@@ -197,7 +197,10 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 <!-- ===== 视频背板:固定全屏,滚动驱动进度 ===== -->
 <div class="video-bg" aria-hidden="true">
   <video id="heroVid" src="assets/hero.mp4" muted playsinline preload="auto" tabindex="-1"></video>
-  <img id="spriteLoader" src="assets/hero-sprite.webp" alt="" style="display:none">
+  <img id="sprite-0" src="assets/hero-sprite-0.webp" alt="" style="display:none">
+  <img id="sprite-1" src="assets/hero-sprite-1.webp" alt="" style="display:none">
+  <img id="sprite-2" src="assets/hero-sprite-2.webp" alt="" style="display:none">
+  <img id="sprite-3" src="assets/hero-sprite-3.webp" alt="" style="display:none">
   <canvas id="heroCanvas"></canvas>
 </div>
 <div class="overlay" aria-hidden="true"></div>
@@ -500,8 +503,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   var heroVid = document.getElementById('heroVid');
   var canvas = document.getElementById('heroCanvas');
   var ctx = canvas ? canvas.getContext('2d') : null;
-  var FR = 96, COLS = 12, ROWS = 8, FW = 1280, FH = 720;
-  var sprite = document.getElementById('spriteLoader');
+  var FR = 96, SUB = 4, PER = 24, COLS = 6, ROWS = 4, FW = 1280, FH = 720;
+  var sprites = [];
   var spriteOk = false;
   var lastFrame = -1;
   var vDur = 8;
@@ -525,8 +528,9 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   function resizeCanvas(){
     if (!ctx || !spriteOk) return;
     var dpr = window.devicePixelRatio || 1;
-    var w = document.documentElement.clientWidth || window.innerWidth;
+    var w = window.innerWidth || document.documentElement.clientWidth;
     var h = window.innerHeight;
+    if (!w || !h) return;
     if (canvas.width !== Math.round(w * dpr)) canvas.width = Math.round(w * dpr);
     if (canvas.height !== Math.round(h * dpr)) canvas.height = Math.round(h * dpr);
     canvas.style.width = w + 'px';
@@ -536,30 +540,56 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 
   function drawFrame(i){
     if (!ctx || !spriteOk) return;
-    var cw = document.documentElement.clientWidth || window.innerWidth;
+    var cw = window.innerWidth || document.documentElement.clientWidth;
     var ch = window.innerHeight;
+    if (!cw || !ch) return;
     var scale = Math.max(cw / FW, ch / FH);
     var dw = FW * scale, dh = FH * scale;
     var dx = (cw - dw) / 2, dy = (ch - dh) / 2;
-    var col = i % COLS, row = Math.floor(i / COLS);
+    var q = Math.floor(i / PER), j = i % PER;
+    var col = j % COLS, row = Math.floor(j / COLS);
+    var src = sprites[q];
+    if (!src || !src.naturalWidth) return;
     try {
-      ctx.drawImage(sprite, col * FW, row * FH, FW, FH, dx, dy, dw, dh);
+      ctx.drawImage(src, col * FW, row * FH, FW, FH, dx, dy, dw, dh);
     } catch (err) {}
   }
 
   function spriteReady(){
+    if (spriteOk) return;
     spriteOk = true;
     if (heroVid) heroVid.style.display = 'none';
     if (canvas) canvas.style.display = 'block';
-    resizeCanvas();
-    update();
+    requestAnimationFrame(function(){
+      resizeCanvas();
+      update();
+    });
   }
-  if (sprite && sprite.complete && sprite.naturalWidth > 0) {
-    spriteReady();
-  } else if (sprite) {
-    sprite.onload = spriteReady;
-    sprite.onerror = function(){ spriteOk = false; };
+
+  var loadedCount = 0;
+  function trackLoad(el){
+    if (!el) return;
+    if (el.complete && el.naturalWidth > 0) {
+      sprites.push(el);
+      loadedCount++;
+    } else {
+      el.addEventListener('load', function(){
+        sprites.push(el);
+        loadedCount++;
+        if (loadedCount >= SUB) spriteReady();
+      });
+      el.addEventListener('error', function(){
+        sprites.push(el);
+        loadedCount++;
+        if (loadedCount >= SUB) spriteReady();
+      });
+    }
   }
+  trackLoad(document.getElementById('sprite-0'));
+  trackLoad(document.getElementById('sprite-1'));
+  trackLoad(document.getElementById('sprite-2'));
+  trackLoad(document.getElementById('sprite-3'));
+  if (loadedCount >= SUB) spriteReady();
 
   function pageProgress(){
     var doc = document.documentElement;
@@ -624,6 +654,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 
   window.addEventListener('scroll', onScroll, {passive:true});
   window.addEventListener('resize', function(){ measure(); resizeCanvas(); onScroll(); }, {passive:true});
+  window.addEventListener('load', function(){ measure(); resizeCanvas(); update(); });
   measure();
   update();
 })();

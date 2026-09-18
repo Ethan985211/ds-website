@@ -599,9 +599,12 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   trackLoad(document.getElementById('sprite-3'));
   if (loadedCount >= SUB) spriteReady();
 
+  var totalScroll = 1;
+  function measureTotal(){
+    totalScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  }
   function pageProgress(){
-    var h = window.innerHeight || 1;
-    return Math.min(1, Math.max(0, window.scrollY / h));
+    return Math.min(1, Math.max(0, window.scrollY / totalScroll));
   }
 
   function doSeek(){
@@ -660,8 +663,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   }
 
   window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', function(){ measure(); resizeCanvas(); onScroll(); }, {passive:true});
-  window.addEventListener('load', function(){ measure(); resizeCanvas(); update(); });
+  window.addEventListener('resize', function(){ measure(); measureTotal(); resizeCanvas(); onScroll(); }, {passive:true});
+  window.addEventListener('load', function(){ measure(); measureTotal(); resizeCanvas(); update(); });
   measure();
   update();
 })();

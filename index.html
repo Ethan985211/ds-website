@@ -39,36 +39,30 @@ button{font-family:inherit}
 .nav-links a{transition:color .2s var(--ease)}
 .nav-links a:hover{color:var(--green)}
 
-/* ===== Hero ===== */
-.hero{position:relative;padding:150px 0 104px;border-bottom:1px solid var(--line);overflow:hidden;color:#fff;background:linear-gradient(180deg,#17382e,#0f241d)}
+/* ===== Hero（sticky 钉住，滚动 scrub 视频时始终可见） ===== */
+.hero{position:relative;height:180vh;border-bottom:1px solid var(--line);background:var(--bg)}
+.hero-pin{position:sticky;top:0;height:100vh;overflow:hidden;color:#fff;background:linear-gradient(180deg,#17382e,#0f241d);display:flex;flex-direction:column;justify-content:center}
 .hero-bg{position:absolute;inset:0;pointer-events:none;z-index:0}
 .hero-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,22,17,.30) 0%,transparent 34%,transparent 66%,var(--bg) 100%)}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,22,17,.35) 0%,rgba(8,22,17,.08) 40%,rgba(8,22,17,.12) 70%,rgba(8,22,17,.5) 100%)}
 .hero .brand-name{color:#fff}
 .hero .brand-name em{color:rgba(255,255,255,.6)}
 .hero .nav-links a{color:rgba(255,255,255,.82)}
 .hero .nav-links a:hover{color:#fff}
 .hero h1{color:#fff}
-.hero h1 .hl{color:#a9cdbc}
-.hero-sub{color:rgba(255,255,255,.82)}
-.hero-sub b{color:#fff}
-.hero-note{color:rgba(255,255,255,.55)}
-.hero .btn-primary{background:#fff;color:var(--green-deep)}
-.hero .btn-primary:hover{background:#eef3ef}
-.hero .btn-ghost{border-color:rgba(255,255,255,.55);color:#fff}
-.hero .btn-ghost:hover{border-color:#fff;color:#fff}
-.hero-grid,.hero .nav{position:relative;z-index:1}
+.hero-pin .nav{position:absolute;top:0;left:0;right:0}
+.hero-content{position:relative;z-index:1;width:100%;padding-top:36px;padding-bottom:20px}
+.hero-grid{position:relative;z-index:1}
 
-/* ===== 滚动进度条 ===== */
-#scrollbar{position:fixed;left:22px;top:50%;transform:translateY(-50%);width:3px;height:34vh;background:var(--line);border-radius:99px;z-index:60;pointer-events:none}
-#scrollFill{position:absolute;left:0;top:0;width:100%;height:0;background:var(--green);border-radius:99px}
-#scrollDot{position:absolute;left:50%;top:0;width:17px;height:17px;transform:translate(-50%,-50%);background:var(--green);border-radius:50%;display:grid;place-items:center;box-shadow:0 2px 8px rgba(36,88,74,.3)}
+/* ===== 滚动进度条（fixed + transform，始终钉在视口） ===== */
+#scrollbar{position:fixed;left:22px;top:50%;transform:translateY(-50%);width:3px;height:34vh;background:var(--line);border-radius:99px;z-index:60;pointer-events:none;contain:layout style}
+#scrollFill{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--green);border-radius:99px;transform-origin:top center;transform:scaleY(0);will-change:transform}
+#scrollDot{position:absolute;left:50%;top:0;width:17px;height:17px;margin-left:-8.5px;margin-top:-8.5px;background:var(--green);border-radius:50%;display:grid;place-items:center;box-shadow:0 2px 8px rgba(36,88,74,.3);will-change:transform;transform:translate3d(0,0,0)}
 #scrollDot i{width:9px;height:9px;border-radius:3px;background:url("assets/ds-logo.png") center/cover}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:72px;align-items:center}
 .hero h1{font-size:clamp(40px,5.6vw,60px);font-weight:800;line-height:1.16;letter-spacing:-.02em;text-wrap:balance;margin-bottom:24px}
-.hero h1 .hl{color:var(--green)}
-.hero-sub{font-size:17px;color:var(--muted);max-width:480px;margin-bottom:40px}
-.hero-sub b{color:var(--ink);font-weight:600}
+.hero-sub{font-size:17px;max-width:480px;margin-bottom:40px}
+.hero-sub b{font-weight:600}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 30px;border-radius:6px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease)}
 .btn svg{width:16px;height:16px}
@@ -76,7 +70,17 @@ button{font-family:inherit}
 .btn-primary:hover{background:var(--green-deep);transform:translateY(-1px)}
 .btn-ghost{background:transparent;color:var(--ink);border-color:#c9c3b8}
 .btn-ghost:hover{border-color:var(--green);color:var(--green)}
-.hero-note{margin-top:44px;font-size:13.5px;color:var(--faint)}
+.hero-note{margin-top:44px;font-size:13.5px}
+
+/* Hero 内浅色文字（必须放在基础 .hero-sub 等之后，避免被覆盖） */
+.hero .hero-sub{color:rgba(255,255,255,.88)}
+.hero .hero-sub b{color:#fff}
+.hero .hero-note{color:rgba(255,255,255,.6)}
+.hero h1 .hl{color:#a9cdbc}
+.hero .btn-ghost{border-color:rgba(255,255,255,.72);color:#fff}
+.hero .btn-ghost:hover{border-color:#fff;color:#fff;background:rgba(255,255,255,.08)}
+.hero .btn-primary{background:#fff;color:var(--green-deep)}
+.hero .btn-primary:hover{background:#eef3ef}
 
 /* ===== Hero 界面卡(干净) ===== */
 .appcard{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 24px 60px rgba(28,38,32,.07)}
@@ -164,11 +168,14 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 .foot-line .dot{margin:0 10px;color:#c9c3b8}
 
 /* ===== 滚动揭示(克制) ===== */
-.reveal{opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
-.reveal.visible{opacity:1;transform:none}
+.reveal{opacity:0;transform:translate3d(0,12px,0);transition:opacity .5s var(--ease),transform .5s var(--ease);will-change:opacity,transform}
+.reveal.visible{opacity:1;transform:translate3d(0,0,0)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .reveal{opacity:1;transform:none;transition:none}
+  .hero{height:auto}
+  .hero-pin{position:relative;height:auto;min-height:100vh;padding:150px 0 104px;justify-content:flex-start}
+  .reveal{opacity:1;transform:none;transition:none;will-change:auto}
+  #scrollFill,#scrollDot{will-change:auto}
   *{transition:none!important}
 }
 
@@ -178,6 +185,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .tech-list{grid-template-columns:1fr 1fr}
 }
 @media (max-width:760px){
+  .hero{height:auto}
+  .hero-pin{position:relative;height:auto;overflow:visible;padding:124px 0 72px;justify-content:flex-start}
   .cap-list{grid-template-columns:1fr}
   .cap-item:nth-child(odd){border-right:none;padding-right:8px}
   .cap-item:nth-child(even){padding-left:8px}
@@ -189,14 +198,13 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .nav{padding:20px 24px}
   .nav-links{gap:20px;font-size:13.5px}
   .nav-links a:last-child{display:none}
-  .hero{padding:128px 0 76px}
+  .hero-grid{gap:36px;padding-top:24px}
   .sec{padding:80px 0}
   .sec-head{flex-direction:column;align-items:flex-start;gap:14px}
   .tech-list{grid-template-columns:1fr}
   .app-body{grid-template-columns:1fr}
   .app-side{display:none}
   #scrollbar{left:10px;width:2px}
-  .hero-bg img{width:78vw}
 }
 </style>
 </head>
@@ -204,20 +212,21 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 
 <!-- ===== Hero ===== -->
 <header class="hero" id="top">
-  <div class="hero-bg" aria-hidden="true">
-    <video id="heroVid" src="assets/hero.mp4" muted playsinline preload="auto" tabindex="-1"></video>
-  </div>
-  <nav class="nav">
-    <div class="brand"><span class="brand-mark"></span><span class="brand-name">DS<em>桌面智能管家</em></span></div>
-    <div class="nav-links">
-      <a href="#capabilities">能力</a>
-      <a href="#tech">技术</a>
-      <a href="#ui">界面</a>
-      <a href="#download">下载</a>
+  <div class="hero-pin">
+    <div class="hero-bg" aria-hidden="true">
+      <video id="heroVid" src="assets/hero.mp4" muted playsinline preload="auto" tabindex="-1"></video>
     </div>
-  </nav>
-  <div class="wrap">
-    <div class="hero-grid">
+    <nav class="nav">
+      <div class="brand"><span class="brand-mark"></span><span class="brand-name">DS<em>桌面智能管家</em></span></div>
+      <div class="nav-links">
+        <a href="#capabilities">能力</a>
+        <a href="#tech">技术</a>
+        <a href="#ui">界面</a>
+        <a href="#download">下载</a>
+      </div>
+    </nav>
+    <div class="wrap hero-content">
+      <div class="hero-grid">
       <div>
         <h1>你的桌面<br><span class="hl">智能管家</span></h1>
         <p class="hero-sub">基于<b>本地大模型</b>的桌面 Agent。对话、检索、记忆、工具,全部在本地完成——纯本地、离线、<b>数据不出机</b>。</p>
@@ -267,6 +276,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
         </div>
       </div>
     </div>
+  </div>
   </div>
 </header>
 
@@ -462,13 +472,15 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 
 <script>
 (function(){
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   var io = null;
   if ('IntersectionObserver' in window) {
     io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
     document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
   } else {
     document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
@@ -493,8 +505,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
     e.preventDefault();
     showToast('安装包即将开放,敬请期待');
   }
-  dl.addEventListener('click', dlClick);
-  dlHero.addEventListener('click', dlClick);
+  if (dl) dl.addEventListener('click', dlClick);
+  if (dlHero) dlHero.addEventListener('click', dlClick);
 
   var fill = document.getElementById('scrollFill');
   var dot = document.getElementById('scrollDot');
@@ -503,34 +515,83 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   var heroEl = document.querySelector('.hero');
   var vDur = 8;
   var lastT = -1;
+  var lastP = -1;
+  var trackH = 0;
+
+  function measure(){
+    trackH = bar ? bar.offsetHeight : 0;
+  }
+
   if (heroVid) {
-    heroVid.addEventListener('loadedmetadata', function(){ vDur = heroVid.duration || 8; });
-    heroVid.currentTime = 0.01;
+    heroVid.addEventListener('loadedmetadata', function(){
+      vDur = heroVid.duration || 8;
+      try { if (heroVid.currentTime < 0.01) heroVid.currentTime = 0.01; } catch (err) {}
+    });
+    try { heroVid.currentTime = 0.01; } catch (err) {}
   }
-  function scrubVideo(){
-    if (!heroVid) return;
+
+  // sticky hero: 0 → 刚进入, 1 → pin 走完即将释放
+  function heroProgress(){
+    if (!heroEl) return 0;
     var r = heroEl.getBoundingClientRect();
-    var vh = window.innerHeight;
-    var p = (vh - r.top) / (vh + r.height);
-    p = Math.min(1, Math.max(0, p));
-    var t = p * vDur;
-    if (Math.abs(t - lastT) > 0.02) {
-      lastT = t;
-      heroVid.currentTime = t;
-    }
+    var vh = window.innerHeight || 1;
+    var total = r.height - vh;
+    if (total <= 0) return (r.bottom <= 0 ? 1 : 0);
+    return Math.min(1, Math.max(0, -r.top / total));
   }
-  function onScroll(){
+
+  function scrubVideo(){
+    if (!heroVid || reduced) return;
+    var r = heroEl.getBoundingClientRect();
+    var vh = window.innerHeight || 1;
+    if (r.bottom <= 0 || r.top >= vh) return;
+
+    var p = heroProgress();
+    if (Math.abs(p - lastP) < 0.01) return;
+    lastP = p;
+
+    var t = p * vDur;
+    if (Math.abs(t - lastT) < 0.05) return;
+    lastT = t;
+    try {
+      if (!heroVid.paused) heroVid.pause();
+      heroVid.currentTime = t;
+    } catch (err) {}
+  }
+
+  function update(){
     var doc = document.documentElement;
     var max = doc.scrollHeight - window.innerHeight;
     var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-    fill.style.height = (p * 100) + '%';
-    dot.style.top = 'calc(' + (p * 100) + '% - 8.5px)';
-    bar.setAttribute('aria-valuenow', Math.round(p * 100));
+
+    if (fill) fill.style.transform = 'scaleY(' + p + ')';
+    if (dot) {
+      var y = trackH > 0 ? (p * trackH) : (p * 100);
+      if (trackH > 0) {
+        dot.style.transform = 'translate3d(0,' + y + 'px,0)';
+      } else {
+        dot.style.top = (p * 100) + '%';
+        dot.style.transform = 'translate3d(0,0,0)';
+      }
+    }
+    if (bar) bar.setAttribute('aria-valuenow', Math.round(p * 100));
     scrubVideo();
   }
+
+  var ticking = false;
+  function onScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      update();
+      ticking = false;
+    });
+  }
+
   window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', onScroll);
-  onScroll();
+  window.addEventListener('resize', function(){ measure(); onScroll(); }, {passive:true});
+  measure();
+  update();
 })();
 </script>
 </body>

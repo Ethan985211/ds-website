@@ -21,16 +21,28 @@ python -m http.server 8080
 # 浏览器打开 http://localhost:8080
 ```
 
-## 部署(域名 desktopsystem.cc.cd)
+## 部署(GitHub + Cloudflare Pages,已上线)
 
-1. **DNS 解析**:在域名服务商控制台添加解析记录,将 `desktopsystem.cc.cd` 指向托管平台(二选一):
-   - Cloudflare Pages / GitHub Pages:A 记录指向平台提供的 IP,或 CNAME 指向平台域名
-   - 国内对象存储(如阿里云 OSS + CDN):A/CNAME 指向存储空间
-2. **上传**:把 `index.html` 与 `assets/` 上传到托管平台(静态站点,无需后端)。
-3. **HTTPS**:托管平台开启 SSL 证书(Cloudflare 免费证书或平台自动签发)。
-4. **验证**:访问 `https://desktopsystem.cc.cd` 确认首页、Logo、favicon 正常。
+线上地址:`https://desktopsystem.cc.cd`(生产,自动构建)
 
-> 注:图片引用为相对路径(`assets/ds-logo.png`),发布时必须连同 `assets/` 目录一起上传,否则 Logo 不显示。
+### 更新站点(改完即上线)
+
+改 `index.html` / `assets/` 后推送到 GitHub 即可,Cloudflare Pages 自动重新构建部署:
+
+```
+git add -A
+git commit -m "update"
+git push origin main
+```
+
+几分钟后访问 `https://desktopsystem.cc.cd` 生效。
+
+### 基础设施(已配置,勿改)
+
+- 仓库:`github.com/Ethan985211/ds-website`(分支 `main`)
+- 托管:Cloudflare Pages 项目 `ds-website`,默认域名 `ds-website-2qw.pages.dev`
+- 域名:`desktopsystem.cc.cd`,DNS 托管在 Cloudflare(NS: `dara/jim.ns.cloudflare.com`),CNAME `@ → ds-website-2qw.pages.dev`(已代理)
+- 域名注册仍在 DNSHE(到期 2027-09-18),NS 已指向 Cloudflare
 
 ## 修改
 

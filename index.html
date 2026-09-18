@@ -155,11 +155,14 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 #scrollDot i{width:9px;height:9px;border-radius:3px;background:url("assets/ds-logo.png") center/cover}
 
 /* ===== 滚动揭示(克制) ===== */
-.reveal{opacity:0;transform:translate3d(0,12px,0);transition:opacity .5s var(--ease),transform .5s var(--ease);will-change:opacity,transform}
+.reveal{opacity:0;transform:translate3d(0,24px,0);transition:opacity .7s var(--ease),transform .7s var(--ease);will-change:opacity,transform}
+[data-stagger] > *{opacity:0;transform:translate3d(0,22px,0);transition:opacity .65s var(--ease),transform .65s var(--ease);will-change:opacity,transform}
+[data-stagger].visible > *{opacity:1;transform:none}
 .reveal.visible{opacity:1;transform:translate3d(0,0,0)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none;transition:none;will-change:auto}
+  [data-stagger] > *{opacity:1;transform:none;transition:none;will-change:auto}
   .hero-hint svg{animation:none}
 }
 
@@ -230,7 +233,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
         </div>
         <p class="hero-note">数据不出机 / 本地大模型 / 默认离线</p>
       </div>
-      <div class="appcard" role="img" aria-label="DS 应用界面示意">
+      <div class="appcard reveal" role="img" aria-label="DS 应用界面示意">
         <div class="app-bar">
           <span class="app-dot"></span><span class="app-dot"></span><span class="app-dot"></span>
           <span class="app-title">DS — Desktop System Agent</span>
@@ -278,7 +281,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
       <h2>一个管家,<br>六项能力</h2>
       <p class="sec-desc">围绕日常桌面工作设计,每项能力都跑在本地,可以按需组合。</p>
     </div>
-    <div class="cap-list">
+    <div class="cap-list reveal" data-stagger>
       <div class="cap-item">
         <span class="cap-num">01</span>
         <div class="cap-main">
@@ -332,7 +335,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
       <h2>为本地而生,<br>可解释可验证</h2>
       <p class="sec-desc">不为堆砌工程规模,只为可解释、可答辩、可验证的本地智能体。</p>
     </div>
-    <div class="tech-list reveal">
+    <div class="tech-list reveal" data-stagger>
       <div class="tech-item"><h3>轻量 ReAct 循环</h3><p>自研轻量 ReAct 智能体循环,推理、调用、观察,每一步可追溯。</p></div>
       <div class="tech-item"><h3>混合检索</h3><p>BM25 + 向量 + RRF 融合排序,召回准、开销低,本地索引毫秒级响应。</p></div>
       <div class="tech-item"><h3>四层记忆</h3><p>语义 / 情境 / 程序记忆自动提取与维护,向量检索注入,巩固与遗忘。</p></div>
@@ -411,7 +414,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
       <h2>开始使用</h2>
       <p class="sec-desc">纯本地运行,无需注册账号,数据不出机。</p>
     </div>
-    <div class="dl-grid reveal">
+    <div class="dl-grid reveal" data-stagger>
       <div class="dl-card">
         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="12" rx="2"/><path d="M8 20h8"/><path d="M12 16v4"/></svg>系统要求</h3>
         <ul>
@@ -464,6 +467,11 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 <script>
 (function(){
   var io = null;
+  document.querySelectorAll('[data-stagger]').forEach(function(p){
+    Array.prototype.forEach.call(p.children, function(c, i){
+      c.style.transitionDelay = (i * 70) + 'ms';
+    });
+  });
   if ('IntersectionObserver' in window) {
     io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){

@@ -87,20 +87,25 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 .hero-badge i{width:7px;height:7px;border-radius:50%;background:var(--green);font-style:normal;box-shadow:0 0 0 3px rgba(143,184,166,.2)}
 .hero h1{
   display:flex;flex-direction:column;align-items:center;
-  gap:6px;margin:0 0 32px;
+  gap:0;margin:0 0 32px;
   width:100%;max-width:none;
   position:relative;z-index:2;text-align:center;
 }
+.hero-t-group{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:flex-end;
+  max-width:100%;
+  position:relative;z-index:2;
+}
 .hero-t-en{
+  display:block;
   font-size:clamp(72px,13.2vw,210px);
   font-weight:800;line-height:.98;
   letter-spacing:-.05em;
   color:#fff;
-  position:relative;z-index:2;
-  transform:none;
   text-shadow:0 12px 48px rgba(0,0,0,.35);
-  width:100%;
-  text-align:center;
+  max-width:100%;
   white-space:nowrap;
 }
 .hero-t-en .t-dot{color:var(--green);margin:0 .02em}
@@ -111,9 +116,6 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   text-indent:.35em;
   color:rgba(255,255,255,.72);
   line-height:1.2;
-  position:relative;z-index:2;
-  align-self:flex-end;
-  transform:none;
   margin-top:4px;
   margin-right:-.35em;
   white-space:nowrap;
@@ -300,8 +302,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .wrap{padding:0 48px}
   .hero .wrap{padding:0 48px}
   .hero-sub{font-size:17px;max-width:100%}
-  .hero-t-en{font-size:clamp(48px,12vw,100px);transform:none;text-shadow:0 6px 24px rgba(0,0,0,.3)}
-  .hero-t-zh{font-size:18px;letter-spacing:.24em;text-indent:.24em;transform:none;align-self:flex-end;white-space:normal;max-width:100%;text-align:right;margin-right:-.24em}
+  .hero-t-en{font-size:clamp(48px,12vw,100px);text-shadow:0 6px 24px rgba(0,0,0,.3);white-space:nowrap}
+  .hero-t-zh{font-size:18px;letter-spacing:.24em;text-indent:.24em;white-space:normal;max-width:100%;text-align:right;margin-right:-.24em}
   .btn{padding:16px 36px;font-size:16px}
 }
 @media (max-width:760px){
@@ -367,8 +369,10 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
       <div class="hero-copy">
         <div class="hero-badge"><i></i>Desktop System Agent · 本地优先</div>
         <h1>
-          <span class="hero-t-en">DS<span class="t-dot">.</span>Agent</span>
-          <span class="hero-t-zh">桌面智能体</span>
+          <span class="hero-t-group">
+            <span class="hero-t-en">DS<span class="t-dot">.</span>Agent</span>
+            <span class="hero-t-zh">桌面智能体</span>
+          </span>
         </h1>
         <p class="hero-sub">基于本地大模型的桌面 Agent，对话、检索、记忆、工具调用全部在本机完成。<b>离线运行，数据不出机</b>。</p>
         <div class="hero-actions">

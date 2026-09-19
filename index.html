@@ -282,16 +282,16 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   opacity:.92;
 }
 .hero-bound-l{
-  left:18px;
-  width:min(18vw,170px);
-  height:min(62vh,460px);
-  transform:translateY(-46%);
+  left:14px;
+  width:min(22vw,210px);
+  height:min(70vh,520px);
+  transform:translateY(-48%);
 }
 .hero-bound-r{
-  right:14px;
-  width:min(16vw,150px);
-  height:min(50vh,380px);
-  transform:translateY(-38%);
+  right:10px;
+  width:min(20vw,190px);
+  height:min(62vh,460px);
+  transform:translateY(-40%);
 }
 .hero-bound svg{width:100%;height:100%;display:block;overflow:visible}
 .hero-bound .lnk{
@@ -637,9 +637,9 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .tech-list{grid-template-columns:1fr}
   .app-body{grid-template-columns:1fr}
   .app-side{display:none}
-  .hero-bound-l{left:4px;width:88px;height:260px}
-  .hero-bound-r{right:4px;width:72px;height:200px}
-  .hero-bound{opacity:.5}
+  .hero-bound-l{left:4px;width:100px;height:300px}
+  .hero-bound-r{right:4px;width:86px;height:250px}
+  .hero-bound{opacity:.55}
   .hero-hint{display:none}
 }
 
@@ -803,48 +803,113 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
     </div>
   </div>
   <div class="hero-bound hero-bound-l" aria-hidden="true">
-    <svg viewBox="0 0 160 420" fill="none">
-      <!-- 左：偏下的文件簇，与右侧错位 -->
-      <path class="lnk" d="M46 168v40M46 248v36M78 208h34M40 320v28"/>
-      <circle class="dot" cx="46" cy="208" r="2"/>
-      <circle class="dot" cx="46" cy="284" r="2"/>
-      <circle class="dot" cx="78" cy="208" r="2"/>
-      <g transform="translate(12,140)">
-        <path class="node" d="M6 22h26l8 9h38v40H6V22z"/>
-        <path class="node-soft" d="M6 34h72"/>
+    <svg viewBox="0 0 200 500" fill="none">
+      <path class="lnk" d="M40 90v34M40 150v30M92 124h36M40 210v28M70 250v36M120 236h28M40 320v30M88 360v28M40 420v24M100 400h34"/>
+      <circle class="dot" cx="40" cy="124" r="2"/>
+      <circle class="dot" cx="40" cy="180" r="2"/>
+      <circle class="dot" cx="92" cy="124" r="2"/>
+      <circle class="dot" cx="40" cy="238" r="2"/>
+      <circle class="dot" cx="70" cy="286" r="2"/>
+      <circle class="dot" cx="120" cy="236" r="2"/>
+      <circle class="dot" cx="40" cy="350" r="2"/>
+      <circle class="dot" cx="88" cy="388" r="2"/>
+      <circle class="dot" cx="40" cy="444" r="2"/>
+      <g transform="translate(8,54)">
+        <path class="node" d="M6 22h26l8 9h40v42H6V22z"/>
+        <path class="node-soft" d="M6 34h74"/>
       </g>
-      <g transform="translate(90,186)">
-        <path class="node" d="M8 6h24l14 14v36H8V6z"/>
+      <g transform="translate(100,92)">
+        <path class="node" d="M8 6h24l14 14v38H8V6z"/>
         <path class="node-soft" d="M32 6v14h14"/>
-        <path class="node-soft" d="M16 32h20M16 40h14"/>
+        <path class="node-soft" d="M16 34h20M16 42h14"/>
       </g>
-      <g transform="translate(18,240)">
+      <g transform="translate(14,148)">
         <path class="node-soft" d="M6 6h22l12 12v34H6V6z"/>
         <path class="node-soft" d="M28 6v12h12"/>
         <path class="node-soft" d="M14 30h18M14 38h12"/>
       </g>
-      <g transform="translate(8,312)">
-        <path class="node-soft" d="M4 16h20l6 7h30v28H4V16z"/>
+      <g transform="translate(108,168)">
+        <path class="node-soft" d="M4 10h20l7 8h28v28H4V10z"/>
+      </g>
+      <g transform="translate(20,214)">
+        <path class="node" d="M6 18h24l7 8h36v34H6V18z"/>
+      </g>
+      <g transform="translate(122,200)">
+        <path class="node-soft" d="M6 4h18l12 12v28H6V4z"/>
+        <path class="node-soft" d="M24 4v12h12"/>
+        <path class="node-soft" d="M12 26h16M12 32h10"/>
+      </g>
+      <g transform="translate(48,248)">
+        <path class="node-soft" d="M4 14h18l6 7h26v24H4V14z"/>
+      </g>
+      <g transform="translate(8,310)">
+        <path class="node-soft" d="M6 6h20l12 12v32H6V6z"/>
+        <path class="node-soft" d="M26 6v12h12"/>
+        <path class="node-soft" d="M14 30h16M14 38h10"/>
+      </g>
+      <g transform="translate(92,348)">
+        <path class="node" d="M6 16h22l7 8h32v30H6V16z"/>
+      </g>
+      <g transform="translate(12,400)">
+        <path class="node-soft" d="M4 12h18l6 7h26v24H4V12z"/>
+      </g>
+      <g transform="translate(104,388)">
+        <path class="node-soft" d="M6 4h18l12 12v26H6V4z"/>
+        <path class="node-soft" d="M24 4v12h12"/>
+      </g>
+      <g transform="translate(40,430)">
+        <path class="node-soft" d="M4 8h16l8 8h22v22H4V8z"/>
       </g>
     </svg>
   </div>
   <div class="hero-bound hero-bound-r" aria-hidden="true">
-    <svg viewBox="0 0 140 340" fill="none">
-      <!-- 右：偏上的少量节点，构图与左侧不同 -->
-      <path class="lnk" d="M40 86v48M88 120h22M40 180v34"/>
-      <circle class="dot" cx="40" cy="134" r="2"/>
-      <circle class="dot" cx="88" cy="120" r="2"/>
-      <g transform="translate(14,48)">
-        <path class="node" d="M6 20h22l7 8h32v34H6V20z"/>
+    <svg viewBox="0 0 180 440" fill="none">
+      <path class="lnk" d="M36 70v30M84 100h28M36 140v26M70 180v30M110 170h24M36 240v28M78 280v26M36 330v24M100 320h28"/>
+      <circle class="dot" cx="36" cy="100" r="2"/>
+      <circle class="dot" cx="84" cy="100" r="2"/>
+      <circle class="dot" cx="36" cy="166" r="2"/>
+      <circle class="dot" cx="70" cy="210" r="2"/>
+      <circle class="dot" cx="110" cy="170" r="2"/>
+      <circle class="dot" cx="36" cy="268" r="2"/>
+      <circle class="dot" cx="78" cy="306" r="2"/>
+      <circle class="dot" cx="36" cy="354" r="2"/>
+      <circle class="dot" cx="100" cy="320" r="2"/>
+      <g transform="translate(10,36)">
+        <path class="node" d="M6 20h22l7 8h34v34H6V20z"/>
       </g>
-      <g transform="translate(86,96)">
+      <g transform="translate(88,72)">
         <path class="node-soft" d="M6 4h18l12 12v28H6V4z"/>
         <path class="node-soft" d="M24 4v12h12"/>
+        <path class="node-soft" d="M12 26h16M12 32h10"/>
       </g>
-      <g transform="translate(22,176)">
-        <path class="node-soft" d="M4 6h18l10 10v26H4V6z"/>
-        <path class="node-soft" d="M22 6v10h10"/>
-        <path class="node-soft" d="M10 26h16M10 32h10"/>
+      <g transform="translate(14,132)">
+        <path class="node-soft" d="M4 8h16l8 8h24v24H4V8z"/>
+      </g>
+      <g transform="translate(74,158)">
+        <path class="node" d="M6 6h20l12 12v32H6V6z"/>
+        <path class="node-soft" d="M26 6v12h12"/>
+        <path class="node-soft" d="M14 30h16"/>
+      </g>
+      <g transform="translate(114,140)">
+        <path class="node-soft" d="M4 10h16l6 7h24v24H4V10z"/>
+      </g>
+      <g transform="translate(18,228)">
+        <path class="node-soft" d="M6 4h18l12 12v26H6V4z"/>
+        <path class="node-soft" d="M24 4v12h12"/>
+      </g>
+      <g transform="translate(80,268)">
+        <path class="node" d="M6 14h20l7 8h30v28H6V14z"/>
+      </g>
+      <g transform="translate(12,318)">
+        <path class="node-soft" d="M4 8h16l8 8h24v24H4V8z"/>
+      </g>
+      <g transform="translate(104,300)">
+        <path class="node-soft" d="M6 4h18l12 12v26H6V4z"/>
+        <path class="node-soft" d="M24 4v12h12"/>
+        <path class="node-soft" d="M12 24h16M12 30h10"/>
+      </g>
+      <g transform="translate(48,360)">
+        <path class="node-soft" d="M4 10h16l6 7h22v22H4V10z"/>
       </g>
     </svg>
   </div>

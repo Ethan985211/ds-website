@@ -246,11 +246,11 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 }
 .hero-sub{
   font-family:var(--font-cn);
-  font-size:clamp(17px,1.4vw,20px);
+  font-size:clamp(16px,1.3vw,19px);
   color:var(--muted);
-  max-width:700px;margin-bottom:40px;line-height:1.9;
+  max-width:none;margin-bottom:40px;line-height:1.9;
   letter-spacing:.03em;font-weight:400;
-  text-wrap:pretty;text-align:center;position:relative;z-index:2;
+  white-space:nowrap;text-align:center;position:relative;z-index:2;
 }
 .hero-sub b{
   font-weight:600;
@@ -544,7 +544,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   #topProgress{display:block}
   .wrap{padding:0 48px}
   .hero .wrap{padding:0 48px}
-  .hero-sub{font-size:17px;max-width:100%}
+  .hero-sub{font-size:17px;max-width:100%;white-space:normal}
   .hero-t-en{font-family:var(--font-en);font-size:clamp(48px,12vw,100px);font-weight:750;letter-spacing:-.03em;white-space:nowrap;filter:drop-shadow(0 6px 24px rgba(0,0,0,.35))}
   .hero-t-zh{font-family:var(--font-cn);font-size:17px;font-weight:400;letter-spacing:.28em;text-indent:.28em;white-space:normal;max-width:100%;text-align:right;margin-right:-.28em}
   .btn{padding:16px 36px;font-size:16px}
@@ -574,7 +574,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .wrap{padding:0 20px}
   .hero{padding:84px 0 108px}
   .hero .wrap{padding:0 20px}
-  .hero-sub{font-size:16px;margin-bottom:28px}
+  .hero-sub{font-size:16px;margin-bottom:28px;white-space:normal}
   .btn{padding:14px 28px;font-size:15px}
   .hero-actions{gap:12px}
   .hero-badge{margin-bottom:18px;font-size:12px;padding:7px 14px}

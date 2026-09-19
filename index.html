@@ -275,69 +275,36 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 
 .hero-note{margin-top:40px;font-family:var(--font-cn);font-size:14px;font-weight:400;color:var(--faint);letter-spacing:.16em;text-align:center;position:relative;z-index:2}
 
-/* 两侧：本机文件关联 · 景深层次（远暗近亮） */
-.hero-bound{
-  position:absolute;top:50%;transform:translateY(-50%);
+/* 两侧文件链路 → 指向标题（无光晕、略乱、有远近） */
+.hero-flow{
+  position:absolute;inset:0;
   pointer-events:none;z-index:0;
+  overflow:hidden;
 }
-.hero-bound-l{
-  left:10px;
-  width:min(24vw,230px);
-  height:min(74vh,560px);
-  transform:translateY(-48%);
+.hero-flow svg{
+  width:100%;height:100%;display:block;
 }
-.hero-bound-r{
-  right:6px;
-  width:min(22vw,200px);
-  height:min(66vh,500px);
-  transform:translateY(-40%);
+.hero-flow .ch{
+  fill:none;stroke-linecap:round;stroke-linejoin:round;
 }
-.hero-bound svg{width:100%;height:100%;display:block;overflow:visible}
-.hero-bound .lnk{
-  fill:none;stroke:rgba(143,184,166,.18);stroke-width:1;
-  stroke-dasharray:2 6;stroke-linecap:round;
+.hero-flow .ch-far{stroke:rgba(143,184,166,.12);stroke-width:1;stroke-dasharray:2 7}
+.hero-flow .ch-mid{stroke:rgba(143,184,166,.22);stroke-width:1;stroke-dasharray:3 5}
+.hero-flow .ch-near{stroke:rgba(143,184,166,.42);stroke-width:1.2;stroke-dasharray:4 4}
+.hero-flow .tip{fill:rgba(164,206,186,.55)}
+.hero-flow .tip-far{fill:rgba(143,184,166,.2)}
+/* 远：暗、小 */
+.hero-flow .n-far .ic{fill:rgba(255,255,255,.01);stroke:rgba(143,184,166,.13);stroke-width:.9}
+.hero-flow .n-far .ln{fill:none;stroke:rgba(143,184,166,.12);stroke-width:.8}
+/* 中 */
+.hero-flow .n-mid .ic{fill:rgba(255,255,255,.02);stroke:rgba(143,184,166,.26);stroke-width:1.05}
+.hero-flow .n-mid .ln{fill:none;stroke:rgba(143,184,166,.2);stroke-width:.9}
+/* 近：亮、实（无光晕） */
+.hero-flow .n-near .ic{
+  fill:rgba(143,184,166,.07);
+  stroke:rgba(174,210,192,.7);
+  stroke-width:1.4;
 }
-.hero-bound .lnk-near{
-  fill:none;stroke:rgba(143,184,166,.4);stroke-width:1.15;
-  stroke-dasharray:3 4;stroke-linecap:round;
-}
-/* 远景：暗、小、虚 */
-.hero-bound .d-far .node,
-.hero-bound .d-far .node-soft{
-  fill:rgba(255,255,255,.01);
-  stroke:rgba(143,184,166,.14);
-  stroke-width:.9;
-  filter:blur(.4px);
-}
-.hero-bound .d-far .dot{fill:rgba(143,184,166,.18)}
-/* 中景 */
-.hero-bound .d-mid .node{
-  fill:rgba(255,255,255,.025);
-  stroke:rgba(143,184,166,.28);
-  stroke-width:1.05;
-}
-.hero-bound .d-mid .node-soft{
-  fill:rgba(255,255,255,.015);
-  stroke:rgba(143,184,166,.18);
-  stroke-width:.95;
-}
-.hero-bound .d-mid .dot{fill:rgba(143,184,166,.32)}
-/* 近景：亮、实、微光晕 */
-.hero-bound .d-near .node{
-  fill:rgba(143,184,166,.08);
-  stroke:rgba(164,206,186,.72);
-  stroke-width:1.45;
-  filter:url(#glowNear);
-}
-.hero-bound .d-near .node-soft{
-  fill:rgba(143,184,166,.04);
-  stroke:rgba(164,206,186,.48);
-  stroke-width:1.2;
-}
-.hero-bound .d-near .dot{
-  fill:rgba(180,220,200,.85);
-  filter:url(#glowNear);
-}
+.hero-flow .n-near .ln{fill:none;stroke:rgba(174,210,192,.45);stroke-width:1.1}
 .hero .wrap,.hero .hero-grid,.hero .hero-copy{position:relative;z-index:2}
 .hero-hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-size:12.5px;color:var(--faint);display:flex;align-items:center;gap:8px;z-index:5;white-space:nowrap}
 .hero-hint svg{width:13px;height:13px;animation:dip 2.2s ease-in-out infinite}
@@ -665,8 +632,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .tech-list{grid-template-columns:1fr}
   .app-body{grid-template-columns:1fr}
   .app-side{display:none}
-  .hero-bound-l{left:2px;width:110px;height:320px}
-  .hero-bound-r{right:2px;width:96px;height:280px}
+  .hero-flow{opacity:.65}
   .hero-hint{display:none}
 }
 
@@ -829,137 +795,120 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
       </div>
     </div>
   </div>
-  <div class="hero-bound hero-bound-l" aria-hidden="true">
-    <svg viewBox="0 0 220 540" fill="none">
-      <defs>
-        <filter id="glowNear" x="-40%" y="-40%" width="180%" height="180%">
-          <feGaussianBlur stdDeviation="2.2" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-      <!-- 连线：近处更亮 -->
-      <path class="lnk" d="M28 70v22M28 120v18M70 90h22M28 170v16"/>
-      <path class="lnk-near" d="M40 300v28M88 250h30M40 400v24M72 460v20M120 430h28"/>
-      <circle class="dot" cx="28" cy="92" r="1.6"/>
-      <circle class="dot" cx="70" cy="90" r="1.6"/>
-      <circle class="dot" cx="40" cy="328" r="2.2"/>
-      <circle class="dot" cx="88" cy="250" r="2.2"/>
-      <circle class="dot" cx="40" cy="424" r="2.2"/>
-      <circle class="dot" cx="72" cy="480" r="2"/>
-      <circle class="dot" cx="120" cy="430" r="2"/>
-      <!-- 远景：顶部小而暗 -->
-      <g class="d-far" transform="translate(16,42) scale(.72)">
-        <path class="node-soft" d="M4 14h14l5 6h20v18H4V14z"/>
+  <div class="hero-flow" aria-hidden="true">
+    <svg viewBox="0 0 1280 800" preserveAspectRatio="xMidYMid slice" fill="none">
+      <!-- 链路：两侧多条指向标题区（约 640,340） -->
+      <path class="ch ch-far" d="M90 120 C220 160, 340 220, 470 300"/>
+      <path class="ch ch-mid" d="M70 260 C200 280, 360 300, 500 320"/>
+      <path class="ch ch-near" d="M120 420 C260 400, 400 360, 520 340"/>
+      <path class="ch ch-mid" d="M80 540 C240 500, 380 400, 530 350"/>
+      <path class="ch ch-far" d="M150 680 C300 600, 420 460, 540 370"/>
+      <path class="ch ch-near" d="M1180 140 C1040 180, 900 240, 780 300"/>
+      <path class="ch ch-mid" d="M1220 280 C1080 300, 920 310, 790 325"/>
+      <path class="ch ch-near" d="M1160 430 C1020 400, 880 360, 770 340"/>
+      <path class="ch ch-mid" d="M1210 560 C1050 510, 900 420, 760 350"/>
+      <path class="ch ch-far" d="M1140 700 C980 620, 860 480, 740 380"/>
+      <circle class="tip" cx="470" cy="300" r="2.2"/>
+      <circle class="tip" cx="500" cy="320" r="2.4"/>
+      <circle class="tip" cx="520" cy="340" r="2.6"/>
+      <circle class="tip-far" cx="530" cy="350" r="2"/>
+      <circle class="tip-far" cx="540" cy="370" r="2"/>
+      <circle class="tip" cx="780" cy="300" r="2.2"/>
+      <circle class="tip" cx="790" cy="325" r="2.4"/>
+      <circle class="tip" cx="770" cy="340" r="2.6"/>
+      <circle class="tip-far" cx="760" cy="350" r="2"/>
+      <circle class="tip-far" cx="740" cy="380" r="2"/>
+      <!-- 左侧散乱图标 -->
+      <g class="n-far" transform="translate(36,88) rotate(-12) scale(.62)">
+        <path class="ic" d="M4 18h20l7 8h30v28H4V18z"/>
+        <path class="ln" d="M4 30h61"/>
       </g>
-      <g class="d-far" transform="translate(78,70) scale(.68)">
-        <path class="node-soft" d="M4 4h12l8 8v18H4V4z"/>
-        <path class="node-soft" d="M16 4v8h8"/>
+      <g class="n-far" transform="translate(130,150) rotate(18) scale(.58)">
+        <path class="ic" d="M4 4h16l12 12v30H4V4z"/>
+        <path class="ln" d="M20 4v12h12"/>
       </g>
-      <g class="d-far" transform="translate(22,128) scale(.7)">
-        <path class="node-soft" d="M4 4h12l8 8v18H4V4z"/>
-        <path class="node-soft" d="M16 4v8h8"/>
-        <path class="node-soft" d="M8 20h12M8 26h8"/>
+      <g class="n-mid" transform="translate(48,230) rotate(-8) scale(.85)">
+        <path class="ic" d="M4 18h20l7 8h30v28H4V18z"/>
+        <path class="ln" d="M4 30h61"/>
       </g>
-      <!-- 中景 -->
-      <g class="d-mid" transform="translate(10,188) scale(.9)">
-        <path class="node" d="M4 18h18l6 7h26v28H4V18z"/>
-        <path class="node-soft" d="M4 28h50"/>
+      <g class="n-mid" transform="translate(150,280) rotate(22) scale(.78)">
+        <path class="ic" d="M4 4h16l12 12v30H4V4z"/>
+        <path class="ln" d="M20 4v12h12"/>
+        <path class="ln" d="M10 28h16M10 36h10"/>
       </g>
-      <g class="d-mid" transform="translate(96,200) scale(.88)">
-        <path class="node-soft" d="M4 4h14l10 10v26H4V4z"/>
-        <path class="node-soft" d="M18 4v10h10"/>
-        <path class="node-soft" d="M10 24h14M10 30h10"/>
+      <g class="n-near" transform="translate(20,360) rotate(-16) scale(1.15)">
+        <path class="ic" d="M4 18h22l8 9h32v34H4V18z"/>
+        <path class="ln" d="M4 32h66"/>
       </g>
-      <g class="d-mid" transform="translate(24,268) scale(.86)">
-        <path class="node-soft" d="M4 12h14l5 6h22v20H4V12z"/>
+      <g class="n-near" transform="translate(140,400) rotate(10) scale(1.08)">
+        <path class="ic" d="M4 4h18l12 12v32H4V4z"/>
+        <path class="ln" d="M22 4v12h12"/>
+        <path class="ln" d="M12 30h16M12 38h10"/>
       </g>
-      <!-- 近景：下方更大更亮 -->
-      <g class="d-near" transform="translate(6,318) scale(1.18)">
-        <path class="node" d="M4 20h20l7 8h30v34H4V20z"/>
-        <path class="node-soft" d="M4 32h61"/>
+      <g class="n-mid" transform="translate(60,480) rotate(6) scale(.9)">
+        <path class="ic" d="M4 16h18l6 7h26v26H4V16z"/>
       </g>
-      <g class="d-near" transform="translate(108,292) scale(1.22)">
-        <path class="node" d="M4 4h16l12 12v32H4V4z"/>
-        <path class="node-soft" d="M20 4v12h12"/>
-        <path class="node-soft" d="M10 28h16M10 36h12"/>
+      <g class="n-near" transform="translate(30,540) rotate(-20) scale(1.2)">
+        <path class="ic" d="M4 20h22l8 9h32v34H4V20z"/>
+        <path class="ln" d="M4 34h66"/>
       </g>
-      <g class="d-near" transform="translate(20,400) scale(1.15)">
-        <path class="node" d="M4 4h16l12 12v30H4V4z"/>
-        <path class="node-soft" d="M20 4v12h12"/>
-        <path class="node-soft" d="M10 26h16M10 34h10"/>
+      <g class="n-far" transform="translate(170,520) rotate(28) scale(.6)">
+        <path class="ic" d="M4 4h14l10 10v26H4V4z"/>
+        <path class="ln" d="M18 4v10h10"/>
       </g>
-      <g class="d-near" transform="translate(118,378) scale(1.1)">
-        <path class="node" d="M4 14h16l6 7h26v26H4V14z"/>
+      <g class="n-near" transform="translate(90,620) rotate(8) scale(1.12)">
+        <path class="ic" d="M4 4h16l12 12v30H4V4z"/>
+        <path class="ln" d="M20 4v12h12"/>
       </g>
-      <g class="d-near" transform="translate(48,456) scale(1.25)">
-        <path class="node" d="M4 16h18l6 7h28v30H4V16z"/>
+      <g class="n-mid" transform="translate(20,660) rotate(-14) scale(.82)">
+        <path class="ic" d="M4 14h16l6 7h24v24H4V14z"/>
       </g>
-      <g class="d-near" transform="translate(132,448) scale(1.05)">
-        <path class="node-soft" d="M4 4h14l10 10v26H4V4z"/>
-        <path class="node-soft" d="M18 4v10h10"/>
+      <g class="n-far" transform="translate(160,100) rotate(8) scale(.55)">
+        <path class="ic" d="M4 14h16l6 7h24v22H4V14z"/>
       </g>
-    </svg>
-  </div>
-  <div class="hero-bound hero-bound-r" aria-hidden="true">
-    <svg viewBox="0 0 190 480" fill="none">
-      <defs>
-        <filter id="glowNearR" x="-40%" y="-40%" width="180%" height="180%">
-          <feGaussianBlur stdDeviation="2" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-      <path class="lnk" d="M30 56v18M72 80h18M30 120v14"/>
-      <path class="lnk-near" d="M36 250v22M80 220h24M36 340v20M70 390v18"/>
-      <circle class="dot" cx="30" cy="74" r="1.5"/>
-      <circle class="dot" cx="72" cy="80" r="1.5"/>
-      <circle class="dot" cx="36" cy="272" r="2"/>
-      <circle class="dot" cx="80" cy="220" r="2"/>
-      <circle class="dot" cx="36" cy="360" r="2"/>
-      <circle class="dot" cx="70" cy="408" r="1.8"/>
-      <!-- 远景偏上 -->
-      <g class="d-far" transform="translate(12,30) scale(.7)">
-        <path class="node-soft" d="M4 16h14l5 6h20v18H4V16z"/>
+      <!-- 右侧散乱图标（构图不同） -->
+      <g class="n-far" transform="translate(1120,96) rotate(14) scale(.6)">
+        <path class="ic" d="M4 16h18l6 7h26v26H4V16z"/>
       </g>
-      <g class="d-far" transform="translate(78,58) scale(.66)">
-        <path class="node-soft" d="M4 4h12l8 8v16H4V4z"/>
-        <path class="node-soft" d="M16 4v8h8"/>
+      <g class="n-mid" transform="translate(1040,170) rotate(-10) scale(.82)">
+        <path class="ic" d="M4 4h16l12 12v28H4V4z"/>
+        <path class="ln" d="M20 4v12h12"/>
       </g>
-      <g class="d-far" transform="translate(18,108) scale(.72)">
-        <path class="node-soft" d="M4 4h12l8 8v16H4V4z"/>
-        <path class="node-soft" d="M16 4v8h8"/>
-        <path class="node-soft" d="M8 20h12"/>
+      <g class="n-far" transform="translate(1180,220) rotate(20) scale(.55)">
+        <path class="ic" d="M4 4h14l10 10v24H4V4z"/>
+        <path class="ln" d="M18 4v10h10"/>
+        <path class="ln" d="M8 24h14"/>
       </g>
-      <!-- 中景 -->
-      <g class="d-mid" transform="translate(8,160) scale(.88)">
-        <path class="node" d="M4 16h16l6 7h24v26H4V16z"/>
+      <g class="n-near" transform="translate(1080,300) rotate(-18) scale(1.18)">
+        <path class="ic" d="M4 18h22l8 9h32v32H4V18z"/>
+        <path class="ln" d="M4 32h66"/>
       </g>
-      <g class="d-mid" transform="translate(84,148) scale(.85)">
-        <path class="node-soft" d="M4 4h12l10 10v24H4V4z"/>
-        <path class="node-soft" d="M16 4v10h10"/>
+      <g class="n-near" transform="translate(1175,360) rotate(12) scale(1.05)">
+        <path class="ic" d="M4 4h16l12 12v30H4V4z"/>
+        <path class="ln" d="M20 4v12h12"/>
+        <path class="ln" d="M10 28h16"/>
       </g>
-      <!-- 近景偏下，更亮更大 -->
-      <g class="d-near" transform="translate(10,236) scale(1.2)" style="filter:url(#glowNearR)">
-        <path class="node" d="M4 18h18l6 7h28v30H4V18z"/>
-        <path class="node-soft" d="M4 30h56"/>
+      <g class="n-mid" transform="translate(1020,400) rotate(8) scale(.88)">
+        <path class="ic" d="M4 16h18l6 7h26v26H4V16z"/>
       </g>
-      <g class="d-near" transform="translate(96,208) scale(1.15)" style="filter:url(#glowNearR)">
-        <path class="node" d="M4 4h14l10 10v28H4V4z"/>
-        <path class="node-soft" d="M18 4v10h10"/>
-        <path class="node-soft" d="M10 24h14M10 30h10"/>
+      <g class="n-near" transform="translate(1100,470) rotate(-8) scale(1.22)">
+        <path class="ic" d="M4 20h22l8 9h30v32H4V20z"/>
+        <path class="ln" d="M4 34h64"/>
       </g>
-      <g class="d-near" transform="translate(22,330) scale(1.18)" style="filter:url(#glowNearR)">
-        <path class="node" d="M4 4h14l10 10v28H4V4z"/>
-        <path class="node-soft" d="M18 4v10h10"/>
+      <g class="n-far" transform="translate(1180,500) rotate(24) scale(.58)">
+        <path class="ic" d="M4 4h14l10 10v24H4V4z"/>
+        <path class="ln" d="M18 4v10h10"/>
       </g>
-      <g class="d-near" transform="translate(100,318) scale(1.12)" style="filter:url(#glowNearR)">
-        <path class="node" d="M4 14h16l6 7h24v24H4V14z"/>
+      <g class="n-mid" transform="translate(1040,560) rotate(-16) scale(.86)">
+        <path class="ic" d="M4 4h16l12 12v28H4V4z"/>
+        <path class="ln" d="M20 4v12h12"/>
+        <path class="ln" d="M10 26h14"/>
       </g>
-      <g class="d-near" transform="translate(48,398) scale(1.2)" style="filter:url(#glowNearR)">
-        <path class="node" d="M4 12h16l6 7h24v24H4V12z"/>
+      <g class="n-near" transform="translate(1120,620) rotate(10) scale(1.1)">
+        <path class="ic" d="M4 16h18l6 7h26v26H4V16z"/>
       </g>
-      <g class="d-near" transform="translate(120,372) scale(1.08)" style="filter:url(#glowNearR)">
-        <path class="node-soft" d="M4 4h14l10 10v24H4V4z"/>
-        <path class="node-soft" d="M18 4v10h10"/>
+      <g class="n-far" transform="translate(1000,640) rotate(-6) scale(.62)">
+        <path class="ic" d="M4 14h16l6 7h22v22H4V14z"/>
       </g>
     </svg>
   </div>

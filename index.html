@@ -47,7 +47,8 @@ button{font-family:inherit}
 
 /* ===== Hero(首屏,叠在视频上) ===== */
 .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 0 80px}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:100px;align-items:center}
+.hero-grid{display:flex;flex-direction:column;align-items:center;text-align:center}
+.hero-copy{max-width:760px;display:flex;flex-direction:column;align-items:center}
 .hero h1{font-size:clamp(68px,8.6vw,150px);font-weight:800;line-height:1.08;letter-spacing:-.025em;text-wrap:balance;margin-bottom:32px;color:#fff}
 .hero h1 .hl{color:var(--green)}
 .hero-sub{font-size:22px;color:var(--muted);max-width:660px;margin-bottom:48px}
@@ -263,9 +264,9 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   </nav>
   <div class="wrap">
     <div class="hero-grid">
-      <div>
+      <div class="hero-copy">
         <h1>你的桌面<br><span class="hl">智能管家</span></h1>
-        <p class="hero-sub">基于<b>本地大模型</b>的桌面 Agent。对话、检索、记忆、工具,全部在本地完成——纯本地、离线、<b>数据不出机</b>。</p>
+        <p class="hero-sub">基于本地大模型的桌面 Agent。对话、检索、记忆、工具调用,全部在本机完成。<b>离线运行,数据不出机</b>。</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#download" id="dlHero">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>

@@ -275,36 +275,42 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 
 .hero-note{margin-top:40px;font-family:var(--font-cn);font-size:14px;font-weight:400;color:var(--faint);letter-spacing:.16em;text-align:center;position:relative;z-index:2}
 
-/* 两侧文件链路 → 指向标题（无光晕、略乱、有远近） */
+/* 两侧：本地文件思维导图（节点互连 + 链路指向标题） */
 .hero-flow{
   position:absolute;inset:0;
   pointer-events:none;z-index:0;
   overflow:hidden;
 }
-.hero-flow svg{
-  width:100%;height:100%;display:block;
-}
-.hero-flow .ch{
+.hero-flow svg{width:100%;height:100%;display:block}
+/* 导图连线：文件之间 */
+.hero-flow .lk{
   fill:none;stroke-linecap:round;stroke-linejoin:round;
+  stroke:rgba(143,184,166,.28);
+  stroke-width:1.05;
 }
-.hero-flow .ch-far{stroke:rgba(143,184,166,.12);stroke-width:1;stroke-dasharray:2 7}
-.hero-flow .ch-mid{stroke:rgba(143,184,166,.22);stroke-width:1;stroke-dasharray:3 5}
-.hero-flow .ch-near{stroke:rgba(143,184,166,.42);stroke-width:1.2;stroke-dasharray:4 4}
-.hero-flow .tip{fill:rgba(164,206,186,.55)}
-.hero-flow .tip-far{fill:rgba(143,184,166,.2)}
-/* 远：暗、小 */
-.hero-flow .n-far .ic{fill:rgba(255,255,255,.01);stroke:rgba(143,184,166,.13);stroke-width:.9}
-.hero-flow .n-far .ln{fill:none;stroke:rgba(143,184,166,.12);stroke-width:.8}
-/* 中 */
-.hero-flow .n-mid .ic{fill:rgba(255,255,255,.02);stroke:rgba(143,184,166,.26);stroke-width:1.05}
+.hero-flow .lk-far{stroke:rgba(143,184,166,.13);stroke-width:.9}
+.hero-flow .lk-near{stroke:rgba(143,184,166,.42);stroke-width:1.2}
+/* 指向标题的链路 */
+.hero-flow .to-t{
+  fill:none;stroke-linecap:round;
+  stroke:rgba(143,184,166,.3);
+  stroke-width:1.1;
+  stroke-dasharray:5 6;
+}
+.hero-flow .to-t-near{
+  stroke:rgba(143,184,166,.48);
+  stroke-width:1.25;
+  stroke-dasharray:6 5;
+}
+.hero-flow .tip{fill:rgba(164,206,186,.5)}
+/* 节点远近 */
+.hero-flow .n-far .ic{fill:rgba(255,255,255,.012);stroke:rgba(143,184,166,.14);stroke-width:.9}
+.hero-flow .n-far .ln{fill:none;stroke:rgba(143,184,166,.12);stroke-width:.75}
+.hero-flow .n-mid .ic{fill:rgba(255,255,255,.02);stroke:rgba(143,184,166,.27);stroke-width:1.05}
 .hero-flow .n-mid .ln{fill:none;stroke:rgba(143,184,166,.2);stroke-width:.9}
-/* 近：亮、实（无光晕） */
-.hero-flow .n-near .ic{
-  fill:rgba(143,184,166,.07);
-  stroke:rgba(174,210,192,.7);
-  stroke-width:1.4;
-}
-.hero-flow .n-near .ln{fill:none;stroke:rgba(174,210,192,.45);stroke-width:1.1}
+.hero-flow .n-near .ic{fill:rgba(143,184,166,.07);stroke:rgba(174,210,192,.68);stroke-width:1.35}
+.hero-flow .n-near .ln{fill:none;stroke:rgba(174,210,192,.42);stroke-width:1.05}
+.hero-flow .hub .ic{fill:rgba(143,184,166,.1);stroke:rgba(174,210,192,.75);stroke-width:1.4}
 .hero .wrap,.hero .hero-grid,.hero .hero-copy{position:relative;z-index:2}
 .hero-hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-size:12.5px;color:var(--faint);display:flex;align-items:center;gap:8px;z-index:5;white-space:nowrap}
 .hero-hint svg{width:13px;height:13px;animation:dip 2.2s ease-in-out infinite}
@@ -797,118 +803,145 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
   </div>
   <div class="hero-flow" aria-hidden="true">
     <svg viewBox="0 0 1280 800" preserveAspectRatio="xMidYMid slice" fill="none">
-      <!-- 链路：两侧多条指向标题区（约 640,340） -->
-      <path class="ch ch-far" d="M90 120 C220 160, 340 220, 470 300"/>
-      <path class="ch ch-mid" d="M70 260 C200 280, 360 300, 500 320"/>
-      <path class="ch ch-near" d="M120 420 C260 400, 400 360, 520 340"/>
-      <path class="ch ch-mid" d="M80 540 C240 500, 380 400, 530 350"/>
-      <path class="ch ch-far" d="M150 680 C300 600, 420 460, 540 370"/>
-      <path class="ch ch-near" d="M1180 140 C1040 180, 900 240, 780 300"/>
-      <path class="ch ch-mid" d="M1220 280 C1080 300, 920 310, 790 325"/>
-      <path class="ch ch-near" d="M1160 430 C1020 400, 880 360, 770 340"/>
-      <path class="ch ch-mid" d="M1210 560 C1050 510, 900 420, 760 350"/>
-      <path class="ch ch-far" d="M1140 700 C980 620, 860 480, 740 380"/>
-      <circle class="tip" cx="470" cy="300" r="2.2"/>
+      <!-- ========== 左：本地文件树 / 思维导图 ========== -->
+      <!-- 根文件夹 → 子节点 -->
+      <path class="lk" d="M118 250 C118 250, 118 210, 78 188"/>
+      <path class="lk lk-near" d="M118 250 C118 250, 160 230, 198 208"/>
+      <path class="lk" d="M118 250 C118 280, 90 320, 68 348"/>
+      <path class="lk lk-near" d="M118 250 C140 290, 170 330, 198 368"/>
+      <!-- 子节点再分叉 -->
+      <path class="lk lk-far" d="M78 188 C78 188, 40 160, 28 138"/>
+      <path class="lk lk-far" d="M78 188 C78 188, 110 150, 128 128"/>
+      <path class="lk" d="M198 208 C198 208, 230 180, 248 158"/>
+      <path class="lk lk-far" d="M198 208 C198 208, 236 220, 258 238"/>
+      <path class="lk lk-near" d="M68 348 C68 348, 40 390, 32 428"/>
+      <path class="lk" d="M68 348 C68 348, 100 390, 122 420"/>
+      <path class="lk lk-near" d="M198 368 C198 368, 230 400, 248 438"/>
+      <path class="lk" d="M198 368 C198 368, 170 420, 158 458"/>
+      <!-- 根节点 → 标题 -->
+      <path class="to-t to-t-near" d="M130 248 C260 260, 380 290, 500 320"/>
+      <path class="to-t" d="M200 370 C300 350, 400 330, 510 335"/>
       <circle class="tip" cx="500" cy="320" r="2.4"/>
-      <circle class="tip" cx="520" cy="340" r="2.6"/>
-      <circle class="tip-far" cx="530" cy="350" r="2"/>
-      <circle class="tip-far" cx="540" cy="370" r="2"/>
-      <circle class="tip" cx="780" cy="300" r="2.2"/>
-      <circle class="tip" cx="790" cy="325" r="2.4"/>
-      <circle class="tip" cx="770" cy="340" r="2.6"/>
-      <circle class="tip-far" cx="760" cy="350" r="2"/>
-      <circle class="tip-far" cx="740" cy="380" r="2"/>
-      <!-- 左侧散乱图标 -->
-      <g class="n-far" transform="translate(36,88) rotate(-12) scale(.62)">
-        <path class="ic" d="M4 18h20l7 8h30v28H4V18z"/>
-        <path class="ln" d="M4 30h61"/>
+      <circle class="tip" cx="510" cy="335" r="2.2"/>
+      <!-- 左侧节点（导图布局：根 + 二级 + 三级） -->
+      <!-- 根：本地索引 -->
+      <g class="n-near hub" transform="translate(88,220) rotate(-4)">
+        <path class="ic" d="M4 22h22l8 9h34v36H4V22z"/>
+        <path class="ln" d="M4 36h68"/>
       </g>
-      <g class="n-far" transform="translate(130,150) rotate(18) scale(.58)">
-        <path class="ic" d="M4 4h16l12 12v30H4V4z"/>
-        <path class="ln" d="M20 4v12h12"/>
+      <!-- 二级 -->
+      <g class="n-near" transform="translate(48,158) rotate(-8)">
+        <path class="ic" d="M4 18h18l6 7h26v28H4V18z"/>
+        <path class="ln" d="M4 30h54"/>
       </g>
-      <g class="n-mid" transform="translate(48,230) rotate(-8) scale(.85)">
-        <path class="ic" d="M4 18h20l7 8h30v28H4V18z"/>
-        <path class="ln" d="M4 30h61"/>
-      </g>
-      <g class="n-mid" transform="translate(150,280) rotate(22) scale(.78)">
+      <g class="n-near" transform="translate(172,180) rotate(6)">
         <path class="ic" d="M4 4h16l12 12v30H4V4z"/>
         <path class="ln" d="M20 4v12h12"/>
         <path class="ln" d="M10 28h16M10 36h10"/>
       </g>
-      <g class="n-near" transform="translate(20,360) rotate(-16) scale(1.15)">
-        <path class="ic" d="M4 18h22l8 9h32v34H4V18z"/>
-        <path class="ln" d="M4 32h66"/>
-      </g>
-      <g class="n-near" transform="translate(140,400) rotate(10) scale(1.08)">
-        <path class="ic" d="M4 4h18l12 12v32H4V4z"/>
-        <path class="ln" d="M22 4v12h12"/>
-        <path class="ln" d="M12 30h16M12 38h10"/>
-      </g>
-      <g class="n-mid" transform="translate(60,480) rotate(6) scale(.9)">
-        <path class="ic" d="M4 16h18l6 7h26v26H4V16z"/>
-      </g>
-      <g class="n-near" transform="translate(30,540) rotate(-20) scale(1.2)">
-        <path class="ic" d="M4 20h22l8 9h32v34H4V20z"/>
-        <path class="ln" d="M4 34h66"/>
-      </g>
-      <g class="n-far" transform="translate(170,520) rotate(28) scale(.6)">
-        <path class="ic" d="M4 4h14l10 10v26H4V4z"/>
-        <path class="ln" d="M18 4v10h10"/>
-      </g>
-      <g class="n-near" transform="translate(90,620) rotate(8) scale(1.12)">
-        <path class="ic" d="M4 4h16l12 12v30H4V4z"/>
-        <path class="ln" d="M20 4v12h12"/>
-      </g>
-      <g class="n-mid" transform="translate(20,660) rotate(-14) scale(.82)">
-        <path class="ic" d="M4 14h16l6 7h24v24H4V14z"/>
-      </g>
-      <g class="n-far" transform="translate(160,100) rotate(8) scale(.55)">
-        <path class="ic" d="M4 14h16l6 7h24v22H4V14z"/>
-      </g>
-      <!-- 右侧散乱图标（构图不同） -->
-      <g class="n-far" transform="translate(1120,96) rotate(14) scale(.6)">
-        <path class="ic" d="M4 16h18l6 7h26v26H4V16z"/>
-      </g>
-      <g class="n-mid" transform="translate(1040,170) rotate(-10) scale(.82)">
-        <path class="ic" d="M4 4h16l12 12v28H4V4z"/>
-        <path class="ln" d="M20 4v12h12"/>
-      </g>
-      <g class="n-far" transform="translate(1180,220) rotate(20) scale(.55)">
-        <path class="ic" d="M4 4h14l10 10v24H4V4z"/>
-        <path class="ln" d="M18 4v10h10"/>
-        <path class="ln" d="M8 24h14"/>
-      </g>
-      <g class="n-near" transform="translate(1080,300) rotate(-18) scale(1.18)">
-        <path class="ic" d="M4 18h22l8 9h32v32H4V18z"/>
-        <path class="ln" d="M4 32h66"/>
-      </g>
-      <g class="n-near" transform="translate(1175,360) rotate(12) scale(1.05)">
-        <path class="ic" d="M4 4h16l12 12v30H4V4z"/>
-        <path class="ln" d="M20 4v12h12"/>
-        <path class="ln" d="M10 28h16"/>
-      </g>
-      <g class="n-mid" transform="translate(1020,400) rotate(8) scale(.88)">
-        <path class="ic" d="M4 16h18l6 7h26v26H4V16z"/>
-      </g>
-      <g class="n-near" transform="translate(1100,470) rotate(-8) scale(1.22)">
-        <path class="ic" d="M4 20h22l8 9h30v32H4V20z"/>
-        <path class="ln" d="M4 34h64"/>
-      </g>
-      <g class="n-far" transform="translate(1180,500) rotate(24) scale(.58)">
-        <path class="ic" d="M4 4h14l10 10v24H4V4z"/>
-        <path class="ln" d="M18 4v10h10"/>
-      </g>
-      <g class="n-mid" transform="translate(1040,560) rotate(-16) scale(.86)">
+      <g class="n-mid" transform="translate(40,320) rotate(5)">
         <path class="ic" d="M4 4h16l12 12v28H4V4z"/>
         <path class="ln" d="M20 4v12h12"/>
         <path class="ln" d="M10 26h14"/>
       </g>
-      <g class="n-near" transform="translate(1120,620) rotate(10) scale(1.1)">
+      <g class="n-near" transform="translate(172,340) rotate(-6)">
         <path class="ic" d="M4 16h18l6 7h26v26H4V16z"/>
       </g>
-      <g class="n-far" transform="translate(1000,640) rotate(-6) scale(.62)">
-        <path class="ic" d="M4 14h16l6 7h22v22H4V14z"/>
+      <!-- 三级叶子 -->
+      <g class="n-far" transform="translate(8,112) rotate(-14)">
+        <path class="ic" d="M3 3h11l8 8v20H3V3z"/>
+        <path class="ln" d="M14 3v8h8"/>
+      </g>
+      <g class="n-far" transform="translate(108,100) rotate(10)">
+        <path class="ic" d="M3 3h11l8 8v20H3V3z"/>
+        <path class="ln" d="M14 3v8h8"/>
+        <path class="ln" d="M7 18h12"/>
+      </g>
+      <g class="n-mid" transform="translate(224,132) rotate(12)">
+        <path class="ic" d="M3 3h12l9 9v22H3V3z"/>
+        <path class="ln" d="M15 3v9h9"/>
+      </g>
+      <g class="n-far" transform="translate(236,220) rotate(-8)">
+        <path class="ic" d="M3 3h11l8 8v18H3V3z"/>
+      </g>
+      <g class="n-near" transform="translate(8,400) rotate(-10)">
+        <path class="ic" d="M3 4h12l9 9v22H3V4z"/>
+        <path class="ln" d="M15 4v9h9"/>
+        <path class="ln" d="M8 22h12"/>
+      </g>
+      <g class="n-mid" transform="translate(98,396) rotate(8)">
+        <path class="ic" d="M3 4h12l9 9v22H3V4z"/>
+        <path class="ln" d="M15 4v9h9"/>
+      </g>
+      <g class="n-near" transform="translate(222,412) rotate(7)">
+        <path class="ic" d="M3 4h12l9 9v22H3V4z"/>
+        <path class="ln" d="M15 4v9h9"/>
+        <path class="ln" d="M8 22h12M8 28h8"/>
+      </g>
+      <g class="n-mid" transform="translate(132,432) rotate(-5)">
+        <path class="ic" d="M3 3h11l8 8v20H3V3z"/>
+        <path class="ln" d="M14 3v8h8"/>
+      </g>
+      <!-- ========== 右：另一棵导图（结构不同） ========== -->
+      <path class="lk lk-near" d="M1140 230 C1140 230, 1100 200, 1068 178"/>
+      <path class="lk" d="M1140 230 C1140 230, 1180 200, 1212 172"/>
+      <path class="lk lk-near" d="M1140 230 C1140 270, 1110 310, 1088 348"/>
+      <path class="lk" d="M1140 230 C1160 280, 1188 330, 1208 372"/>
+      <path class="lk lk-far" d="M1068 178 C1068 178, 1030 150, 1012 128"/>
+      <path class="lk lk-far" d="M1068 178 C1068 178, 1096 140, 1112 118"/>
+      <path class="lk" d="M1212 172 C1212 172, 1240 148, 1256 128"/>
+      <path class="lk lk-near" d="M1088 348 C1088 348, 1058 390, 1048 428"/>
+      <path class="lk" d="M1088 348 C1088 348, 1120 390, 1142 424"/>
+      <path class="lk lk-far" d="M1208 372 C1208 372, 1236 410, 1250 448"/>
+      <path class="to-t to-t-near" d="M1128 232 C1000 250, 880 280, 780 310"/>
+      <path class="to-t" d="M1090 350 C980 340, 880 330, 770 328"/>
+      <circle class="tip" cx="780" cy="310" r="2.4"/>
+      <circle class="tip" cx="770" cy="328" r="2.2"/>
+      <!-- 右侧根节点 -->
+      <g class="n-near hub" transform="translate(1108,200) rotate(5)">
+        <path class="ic" d="M4 22h22l8 9h34v36H4V22z"/>
+        <path class="ln" d="M4 36h68"/>
+      </g>
+      <g class="n-near" transform="translate(1040,150) rotate(-10)">
+        <path class="ic" d="M4 4h16l12 12v30H4V4z"/>
+        <path class="ln" d="M20 4v12h12"/>
+        <path class="ln" d="M10 28h16"/>
+      </g>
+      <g class="n-mid" transform="translate(1184,144) rotate(8)">
+        <path class="ic" d="M4 16h18l6 7h26v26H4V16z"/>
+      </g>
+      <g class="n-near" transform="translate(1060,320) rotate(4)">
+        <path class="ic" d="M4 4h16l12 12v28H4V4z"/>
+        <path class="ln" d="M20 4v12h12"/>
+        <path class="ln" d="M10 26h14M10 34h10"/>
+      </g>
+      <g class="n-mid" transform="translate(1180,344) rotate(-7)">
+        <path class="ic" d="M4 16h18l6 7h26v26H4V16z"/>
+        <path class="ln" d="M4 28h54"/>
+      </g>
+      <g class="n-far" transform="translate(992,104) rotate(-12)">
+        <path class="ic" d="M3 3h11l8 8v20H3V3z"/>
+        <path class="ln" d="M14 3v8h8"/>
+      </g>
+      <g class="n-far" transform="translate(1092,92) rotate(9)">
+        <path class="ic" d="M3 3h11l8 8v20H3V3z"/>
+      </g>
+      <g class="n-mid" transform="translate(1232,102) rotate(11)">
+        <path class="ic" d="M3 3h12l9 9v20H3V3z"/>
+        <path class="ln" d="M15 3v9h9"/>
+      </g>
+      <g class="n-near" transform="translate(1022,402) rotate(-8)">
+        <path class="ic" d="M3 4h12l9 9v22H3V4z"/>
+        <path class="ln" d="M15 4v9h9"/>
+        <path class="ln" d="M8 22h12"/>
+      </g>
+      <g class="n-mid" transform="translate(1116,400) rotate(6)">
+        <path class="ic" d="M3 4h12l9 9v22H3V4z"/>
+        <path class="ln" d="M15 4v9h9"/>
+      </g>
+      <g class="n-far" transform="translate(1224,424) rotate(10)">
+        <path class="ic" d="M3 3h11l8 8v20H3V3z"/>
+        <path class="ln" d="M14 3v8h8"/>
       </g>
     </svg>
   </div>

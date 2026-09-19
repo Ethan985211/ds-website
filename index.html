@@ -244,7 +244,17 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   color:transparent;
   -webkit-text-fill-color:transparent;
 }
-.hero-sub{font-family:var(--font-cn);font-size:clamp(17px,1.4vw,20px);color:var(--muted);max-width:700px;margin-bottom:40px;line-height:1.9;letter-spacing:.03em;font-weight:400;text-wrap:pretty;text-align:center;position:relative;z-index:2}
+.hero-sub{font-family:var(--font-cn);font-size:clamp(17px,1.4vw,20px);color:rgba(244,247,244,.82);max-width:700px;margin-bottom:40px;line-height:1.95;letter-spacing:.04em;font-weight:400;text-wrap:pretty;text-align:center;position:relative;z-index:2}
+.hero-sub b{
+  font-weight:600;
+  letter-spacing:.08em;
+  background:linear-gradient(100deg,#ffffff 0%,#e7f4ec 35%,#8fb8a6 75%,#6d9c89 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  text-shadow:none;
+}
 .hero-sub b{color:#fff;font-weight:600}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
 .btn{display:inline-flex;align-items:center;gap:11px;padding:17px 44px;border-radius:8px;font-family:var(--font);font-size:17px;font-weight:700;letter-spacing:.06em;cursor:pointer;border:1px solid transparent;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease)}

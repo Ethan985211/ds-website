@@ -595,6 +595,79 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .hero-glow{width:70vw;height:70vw}
   .hero-hint{display:none}
 }
+
+/* ===== 英文排版：放开中文专用 nowrap/宽字距，避免遮挡与怪异换行 ===== */
+html[lang="en"] body{letter-spacing:0}
+html[lang="en"] .hero-sub,
+html[lang="en"] .sec-desc,
+html[lang="en"] .ui-copy .sec-desc{
+  font-family:var(--font-en);
+  white-space:normal;
+  max-width:40em;
+  letter-spacing:.01em;
+  line-height:1.65;
+  text-wrap:pretty;
+}
+html[lang="en"] .hero-sub{font-size:clamp(15px,1.2vw,18px);max-width:46em;margin-left:auto;margin-right:auto}
+html[lang="en"] .sec-desc{justify-self:start;text-align:left;max-width:36em}
+html[lang="en"] .sec-head{align-items:start}
+html[lang="en"] .hero-t-zh{
+  font-family:var(--font-en);
+  letter-spacing:.18em;
+  text-indent:.18em;
+  font-size:clamp(16px,1.8vw,24px);
+  font-weight:500;
+  white-space:nowrap;
+  margin-right:-.18em;
+}
+html[lang="en"] .sec-en,
+html[lang="en"] .ui-copy .sec-en,
+html[lang="en"] .arch-cap{
+  letter-spacing:.16em;
+  font-family:var(--font-en);
+}
+html[lang="en"] .cap-main h3,
+html[lang="en"] .tech-item h3,
+html[lang="en"] .dl-card h3,
+html[lang="en"] .ui-copy h2,
+html[lang="en"] .sec-head h2,
+html[lang="en"] .brand-name,
+html[lang="en"] .nav-links,
+html[lang="en"] .btn,
+html[lang="en"] .hero-note,
+html[lang="en"] .badge-zh,
+html[lang="en"] .foot-zh,
+html[lang="en"] .side-label,
+html[lang="en"] .dl-card li,
+html[lang="en"] .cap-main p,
+html[lang="en"] .tech-item p,
+html[lang="en"] .arch-node p,
+html[lang="en"] .arch-bound,
+html[lang="en"] .ui-note,
+html[lang="en"] .dl-hint,
+html[lang="en"] .app-title{
+  font-family:var(--font-en);
+  letter-spacing:.02em;
+}
+html[lang="en"] .cap-main h3,
+html[lang="en"] .tech-item h3,
+html[lang="en"] .ui-copy h2,
+html[lang="en"] .sec-head h2{letter-spacing:.01em;font-weight:650}
+html[lang="en"] .btn{letter-spacing:.04em;padding-left:36px;padding-right:36px}
+html[lang="en"] .hero-note{letter-spacing:.06em}
+html[lang="en"] .badge-zh{letter-spacing:.04em}
+html[lang="en"] .cap-main p,
+html[lang="en"] .tech-item p,
+html[lang="en"] .dl-card li{line-height:1.65;text-wrap:pretty}
+html[lang="en"] .side-rail{width:170px}
+html[lang="en"] .side-label{letter-spacing:.04em;font-family:var(--font-en)}
+html[lang="en"] .hero-grid{gap:28px}
+html[lang="en"] .sec-head h2 br{display:none}
+html[lang="en"] .ui-copy h2 br{display:none}
+html[lang="en"] .hero-copy,
+html[lang="en"] .ui-copy{max-width:100%}
+html[lang="en"] .dl-card h3{gap:8px}
+html[lang="en"] .dl-card h3 svg{margin-top:2px}
 </style>
 </head>
 <body>
@@ -912,36 +985,36 @@ var I18N = {
   en: {
     'nav.cap':'Features','nav.tech':'Tech','nav.ui':'UI','nav.dl':'Download',
     'badge.zh':'Local-first','hero.zh':'Desktop Agent',
-    'hero.sub1':'A desktop agent powered by local LLMs. Chat, search, memory and tools run on your device',
-    'hero.sub2':'Offline-ready. Your data stays safe',
+    'hero.sub1':'A desktop agent powered by local LLMs — chat, search, memory and tools run on your device',
+    'hero.sub2':'Offline-ready · Data stays safe',
     'hero.dl':'Download for Windows','hero.more':'Explore features',
     'hero.note':'Data-safe · Local LLM · No account','hero.hint':'Scroll to explore',
-    'cap.title':'Six capabilities,<br>all on-device',
-    'cap.desc':'Built for everyday desktop work. Every capability runs locally and can be enabled as needed',
-    'cap1.t':'Local chat','cap1.d':'Talk to a local LLM. Conversations and tasks never leave your device',
-    'cap2.t':'File search','cap2.d':'Find documents on this PC quickly. Supports PDF, Word, Excel and more',
-    'cap3.t':'Long-term memory','cap3.d':'Remembers your preferences and context across sessions',
-    'cap4.t':'Plugins & skills','cap4.d':'Pluggable extensions you can turn on when needed, with clear boundaries',
-    'cap5.t':'Optional network','cap5.d':'Go online only when you choose. Offline by default; nothing is uploaded on its own',
-    'cap6.t':'Safe permissions','cap6.d':'Sensitive actions ask first. Permission status stays clear and reviewable',
-    'tech.title':'Built for local use,<br>safer by design',
-    'tech.desc':'Made for local workflows. Steps stay transparent, and data remains on your device',
-    'tech1.t':'Agentic workflow','tech1.d':'Understands your request, calls tools, and reports results—each step is visible',
-    'tech2.t':'Precise local search','tech2.d':'Blended ranking finds what you need in files stored on this machine',
-    'tech3.t':'Long-term memory','tech3.d':'Recalls your preferences and context so you never start from zero',
-    'tech4.t':'Safe authorization','tech4.d':'Important actions confirm first, with clear permission status',
+    'cap.title':'Six capabilities, all on-device',
+    'cap.desc':'Everyday desktop work, fully local. Enable what you need',
+    'cap1.t':'Local chat','cap1.d':'Talk to a local LLM. Conversations stay on your device',
+    'cap2.t':'File search','cap2.d':'Find local files fast — PDF, Word, Excel and more',
+    'cap3.t':'Long-term memory','cap3.d':'Remembers preferences and context across sessions',
+    'cap4.t':'Plugins & skills','cap4.d':'Turn tools on when needed, with clear boundaries',
+    'cap5.t':'Optional network','cap5.d':'Online only when you choose. Offline by default',
+    'cap6.t':'Safe permissions','cap6.d':'Sensitive actions ask first. Status stays clear',
+    'tech.title':'Built for local use, safer by design',
+    'tech.desc':'Transparent steps. Data remains on your device',
+    'tech1.t':'Agentic workflow','tech1.d':'Understand, act, report — each step stays visible',
+    'tech2.t':'Precise local search','tech2.d':'Blended ranking finds files stored on this PC',
+    'tech3.t':'Long-term memory','tech3.d':'Recalls context so you never start from zero',
+    'tech4.t':'Safe authorization','tech4.d':'Important actions confirm first',
     'arch.you':'You','arch.you.d':'Natural language','arch.core.d':'Reason · Remember · Authorize',
     'arch.local':'Local skills','arch.local.d':'Files · Tools · Local model',
     'arch.tag':'Your device','arch.bound':' · Processed locally · Results stay on device','arch.cloud':'Online features (optional)',
-    'ui.title':'Clean single-window<br>design',
-    'ui.desc':'Sessions on the left, chat and tools in the main pane, status at a glance',
-    'app.sess':'Sessions','app.new':'+ New chat','ui.note':'UI is illustrative; actual app may differ',
-    'dl.title':'Get started','dl.desc':'Install and use right away. No account required. Data stays on your device',
-    'dl1.t':'System','dl1.a':'Windows 10+ 64-bit','dl1.b':'4 GB RAM or more','dl1.c':'About 2 GB disk space',
-    'dl2.t':'Local model','dl2.a':'Install Ollama and choose a local model','dl2.b':'7B+ parameters recommended','dl2.c':'Local inference by default; no network required',
-    'dl3.t':'Privacy','dl3.a':'Data stays on your device, offline by default','dl3.b':'No account or sign-up','dl3.c':'You control network access, enable when needed',
+    'ui.title':'Clean single-window design',
+    'ui.desc':'Sessions on the left, chat and tools in the main pane',
+    'app.sess':'Sessions','app.new':'+ New chat','ui.note':'UI is illustrative; the app may differ',
+    'dl.title':'Get started','dl.desc':'Install and go. No account required',
+    'dl1.t':'System','dl1.a':'Windows 10+ 64-bit','dl1.b':'4 GB RAM or more','dl1.c':'~2 GB disk space',
+    'dl2.t':'Local model','dl2.a':'Install Ollama and pick a local model','dl2.b':'7B+ parameters recommended','dl2.c':'Local inference; network optional',
+    'dl3.t':'Privacy','dl3.a':'Data stays on device, offline by default','dl3.b':'No account required','dl3.c':'You control network access',
     'dl.btn':'Download for Windows','dl.hint':'Installer coming soon','dl.toast':'Installer coming soon',
-    'foot.zh':'Desktop Agent','foot.tag':'Local-first, data-safe',
+    'foot.zh':'Desktop Agent','foot.tag':'Local-first · Data-safe',
     'rail.home':'Home','rail.cap':'Features','rail.tech':'Tech','rail.ui':'UI','rail.dl':'Download'
   }
 };

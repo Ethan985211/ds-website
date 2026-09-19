@@ -46,7 +46,7 @@ button{font-family:inherit}
 .nav-links a:hover{color:var(--green)}
 
 /* ===== Hero(首屏,叠在视频上) ===== */
-.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 0 60px}
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 0 60px;overflow:hidden}
 .hero-grid{display:flex;flex-direction:column;align-items:center;text-align:center}
 .hero-copy{max-width:1000px;width:100%;display:flex;flex-direction:column;align-items:center}
 .hero h1{font-size:clamp(68px,8.6vw,150px);font-weight:800;line-height:1.08;letter-spacing:-.025em;text-wrap:balance;margin-bottom:32px;color:#fff}
@@ -64,6 +64,11 @@ button{font-family:inherit}
 .hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:36px}
 .hero-tags span{font-size:13.5px;color:var(--muted);border:1px solid var(--line);padding:8px 18px;border-radius:999px;background:rgba(255,255,255,.03)}
 .hero-note{margin-top:56px;font-size:16px;color:var(--faint)}
+
+.hero-glow{position:absolute;top:50%;transform:translateY(-50%);width:38vw;height:38vw;border-radius:50%;pointer-events:none;z-index:1;border:1px solid rgba(143,185,166,.14)}
+.hero-glow-l{left:-14vw;background:radial-gradient(circle,rgba(143,185,166,.08) 0%,transparent 70%)}
+.hero-glow-r{right:-14vw;background:radial-gradient(circle,rgba(143,185,166,.08) 0%,transparent 70%)}
+.hero-glow::after{content:"";position:absolute;inset:8%;border-radius:50%;border:1px solid rgba(143,185,166,.07)}
 .hero-hint{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);font-size:12px;color:var(--faint);display:flex;align-items:center;gap:8px;z-index:5}
 .hero-hint svg{width:13px;height:13px;animation:dip 2.2s ease-in-out infinite}
 @keyframes dip{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
@@ -237,7 +242,12 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .app-body{grid-template-columns:1fr}
   .app-side{display:none}
   #scrollbar{left:10px;width:2px}
-  .hero-hint{display:none}
+  
+.hero-glow{position:absolute;top:50%;transform:translateY(-50%);width:38vw;height:38vw;border-radius:50%;pointer-events:none;z-index:1;border:1px solid rgba(143,185,166,.14)}
+.hero-glow-l{left:-14vw;background:radial-gradient(circle,rgba(143,185,166,.08) 0%,transparent 70%)}
+.hero-glow-r{right:-14vw;background:radial-gradient(circle,rgba(143,185,166,.08) 0%,transparent 70%)}
+.hero-glow::after{content:"";position:absolute;inset:8%;border-radius:50%;border:1px solid rgba(143,185,166,.07)}
+.hero-hint{display:none}
 }
 </style>
 </head>
@@ -290,6 +300,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 
     </div>
   </div>
+  <div class="hero-glow hero-glow-l" aria-hidden="true"></div>
+  <div class="hero-glow hero-glow-r" aria-hidden="true"></div>
   <div class="hero-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg>滚动查看,视频随进度播放</div>
 </header>
 

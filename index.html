@@ -358,12 +358,13 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   flex-direction:row;
   align-items:flex-end;
   justify-content:space-between;
+  flex-wrap:wrap;
   gap:24px 48px;
   margin-bottom:56px;
   max-width:none;
 }
 .sec-head h2{font-family:var(--font-cn);font-size:clamp(32px,4vw,48px);font-weight:600;letter-spacing:.06em;line-height:1.35;text-wrap:balance;color:#fff;max-width:14em;margin:0}
-.sec-head-main{min-width:0;flex:0 1 auto}
+.sec-head-main{min-width:0;flex:0 0 auto;max-width:100%}
 .sec-en{
   display:block;
   font-family:var(--font-en);
@@ -372,6 +373,8 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   letter-spacing:.26em;
   text-transform:uppercase;
   margin-bottom:14px;
+  white-space:nowrap;
+  flex-shrink:0;
   background:linear-gradient(90deg,#8fb8a6 0%,#d7ebe0 55%,#8fb8a6 100%);
   -webkit-background-clip:text;
   background-clip:text;

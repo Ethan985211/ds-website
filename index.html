@@ -89,7 +89,9 @@ button{font-family:inherit}
 .app-bubble{max-width:80%;font-size:13.5px;line-height:1.7;padding:11px 15px;border-radius:8px;background:#f0ede5;color:#26303c}
 .app-msg.me{flex-direction:row-reverse}
 .app-msg.me .app-ava{display:none}
-.app-msg.me .app-bubble{background:#24584a;color:#fff}
+.app-msg.me .app-bubble{background:#eef2ff;color:#26303c}
+.app-bubble .who{display:block;font-size:11px;color:#9a8f7a;margin-bottom:3px}
+.app-msg.tool .app-bubble{background:#fef9c3;color:#8a6d1f}
 .app-input{display:flex;align-items:center;gap:12px;background:#f7f3ec;border:1px solid rgba(38,48,60,.1);border-radius:8px;padding:12px 15px;margin-top:auto}
 .app-input span{font-size:13px;color:#9a8f7a}
 .app-input em{width:30px;height:30px;border-radius:6px;background:#24584a;display:grid;place-items:center;font-style:normal;color:#fff;margin-left:auto}
@@ -262,15 +264,24 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
             <div class="app-toolbar"><span class="app-scope">▾ 搜索范围 · 全部位置</span></div>
             <div class="app-msg">
               <div class="app-ava"></div>
-              <div class="app-bubble">把上周整理的《调研报告》找出来,总结要点。</div>
+              <div class="app-bubble">
+                <span class="who">我</span>
+                把上周整理的《调研报告》找出来,总结要点。
+              </div>
             </div>
-            <div class="app-msg me">
+            <div class="app-msg tool">
               <div class="app-ava"></div>
-              <div class="app-bubble">已在本机检索到 3 个匹配,优先展示相关性最高的一份。</div>
+              <div class="app-bubble">
+                <span class="who">工具</span>
+                正在本机检索「调研报告」相关文件…
+              </div>
             </div>
             <div class="app-msg">
               <div class="app-ava"></div>
-              <div class="app-bubble">已定位《调研报告.md》,共 12 页,数据未离开本机。</div>
+              <div class="app-bubble">
+                <span class="who">DS 管家</span>
+                已定位《调研报告.md》,共 12 页。要点已提取,全程未离开本机。
+              </div>
             </div>
             <div class="app-input"><span>输入指令,让 DS 帮你完成…</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4Z"/></svg></em></div>
             <div class="app-perm">
@@ -400,15 +411,24 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
             <div class="app-toolbar"><span class="app-scope">▾ 搜索范围 · 全部位置</span></div>
             <div class="app-msg">
               <div class="app-ava"></div>
-              <div class="app-bubble">把上周整理的《调研报告》找出来,总结要点。</div>
+              <div class="app-bubble">
+                <span class="who">我</span>
+                把上周整理的《调研报告》找出来,总结要点。
+              </div>
             </div>
-            <div class="app-msg me">
+            <div class="app-msg tool">
               <div class="app-ava"></div>
-              <div class="app-bubble">已在本机检索到 3 个匹配,优先展示相关性最高的一份。</div>
+              <div class="app-bubble">
+                <span class="who">工具</span>
+                正在本机检索「调研报告」相关文件…
+              </div>
             </div>
             <div class="app-msg">
               <div class="app-ava"></div>
-              <div class="app-bubble">已定位《调研报告.md》,共 12 页,数据未离开本机。</div>
+              <div class="app-bubble">
+                <span class="who">DS 管家</span>
+                已定位《调研报告.md》,共 12 页。要点已提取,全程未离开本机。
+              </div>
             </div>
             <div class="app-input"><span>输入指令,让 DS 帮你完成…</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4Z"/></svg></em></div>
             <div class="app-perm">

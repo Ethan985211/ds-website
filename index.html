@@ -93,69 +93,57 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   .brand{padding-left:0}
 }
 
-/* ===== 右侧轨道导航（进度 + 章节节点） ===== */
+/* ===== 右侧悬浮导航（无线轨，现代点/条指示） ===== */
 .side-rail{
-  position:fixed;right:28px;top:50%;transform:translateY(-50%);
-  z-index:60;height:min(440px,52vh);width:132px;
+  position:fixed;right:36px;top:50%;transform:translateY(-50%);
+  z-index:60;
+  display:flex;flex-direction:column;align-items:flex-end;gap:18px;
+  width:auto;height:auto;
   pointer-events:none;
 }
-.side-rail-line{
-  position:absolute;right:8px;top:0;bottom:0;width:3px;
-  background:rgba(255,255,255,.16);border-radius:99px;
-  contain:layout style;
-}
-#scrollFill{
-  position:absolute;left:0;top:0;width:100%;height:100%;
-  background:var(--green);border-radius:99px;
-  transform-origin:top center;transform:scaleY(0);will-change:transform;
-}
+.side-rail-line{display:none}
+#scrollFill{display:none}
+#scrollDot{display:none}
 .side-item{
-  position:absolute;right:0;top:calc(var(--p,0) * 100%);
-  transform:translateY(-50%);
-  display:flex;align-items:center;flex-direction:row-reverse;gap:14px;
-  height:28px;pointer-events:auto;
+  position:static;transform:none;
+  display:flex;flex-direction:row-reverse;align-items:center;gap:12px;
+  height:auto;padding:2px 0;
+  pointer-events:auto;
   text-decoration:none;color:inherit;
-  padding-left:8px;
 }
 .side-dot{
-  width:12px;height:12px;border-radius:50%;
-  margin-right:3.5px;
+  width:6px;height:6px;border-radius:99px;
+  margin:0;
   background:rgba(255,255,255,.28);
-  border:1px solid rgba(255,255,255,.2);
-  box-shadow:0 0 0 0 rgba(143,184,166,0);
-  transition:background .2s var(--ease),transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease);
+  border:none;box-shadow:none;
   flex-shrink:0;
+  transition:background .22s var(--ease),height .22s var(--ease),box-shadow .22s var(--ease);
 }
 .side-label{
   font-family:var(--font-cn);
-  font-size:12.5px;font-weight:500;letter-spacing:.14em;
-  color:rgba(244,247,244,.55);
+  font-size:12.5px;font-weight:500;letter-spacing:.1em;
+  color:rgba(244,247,244,.7);
   white-space:nowrap;
   opacity:0;transform:translateX(6px);
-  transition:opacity .2s var(--ease),transform .2s var(--ease),color .2s var(--ease);
+  transition:opacity .22s var(--ease),transform .22s var(--ease),color .22s var(--ease);
   pointer-events:none;
 }
-.side-rail:hover .side-label,
-.side-item.is-active .side-label,
-.side-item:focus-visible .side-label{
-  opacity:1;transform:translateX(0);
+.side-rail:hover .side-label{opacity:1;transform:translateX(0)}
+.side-item:hover .side-label,
+.side-item:focus-visible .side-label,
+.side-item.is-active .side-label{
+  opacity:1;transform:translateX(0);color:#fff;
 }
 .side-item:hover .side-dot,
 .side-item:focus-visible .side-dot{
-  background:var(--green);
-  border-color:var(--green);
-  transform:scale(1.15);
+  background:rgba(255,255,255,.7);
+  height:14px;
 }
 .side-item.is-active .side-dot{
   background:var(--green);
-  border-color:#d7ebe0;
-  transform:scale(1.25);
-  box-shadow:0 0 0 4px rgba(143,184,166,.22);
+  height:22px;
+  box-shadow:0 0 0 4px rgba(143,184,166,.16);
 }
-.side-item.is-active .side-label{
-  color:#fff;opacity:1;transform:translateX(0);
-}
-/* 移动端顶栏恢复链接；隐藏侧轨，顶部细进度条 */
 #topProgress{
   display:none;position:fixed;top:0;left:0;height:2px;width:100%;
   background:var(--green);z-index:70;transform-origin:left center;
@@ -683,7 +671,7 @@ html[lang="en"] .badge-zh{letter-spacing:.04em}
 html[lang="en"] .cap-main p,
 html[lang="en"] .tech-item p,
 html[lang="en"] .dl-card li{line-height:1.65;text-wrap:pretty}
-html[lang="en"] .side-rail{width:170px}
+html[lang="en"] .side-rail{right:36px;width:auto}
 html[lang="en"] .side-label{letter-spacing:.04em;font-family:var(--font-en)}
 html[lang="en"] .hero-grid{gap:28px}
 html[lang="en"] .sec-head h2 br{display:none}

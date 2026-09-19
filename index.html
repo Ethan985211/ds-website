@@ -615,28 +615,20 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   }
 
   var loadedCount = 0;
-  function trackLoad(el){
+  function trackLoad(el, idx){
     if (!el) return;
+    function done(){ sprites[idx] = el; loadedCount++; if (loadedCount >= SUB) spriteReady(); }
     if (el.complete && el.naturalWidth > 0) {
-      sprites.push(el);
-      loadedCount++;
+      done();
     } else {
-      el.addEventListener('load', function(){
-        sprites.push(el);
-        loadedCount++;
-        if (loadedCount >= SUB) spriteReady();
-      });
-      el.addEventListener('error', function(){
-        sprites.push(el);
-        loadedCount++;
-        if (loadedCount >= SUB) spriteReady();
-      });
+      el.addEventListener('load', done);
+      el.addEventListener('error', done);
     }
   }
-  trackLoad(document.getElementById('sprite-0'));
-  trackLoad(document.getElementById('sprite-1'));
-  trackLoad(document.getElementById('sprite-2'));
-  trackLoad(document.getElementById('sprite-3'));
+  trackLoad(document.getElementById('sprite-0'), 0);
+  trackLoad(document.getElementById('sprite-1'), 1);
+  trackLoad(document.getElementById('sprite-2'), 2);
+  trackLoad(document.getElementById('sprite-3'), 3);
   if (loadedCount >= SUB) spriteReady();
 
   var totalScroll = 1;
@@ -644,7 +636,9 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
     totalScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
   }
   function pageProgress(){
-    return Math.min(1, Math.max(0, window.scrollY / totalScroll));
+    var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    totalScroll = max;
+    return Math.min(1, Math.max(0, window.scrollY / max));
   }
 
   function doSeek(){

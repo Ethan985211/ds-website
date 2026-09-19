@@ -23,7 +23,7 @@
   --ease:cubic-bezier(.22,1,.36,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:auto}
 body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.8;-webkit-font-smoothing:antialiased;font-size:16px;word-break:normal;overflow-wrap:break-word;line-break:strict;text-rendering:optimizeLegibility}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit}
@@ -1126,10 +1126,89 @@ applyLang(lang);
   var lastT = -1;
   var targetT = -1;
   var seeking = false;
+  var jumping = false;
+  var jumpRaf = 0;
+  var jumpTimer = 0;
 
   function pageMax(){
     return Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
   }
+
+  function easeInOutCubic(t){
+    return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+  }
+
+  function getSectionTop(id){
+    var el = document.getElementById(id);
+    if (!el) return 0;
+    var top = el.getBoundingClientRect().top + window.scrollY;
+    if (id !== 'top') top = Math.max(0, top - 12);
+    return top;
+  }
+
+  function cancelJump(){
+    if (jumpRaf) cancelAnimationFrame(jumpRaf);
+    jumpRaf = 0;
+    clearTimeout(jumpTimer);
+    jumping = false;
+  }
+
+  /* 导航跳转：更慢的缓动，避免“唰”一下到底 */
+  function smoothScrollTo(targetY){
+    cancelJump();
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      window.scrollTo(0, targetY);
+      update();
+      return;
+    }
+    var startY = window.scrollY;
+    var diff = targetY - startY;
+    if (Math.abs(diff) < 2) return;
+    jumping = true;
+    var dist = Math.abs(diff);
+    var duration = Math.min(1800, Math.max(1100, 900 + dist * 0.4));
+    var start = null;
+    function step(ts){
+      if (start === null) start = ts;
+      var p = Math.min(1, (ts - start) / duration);
+      var e = easeInOutCubic(p);
+      window.scrollTo(0, startY + diff * e);
+      if (p < 1) {
+        jumpRaf = requestAnimationFrame(step);
+        return;
+      }
+      jumpRaf = 0;
+      lastFrame = -1;
+      lastT = -1;
+      targetT = -1;
+      seeking = false;
+      jumping = false;
+      update();
+    }
+    jumpRaf = requestAnimationFrame(step);
+    jumpTimer = setTimeout(function(){
+      if (!jumping) return;
+      if (jumpRaf) cancelAnimationFrame(jumpRaf);
+      jumpRaf = 0;
+      jumping = false;
+      update();
+    }, duration + 240);
+  }
+
+  function bindNavJump(){
+    document.querySelectorAll('.side-item[href^="#"], .nav-links a[href^="#"], a.btn[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var href = a.getAttribute('href');
+        if (!href || href.charAt(0) !== '#') return;
+        var id = href.slice(1);
+        if (!id || !document.getElementById(id)) return;
+        e.preventDefault();
+        smoothScrollTo(getSectionTop(id));
+      });
+    });
+  }
+  bindNavJump();
 
   function layoutRail(){
     var max = pageMax();
@@ -1256,9 +1335,9 @@ applyLang(lang);
   }
 
   function scrubVideo(){
-    if (!heroVid) return;
+    if (!heroVid || jumping) return;
     var t = pageProgress() * vDur;
-    if (Math.abs(t - lastT) < 0.01) return;
+    if (Math.abs(t - lastT) < 0.05) return;
     lastT = t;
     targetT = t;
     if (!seeking) doSeek();
@@ -1267,6 +1346,7 @@ applyLang(lang);
   function update(){
     syncNav();
     syncRail();
+    if (jumping) return; /* 导航平滑滚动期间只更新进度/高亮 */
     var p = pageProgress();
     if (spriteOk) {
       var f = Math.round(p * (FR - 1));

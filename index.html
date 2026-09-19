@@ -87,6 +87,17 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
 }
 .hero-badge i{width:7px;height:7px;border-radius:50%;background:var(--green);font-style:normal;box-shadow:0 0 0 3px rgba(143,184,166,.2)}
+.hero-badge .badge-en{
+  font-family:var(--font-en);
+  font-weight:600;
+  letter-spacing:.12em;
+  color:rgba(244,247,244,.88);
+}
+.hero-badge .badge-zh{
+  font-family:var(--font);
+  letter-spacing:.16em;
+  color:var(--muted);
+}
 .hero h1{
   display:flex;flex-direction:column;align-items:center;
   gap:0;margin:0 0 32px;
@@ -246,6 +257,21 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   margin-bottom:56px;
 }
 .sec-head h2{font-family:var(--font);font-size:clamp(32px,4vw,48px);font-weight:700;letter-spacing:.04em;line-height:1.3;text-wrap:balance;color:#fff;max-width:14em}
+.sec-head-main{min-width:0}
+.sec-en{
+  display:block;
+  font-family:var(--font-en);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  margin-bottom:14px;
+  background:linear-gradient(90deg,#8fb8a6 0%,#d7ebe0 55%,#8fb8a6 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
 .sec-desc{max-width:28em;font-size:16px;color:var(--muted);line-height:1.85;letter-spacing:.02em;text-wrap:pretty;justify-self:end}
 
 /* ===== 能力 ===== */
@@ -264,7 +290,19 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 .tech-item h3{font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:.04em;color:#fff;line-height:1.45}
 .tech-item p{font-family:var(--font);font-size:13.5px;color:var(--muted);line-height:1.85;letter-spacing:.02em;text-wrap:pretty}
 .arch{border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(255,255,255,.05);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);padding:36px 32px}
-.arch-cap{font-size:12px;color:var(--faint);letter-spacing:.08em;margin-bottom:26px}
+.arch-cap{
+  font-family:var(--font-en);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  margin-bottom:26px;
+  background:linear-gradient(90deg,#8fb8a6 0%,#e5f3eb 50%,#8fb8a6 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
 .arch-flow{display:grid;grid-template-columns:1fr 40px 1.2fr 40px 1fr;align-items:stretch}
 .arch-node{border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:18px 16px;background:rgba(255,255,255,.045);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);}
 .arch-node h4{font-size:14.5px;font-weight:700;margin-bottom:4px;color:#fff}
@@ -296,7 +334,8 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 
 /* ===== Footer ===== */
 footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
-.foot-brand{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:800;margin-bottom:12px;color:#fff}
+.foot-brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-en);font-size:15px;font-weight:700;letter-spacing:.08em;margin-bottom:12px;color:#fff}
+.foot-brand .foot-zh{font-family:var(--font);font-weight:500;letter-spacing:.12em;color:var(--muted);font-size:13px}
 .foot-brand i{width:24px;height:24px;border-radius:7px;background-size:cover;background-position:center;background-image:url("assets/ds-logo.png");font-style:normal}
 .foot-line{font-size:13px;color:var(--faint);line-height:1.8}
 .foot-line .dot{margin:0 10px;color:rgba(255,255,255,.2)}
@@ -395,7 +434,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-copy">
-        <div class="hero-badge"><i></i>Desktop System Agent · 本地优先</div>
+        <div class="hero-badge"><i></i><span class="badge-en">Desktop System Agent</span><span aria-hidden="true">·</span><span class="badge-zh">本地优先</span></div>
         <h1>
           <span class="hero-t-group">
             <span class="hero-t-en"><span class="t-word">DS</span><span class="t-dot">.</span><span class="t-word t-agent">Agent</span></span>
@@ -423,7 +462,10 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 <section class="sec" id="capabilities">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>六项能力，<br>皆在本地</h2>
+      <div class="sec-head-main">
+        <span class="sec-en">Capabilities</span>
+        <h2>六项能力，<br>皆在本地</h2>
+      </div>
       <p class="sec-desc">围绕日常桌面工作设计，每项能力都跑在本地，可以按需组合。</p>
     </div>
     <div class="cap-list reveal" data-stagger>
@@ -477,7 +519,10 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 <section class="sec" id="tech" style="border-top:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>为本地而生，<br>可解释可验证</h2>
+      <div class="sec-head-main">
+        <span class="sec-en">Local Stack</span>
+        <h2>为本地而生，<br>可解释可验证</h2>
+      </div>
       <p class="sec-desc">不为堆砌工程规模，只为可解释、可答辩、可验证的本地智能体。</p>
     </div>
     <div class="tech-list reveal" data-stagger>
@@ -487,7 +532,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
       <div class="tech-item"><h3>安全授权门</h3><p>写操作授权确认 + 审计留痕，权限模型清晰，不越权、可反查。</p></div>
     </div>
     <div class="arch reveal">
-      <div class="arch-cap">LOCAL BOUNDARY</div>
+      <div class="arch-cap">Local Boundary</div>
       <div class="arch-flow">
         <div class="arch-node"><h4>你</h4><p>自然语言指令</p></div>
         <div class="arch-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
@@ -507,7 +552,10 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 <section class="sec" id="ui">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>克制的<br>单窗口设计</h2>
+      <div class="sec-head-main">
+        <span class="sec-en">Interface</span>
+        <h2>克制的<br>单窗口设计</h2>
+      </div>
       <p class="sec-desc">侧边栏管理会话，主区对话与工具调用，权限状态一目了然。</p>
     </div>
     <div class="ui-wrap reveal">
@@ -565,7 +613,10 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 <section class="sec" id="download" style="border-top:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>开始使用</h2>
+      <div class="sec-head-main">
+        <span class="sec-en">Get Started</span>
+        <h2>开始使用</h2>
+      </div>
       <p class="sec-desc">纯本地运行，无需注册账号，数据不出机。</p>
     </div>
     <div class="dl-grid reveal" data-stagger>
@@ -607,7 +658,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 <!-- ===== Footer ===== -->
 <footer>
   <div class="wrap">
-    <div class="foot-brand"><i></i>DS · Desktop System Agent</div>
+    <div class="foot-brand"><i></i>DS · Desktop System Agent<span class="foot-zh">桌面智能体</span></div>
     <div class="foot-line">desktopsystem.cc.cd<span class="dot">·</span>© 2026 DS<span class="dot">·</span>本地优先，数据不出机</div>
   </div>
 </footer>

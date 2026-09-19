@@ -245,12 +245,19 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   -webkit-text-fill-color:transparent;
 }
 .hero-sub{
-  font-family:"STCaiyun","华文彩云","STZongyi","华文综艺","STHupo","华文琥珀","STXingkai","华文行楷",var(--font-cn);
-  font-size:clamp(18px,1.5vw,22px);
-  color:rgba(244,247,244,.9);
-  max-width:720px;margin-bottom:40px;line-height:1.85;
-  letter-spacing:.1em;font-weight:400;
+  font-family:var(--font-cn);
+  font-size:clamp(17px,1.4vw,20px);
+  color:var(--muted);
+  max-width:700px;margin-bottom:40px;line-height:1.9;
+  letter-spacing:.03em;font-weight:400;
   text-wrap:pretty;text-align:center;position:relative;z-index:2;
+}
+.hero-sub b{
+  font-weight:600;
+  letter-spacing:.04em;
+  color:#fff;
+  background:none;
+  -webkit-text-fill-color:#fff;
 }
 .hero-sub b{
   font-weight:400;

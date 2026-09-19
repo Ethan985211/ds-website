@@ -71,49 +71,30 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 }
 .nav-links a:hover::after{transform:scaleX(1)}
 
-/* ===== Hero(首屏:居中主体 + 两侧微文案拉开空间) ===== */
-.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px 0 88px;overflow:hidden}
+/* ===== Hero(首屏:干净居中，不堆侧栏装饰) ===== */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:132px 0 96px;overflow:hidden}
 .hero-grid{display:flex;flex-direction:column;align-items:center;text-align:center}
-.hero-copy{max-width:1080px;width:100%;display:flex;flex-direction:column;align-items:center}
-.hero h1{font-size:clamp(44px,6.2vw,92px);font-weight:800;line-height:1.08;letter-spacing:-.03em;text-wrap:balance;margin-bottom:28px;color:#fff}
+.hero-copy{max-width:920px;width:100%;display:flex;flex-direction:column;align-items:center}
+.hero h1{font-size:clamp(52px,7.4vw,112px);font-weight:800;line-height:1.06;letter-spacing:-.03em;text-wrap:balance;margin-bottom:26px;color:#fff}
 .hero h1 .hl{color:var(--green)}
-.hero-sub{font-size:19px;color:var(--muted);max-width:640px;margin-bottom:44px;line-height:1.8;text-wrap:pretty;text-align:center}
+.hero-sub{font-size:18px;color:var(--muted);max-width:560px;margin-bottom:40px;line-height:1.75;text-wrap:pretty;text-align:center}
 .hero-sub b{color:#fff;font-weight:600}
-.hero-actions{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
-.btn{display:inline-flex;align-items:center;gap:12px;padding:18px 46px;border-radius:8px;font-size:17px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease)}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 40px;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease)}
 .btn svg{width:16px;height:16px}
 .btn-primary{background:var(--green);color:#0d1f18}
 .btn-primary:hover{background:var(--green-deep);color:#0d1f18;transform:translateY(-1px)}
-.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.45)}
 .btn-ghost:hover{border-color:var(--green);color:var(--green)}
 
-.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 14px;margin-top:36px;max-width:920px;width:100%}
-.hero-tags span{font-size:14px;color:var(--muted);border:1px solid var(--line);padding:10px 20px;border-radius:999px;background:rgba(255,255,255,.04);white-space:nowrap}
-.hero-note{margin-top:36px;font-size:15px;color:var(--faint);letter-spacing:.04em;text-align:center}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:28px;max-width:640px}
+.hero-tags span{font-size:13px;color:var(--muted);border:1px solid var(--line);padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.03);white-space:nowrap}
+.hero-note{margin-top:48px;font-size:14px;color:var(--faint);letter-spacing:.03em;text-align:center}
 
-/* 两侧对称微文案:填充空白，不抢主视觉 */
-.hero-side{
-  position:absolute;top:50%;transform:translateY(-50%);z-index:3;
-  display:flex;flex-direction:column;gap:24px;
-  pointer-events:none;max-width:150px;
-}
-.hero-side-l{left:max(28px, calc(50% - 620px));align-items:flex-start;text-align:left}
-.hero-side-r{right:max(28px, calc(50% - 620px));align-items:flex-end;text-align:right}
-.hero-side-item{font-size:11px;color:rgba(244,247,244,.42);letter-spacing:.08em;font-variant-numeric:tabular-nums}
-.hero-side-item span{
-  display:block;margin-top:6px;
-  font-size:13.5px;color:rgba(244,247,244,.72);
-  letter-spacing:.04em;font-weight:500;
-}
-.hero-side-l::before,.hero-side-r::before{
-  content:"";width:28px;height:1px;background:rgba(143,184,166,.45);margin-bottom:2px;
-}
-.hero-side-r::before{align-self:flex-end}
-
-.hero-glow{position:absolute;top:48%;transform:translateY(-50%);width:36vw;height:36vw;border-radius:50%;pointer-events:none;z-index:0;border:1px solid rgba(143,185,166,.14)}
-.hero-glow-l{left:-12vw;background:radial-gradient(circle,rgba(143,185,166,.08) 0%,transparent 70%)}
-.hero-glow-r{right:-10vw;background:radial-gradient(circle,rgba(143,185,166,.08) 0%,transparent 70%)}
-.hero-glow::after{content:"";position:absolute;inset:8%;border-radius:50%;border:1px solid rgba(143,185,166,.07)}
+.hero-glow{position:absolute;top:50%;transform:translateY(-50%);width:34vw;height:34vw;border-radius:50%;pointer-events:none;z-index:0;border:1px solid rgba(143,185,166,.12)}
+.hero-glow-l{left:-13vw;background:radial-gradient(circle,rgba(143,185,166,.07) 0%,transparent 70%)}
+.hero-glow-r{right:-11vw;background:radial-gradient(circle,rgba(143,185,166,.07) 0%,transparent 70%)}
+.hero-glow::after{content:"";position:absolute;inset:8%;border-radius:50%;border:1px solid rgba(143,185,166,.06)}
 .hero .wrap,.hero .hero-grid,.hero .hero-copy{position:relative;z-index:2}
 .hero-hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-size:12.5px;color:var(--faint);display:flex;align-items:center;gap:8px;z-index:5;white-space:nowrap}
 .hero-hint svg{width:13px;height:13px;animation:dip 2.2s ease-in-out infinite}
@@ -280,7 +261,6 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .wrap{padding:0 28px}
   .hero-sub{font-size:17px;max-width:100%}
   .hero h1{font-size:clamp(40px,8vw,72px)}
-  .hero-side{display:none}
 }
 @media (max-width:760px){
   .cap-list{grid-template-columns:1fr}
@@ -303,7 +283,6 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .hero-actions{gap:12px}
   .hero-tags{gap:8px;max-width:100%}
   .hero-tags span{font-size:12.5px;padding:7px 12px}
-  .hero-side{display:none}
   .sec{padding:80px 0}
   .tech-list{grid-template-columns:1fr}
   .app-body{grid-template-columns:1fr}
@@ -364,16 +343,6 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
       </div>
     </div>
   </div>
-  <aside class="hero-side hero-side-l" aria-hidden="true">
-    <div class="hero-side-item">01<span>本地推理</span></div>
-    <div class="hero-side-item">02<span>数据不出机</span></div>
-    <div class="hero-side-item">03<span>默认离线</span></div>
-  </aside>
-  <aside class="hero-side hero-side-r" aria-hidden="true">
-    <div class="hero-side-item">04<span>ReAct 循环</span></div>
-    <div class="hero-side-item">05<span>四层记忆</span></div>
-    <div class="hero-side-item">06<span>权限门控</span></div>
-  </aside>
   <div class="hero-glow hero-glow-l" aria-hidden="true"></div>
   <div class="hero-glow hero-glow-r" aria-hidden="true"></div>
   <div class="hero-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg>滚动查看，视频随进度播放</div>

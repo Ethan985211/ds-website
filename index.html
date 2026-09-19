@@ -72,10 +72,16 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   transition:transform .22s var(--ease);
 }
 .nav-links a:hover::after{transform:scaleX(1)}
-/* 桌面：导航并入左侧轨道，顶栏只留品牌 */
+/* 桌面：导航并入左侧轨道，顶栏只留品牌，Logo 贴左侧轴线 */
 @media (min-width:941px){
-  .nav-inner{justify-content:flex-start}
+  .nav-inner{
+    max-width:none;
+    margin:0;
+    padding:20px 32px 20px 28px;
+    justify-content:flex-start;
+  }
   .nav-links{display:none}
+  .brand{padding-left:0}
 }
 
 /* ===== 左侧轨道导航（进度 + 章节节点） ===== */

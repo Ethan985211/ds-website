@@ -275,36 +275,30 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 
 .hero-note{margin-top:40px;font-family:var(--font-cn);font-size:14px;font-weight:400;color:var(--faint);letter-spacing:.16em;text-align:center;position:relative;z-index:2}
 
-/* 两侧：本地索引点阵（向中间渐隐，呼应本地检索） */
+/* 两侧：本地边界弧 + 权限缺口（贴合 Local Boundary / 安全授权） */
 .hero-bound{
   position:absolute;top:50%;transform:translateY(-50%);
-  width:min(36vw,420px);height:min(72vh,640px);
+  width:min(44vw,520px);height:min(44vw,520px);
   pointer-events:none;z-index:0;
-  overflow:hidden;
 }
-.hero-bound-l{
-  left:0;
-  background-image:radial-gradient(circle,rgba(143,184,166,.28) 1px,transparent 1.2px);
-  background-size:18px 18px;
-  background-position:0 0;
-  -webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.45) 42%,transparent 78%);
-  mask-image:linear-gradient(90deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.45) 42%,transparent 78%);
+.hero-bound-l{left:min(-12vw,-64px)}
+.hero-bound-r{right:min(-10vw,-56px);transform:translateY(-50%) scaleX(-1)}
+.hero-bound svg{width:100%;height:100%;display:block;overflow:visible}
+.hero-bound .arc-glow{
+  fill:none;stroke:rgba(143,184,166,.08);stroke-width:16;
+  filter:blur(12px);
+  stroke-dasharray:380 220 160;
 }
-.hero-bound-r{
-  right:0;
-  background-image:radial-gradient(circle,rgba(143,184,166,.28) 1px,transparent 1.2px);
-  background-size:18px 18px;
-  background-position:6px 9px;
-  -webkit-mask-image:linear-gradient(270deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.45) 42%,transparent 78%);
-  mask-image:linear-gradient(270deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.45) 42%,transparent 78%);
+.hero-bound .arc-main{
+  fill:none;stroke:rgba(143,184,166,.2);stroke-width:1.2;
+  stroke-linecap:round;
+  stroke-dasharray:700 40 95 26 250 36;
 }
-.hero-bound::after{
-  content:"";position:absolute;inset:0;
-  background:radial-gradient(ellipse 80% 60% at 0% 50%,rgba(13,31,24,.35),transparent 70%);
+.hero-bound .arc-soft{
+  fill:none;stroke:rgba(143,184,166,.09);stroke-width:1;
+  stroke-dasharray:10 14;
 }
-.hero-bound-r::after{
-  background:radial-gradient(ellipse 80% 60% at 100% 50%,rgba(13,31,24,.35),transparent 70%);
-}
+.hero-bound .gate{fill:rgba(143,184,166,.4)}
 .hero .wrap,.hero .hero-grid,.hero .hero-copy{position:relative;z-index:2}
 .hero-hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-size:12.5px;color:var(--faint);display:flex;align-items:center;gap:8px;z-index:5;white-space:nowrap}
 .hero-hint svg{width:13px;height:13px;animation:dip 2.2s ease-in-out infinite}
@@ -632,7 +626,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .tech-list{grid-template-columns:1fr}
   .app-body{grid-template-columns:1fr}
   .app-side{display:none}
-  .hero-bound{width:28vw;height:50vh;opacity:.7}
+  .hero-bound{width:56vw;height:56vw;opacity:.7}
   .hero-hint{display:none}
 }
 
@@ -795,8 +789,24 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
       </div>
     </div>
   </div>
-  <div class="hero-bound hero-bound-l" aria-hidden="true"></div>
-  <div class="hero-bound hero-bound-r" aria-hidden="true"></div>
+  <div class="hero-bound hero-bound-l" aria-hidden="true">
+    <svg viewBox="0 0 400 400" fill="none">
+      <circle class="arc-glow" cx="200" cy="200" r="170"/>
+      <circle class="arc-main" cx="200" cy="200" r="170"/>
+      <circle class="arc-soft" cx="200" cy="200" r="150"/>
+      <circle class="gate" cx="322" cy="112" r="3.4"/>
+      <circle class="gate" cx="336" cy="138" r="2.2"/>
+    </svg>
+  </div>
+  <div class="hero-bound hero-bound-r" aria-hidden="true">
+    <svg viewBox="0 0 400 400" fill="none">
+      <circle class="arc-glow" cx="200" cy="200" r="170"/>
+      <circle class="arc-main" cx="200" cy="200" r="170"/>
+      <circle class="arc-soft" cx="200" cy="200" r="150"/>
+      <circle class="gate" cx="322" cy="112" r="3.4"/>
+      <circle class="gate" cx="336" cy="138" r="2.2"/>
+    </svg>
+  </div>
   <div class="hero-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg><span data-i18n="hero.hint">滚动查看</span></div>
 </header>
 

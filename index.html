@@ -690,7 +690,13 @@ html[lang="en"] .arch-node p,
 html[lang="en"] .arch-bound,
 html[lang="en"] .ui-note,
 html[lang="en"] .dl-hint,
-html[lang="en"] .app-title{
+html[lang="en"] .app-title,
+html[lang="en"] .app-sess-item,
+html[lang="en"] .app-side-foot i,
+html[lang="en"] .app-toolbar,
+html[lang="en"] .app-bubble,
+html[lang="en"] .app-input span,
+html[lang="en"] .app-perm{
   font-family:var(--font-en);
   letter-spacing:.02em;
 }
@@ -879,36 +885,36 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
               <span class="app-sess-title" data-i18n="app.sess">会话</span>
               <span class="app-new" data-i18n="app.new">+ 新对话</span>
             </div>
-            <div class="app-sess-item on">调研报告总结</div>
-            <div class="app-sess-item">本周文件整理</div>
-            <div class="app-sess-item">合同条款检索</div>
-            <div class="app-sess-item">读书笔记</div>
+            <div class="app-sess-item on" data-i18n="app.s1">调研报告总结</div>
+            <div class="app-sess-item" data-i18n="app.s2">本周文件整理</div>
+            <div class="app-sess-item" data-i18n="app.s3">合同条款检索</div>
+            <div class="app-sess-item" data-i18n="app.s4">读书笔记</div>
             <div class="app-side-foot">
-              <i>插件</i><i>记忆</i><i>整理</i><i>关于</i>
+              <i data-i18n="app.f1">插件</i><i data-i18n="app.f2">记忆</i><i data-i18n="app.f3">整理</i><i data-i18n="app.f4">关于</i>
             </div>
           </div>
           <div class="app-main">
-            <div class="app-toolbar"><span class="app-scope">▾ 搜索范围 · 全部位置</span></div>
+            <div class="app-toolbar"><span class="app-scope" data-i18n="app.scope">▾ 搜索范围 · 全部位置</span></div>
             <div class="app-msg me">
               <div class="app-ava"></div>
-              <div class="app-bubble">帮我找一下本地硬盘里关于「机器学习」的文档</div>
+              <div class="app-bubble" data-i18n="app.m1">帮我找一下本地硬盘里关于「机器学习」的文档</div>
             </div>
             <div class="app-msg">
               <div class="app-ava"></div>
-              <div class="app-bubble">已在本机检索到 5 个相关文档，优先展示最新的 3 份</div>
+              <div class="app-bubble" data-i18n="app.m2">已在本机检索到 5 个相关文档，优先展示最新的 3 份</div>
             </div>
             <div class="app-msg me">
               <div class="app-ava"></div>
-              <div class="app-bubble">把这些结果总结一下</div>
+              <div class="app-bubble" data-i18n="app.m3">把这些结果总结一下</div>
             </div>
             <div class="app-msg">
               <div class="app-ava"></div>
-              <div class="app-bubble">最新一份是《机器学习笔记.md》，共 18 页，涵盖线性回归与神经网络两章全程未离开本机</div>
+              <div class="app-bubble" data-i18n="app.m4">最新一份是《机器学习笔记.md》，共 18 页，涵盖线性回归与神经网络两章全程未离开本机</div>
             </div>
-            <div class="app-input"><span>输入指令，让 DS 帮你完成…</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4Z"/></svg></em></div>
+            <div class="app-input"><span data-i18n="app.ph">输入指令，让 DS 帮你完成…</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4Z"/></svg></em></div>
             <div class="app-perm">
-              <span class="app-net"><i class="pd off"></i>联网 关</span>
-              <span class="app-perm-level"><i class="pd"></i>权限 · 询问 ▾</span>
+              <span class="app-net"><i class="pd off"></i><span data-i18n="app.net">联网 关</span></span>
+              <span class="app-perm-level"><i class="pd"></i><span data-i18n="app.perm">权限 · 询问 ▾</span></span>
             </div>
           </div>
         </div>
@@ -1014,7 +1020,17 @@ var I18N = {
     'arch.tag':'你的设备','arch.bound':' · 数据本地处理 · 结果留在本机','arch.cloud':'联网功能（可选）',
     'ui.title':'简洁的<br>单窗口设计',
     'ui.desc':'左侧管理会话，主区完成对话与工具调用，状态一目了然',
-    'app.sess':'会话','app.new':'+ 新对话','ui.note':'界面为示意，以实际应用为准',
+    'app.sess':'会话','app.new':'+ 新对话',
+    'app.s1':'调研报告总结','app.s2':'本周文件整理','app.s3':'合同条款检索','app.s4':'读书笔记',
+    'app.f1':'插件','app.f2':'记忆','app.f3':'整理','app.f4':'关于',
+    'app.scope':'▾ 搜索范围 · 全部位置',
+    'app.m1':'帮我找一下本地硬盘里关于「机器学习」的文档',
+    'app.m2':'已在本机检索到 5 个相关文档，优先展示最新的 3 份',
+    'app.m3':'把这些结果总结一下',
+    'app.m4':'最新一份是《机器学习笔记.md》，共 18 页，涵盖线性回归与神经网络两章全程未离开本机',
+    'app.ph':'输入指令，让 DS 帮你完成…',
+    'app.net':'联网 关','app.perm':'权限 · 询问 ▾',
+    'ui.note':'界面为示意，以实际应用为准',
     'dl.title':'开始使用','dl.desc':'安装即可使用，无需注册账号，数据保存在本机',
     'dl1.t':'系统要求','dl1.a':'Windows 10+ 64 位','dl1.b':'4 GB 内存以上','dl1.c':'约 2 GB 磁盘空间',
     'dl2.t':'本地模型','dl2.a':'安装 Ollama 并选择一个本地大模型','dl2.b':'推荐 7B 及以上参数模型','dl2.c':'全程本地推理，默认无需联网',
@@ -1049,7 +1065,17 @@ var I18N = {
     'arch.tag':'Your device','arch.bound':' · Processed locally · Results stay on device','arch.cloud':'Online features (optional)',
     'ui.title':'Clean single-window<br>design',
     'ui.desc':'Sessions on the left, chat and tools in the main pane',
-    'app.sess':'Sessions','app.new':'+ New chat','ui.note':'UI is illustrative; the app may differ',
+    'app.sess':'Sessions','app.new':'+ New chat',
+    'app.s1':'Research summary','app.s2':'Weekly file cleanup','app.s3':'Contract clause search','app.s4':'Reading notes',
+    'app.f1':'Plugins','app.f2':'Memory','app.f3':'Tidy','app.f4':'About',
+    'app.scope':'▾ Search scope · All locations',
+    'app.m1':'Find local documents about “machine learning”',
+    'app.m2':'Found 5 related files on this device. Showing the latest 3',
+    'app.m3':'Summarize these results',
+    'app.m4':'Latest: “ML Notes.md”, 18 pages covering linear regression and neural nets. Nothing left this device',
+    'app.ph':'Type a command for DS…',
+    'app.net':'Network off','app.perm':'Permission · Ask ▾',
+    'ui.note':'UI is illustrative; the app may differ',
     'dl.title':'Get started','dl.desc':'Install and go. No account required',
     'dl1.t':'System','dl1.a':'Windows 10+ 64-bit','dl1.b':'4 GB RAM or more','dl1.c':'~2 GB disk space',
     'dl2.t':'Local model','dl2.a':'Install Ollama and pick a local model','dl2.b':'7B+ parameters recommended','dl2.c':'Local inference; network optional',

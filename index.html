@@ -72,6 +72,80 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   transition:transform .22s var(--ease);
 }
 .nav-links a:hover::after{transform:scaleX(1)}
+/* 桌面：导航并入左侧轨道，顶栏只留品牌 */
+@media (min-width:941px){
+  .nav-inner{justify-content:flex-start}
+  .nav-links{display:none}
+}
+
+/* ===== 左侧轨道导航（进度 + 章节节点） ===== */
+.side-rail{
+  position:fixed;left:28px;top:50%;transform:translateY(-50%);
+  z-index:60;height:min(440px,52vh);width:132px;
+  pointer-events:none;
+}
+.side-rail-line{
+  position:absolute;left:8px;top:0;bottom:0;width:3px;
+  background:rgba(255,255,255,.16);border-radius:99px;
+  contain:layout style;
+}
+#scrollFill{
+  position:absolute;left:0;top:0;width:100%;height:100%;
+  background:var(--green);border-radius:99px;
+  transform-origin:top center;transform:scaleY(0);will-change:transform;
+}
+.side-item{
+  position:absolute;left:0;top:calc(var(--p,0) * 100%);
+  transform:translateY(-50%);
+  display:flex;align-items:center;gap:14px;
+  height:28px;pointer-events:auto;
+  text-decoration:none;color:inherit;
+  padding-right:8px;
+}
+.side-dot{
+  width:12px;height:12px;border-radius:50%;
+  margin-left:2.5px; /* 与 3px 轨道中心对齐 */
+  background:rgba(255,255,255,.28);
+  border:1px solid rgba(255,255,255,.2);
+  box-shadow:0 0 0 0 rgba(143,184,166,0);
+  transition:background .2s var(--ease),transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease);
+  flex-shrink:0;
+}
+.side-label{
+  font-family:var(--font-cn);
+  font-size:12.5px;font-weight:500;letter-spacing:.14em;
+  color:rgba(244,247,244,.55);
+  white-space:nowrap;
+  opacity:0;transform:translateX(-6px);
+  transition:opacity .2s var(--ease),transform .2s var(--ease),color .2s var(--ease);
+  pointer-events:none;
+}
+.side-rail:hover .side-label,
+.side-item.is-active .side-label,
+.side-item:focus-visible .side-label{
+  opacity:1;transform:translateX(0);
+}
+.side-item:hover .side-dot,
+.side-item:focus-visible .side-dot{
+  background:var(--green);
+  border-color:var(--green);
+  transform:scale(1.15);
+}
+.side-item.is-active .side-dot{
+  background:var(--green);
+  border-color:#d7ebe0;
+  transform:scale(1.25);
+  box-shadow:0 0 0 4px rgba(143,184,166,.22);
+}
+.side-item.is-active .side-label{
+  color:#fff;opacity:1;transform:translateX(0);
+}
+/* 移动端顶栏恢复链接；隐藏侧轨，顶部细进度条 */
+#topProgress{
+  display:none;position:fixed;top:0;left:0;height:2px;width:100%;
+  background:var(--green);z-index:70;transform-origin:left center;
+  transform:scaleX(0);will-change:transform;
+}
 
 /* ===== Hero(首屏:居中主文案 + 能力卡片横向铺开) ===== */
 .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 0 140px;overflow:hidden}
@@ -345,11 +419,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 .foot-line{font-size:13px;color:var(--faint);line-height:1.8}
 .foot-line .dot{margin:0 10px;color:rgba(255,255,255,.2)}
 
-/* ===== 滚动进度条 ===== */
-#scrollbar{position:fixed;left:22px;top:50%;transform:translateY(-50%);width:3px;height:34vh;background:rgba(255,255,255,.16);border-radius:99px;z-index:60;pointer-events:none;contain:layout style}
-#scrollFill{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--green);border-radius:99px;transform-origin:top center;transform:scaleY(0);will-change:transform}
-#scrollDot{position:absolute;left:50%;top:0;width:17px;height:17px;margin-left:-8.5px;margin-top:-8.5px;background:var(--green);border-radius:50%;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.4);will-change:transform;transform:translate3d(0,0,0)}
-#scrollDot i{width:9px;height:9px;border-radius:3px;background:url("assets/ds-logo.png") center/cover}
+/* ===== 滚动进度条（旧节点样式清理，逻辑并入 side-rail） ===== */
+#scrollDot{display:none}
 
 /* ===== 滚动揭示(克制) ===== */
 .reveal{opacity:0;transform:translate3d(0,24px,0);transition:opacity .7s var(--ease),transform .7s var(--ease);will-change:opacity,transform}
@@ -370,7 +441,10 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .tech-list{grid-template-columns:1fr 1fr}
   .brand-name em{display:none}
   .nav-links{gap:24px;font-size:14.5px}
-  .nav-inner{padding:16px 48px}
+  .nav-inner{padding:16px 48px;justify-content:space-between}
+  .nav-links{display:flex}
+  .side-rail{display:none}
+  #topProgress{display:block}
   .wrap{padding:0 48px}
   .hero .wrap{padding:0 48px}
   .hero-sub{font-size:17px;max-width:100%}
@@ -392,6 +466,9 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .brand-name{font-size:16px}
   .nav-links{gap:16px;font-size:13.5px}
   .nav-links a:last-child{display:none}
+  .nav-inner{justify-content:space-between}
+  .side-rail{display:none}
+  #topProgress{display:block}
   .wrap{padding:0 20px}
   .hero{padding:84px 0 108px}
   .hero .wrap{padding:0 20px}
@@ -404,7 +481,6 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .tech-list{grid-template-columns:1fr}
   .app-body{grid-template-columns:1fr}
   .app-side{display:none}
-  #scrollbar{left:10px;width:2px}
   .hero-glow{width:70vw;height:70vw}
   .hero-hint{display:none}
 }
@@ -668,11 +744,18 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   </div>
 </footer>
 
-<!-- ===== 滚动进度条 ===== -->
-<div id="scrollbar" role="progressbar" aria-label="页面进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-  <div id="scrollFill"></div>
-  <div id="scrollDot"><i></i></div>
-</div>
+<!-- ===== 左侧轨道导航：进度 + 章节节点 ===== -->
+<nav class="side-rail" id="sideRail" aria-label="章节导航">
+  <div class="side-rail-line" id="scrollbar" role="progressbar" aria-label="页面进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div id="scrollFill"></div>
+  </div>
+  <a class="side-item" href="#top" data-target="top"><span class="side-dot"></span><span class="side-label">首页</span></a>
+  <a class="side-item" href="#capabilities" data-target="capabilities"><span class="side-dot"></span><span class="side-label">能力</span></a>
+  <a class="side-item" href="#tech" data-target="tech"><span class="side-dot"></span><span class="side-label">技术</span></a>
+  <a class="side-item" href="#ui" data-target="ui"><span class="side-dot"></span><span class="side-label">界面</span></a>
+  <a class="side-item" href="#download" data-target="download"><span class="side-dot"></span><span class="side-label">下载</span></a>
+</nav>
+<div id="topProgress" aria-hidden="true"></div>
 
 <script>
 (function(){
@@ -723,8 +806,10 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   }
 
   var fill = document.getElementById('scrollFill');
-  var dot = document.getElementById('scrollDot');
   var bar = document.getElementById('scrollbar');
+  var topProgress = document.getElementById('topProgress');
+  var sideItems = Array.prototype.slice.call(document.querySelectorAll('.side-item'));
+  var sectionIds = ['top','capabilities','tech','ui','download'];
   var heroVid = document.getElementById('heroVid');
   var canvas = document.getElementById('heroCanvas');
   var ctx = canvas ? canvas.getContext('2d') : null;
@@ -736,10 +821,42 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   var lastT = -1;
   var targetT = -1;
   var seeking = false;
-  var trackH = 0;
 
-  function measure(){
-    trackH = bar ? bar.offsetHeight : 0;
+  function pageMax(){
+    return Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  }
+
+  function layoutRail(){
+    var max = pageMax();
+    sideItems.forEach(function(item){
+      var id = item.getAttribute('data-target');
+      var el = document.getElementById(id);
+      if (!el) return;
+      var top = el.getBoundingClientRect().top + window.scrollY;
+      var p = id === 'top' ? 0 : Math.min(1, Math.max(0, top / max));
+      /* 稍微上提一点，避免末节点贴底 */
+      if (id === 'download') p = Math.min(1, p * 0.92);
+      item.style.setProperty('--p', p);
+    });
+  }
+
+  function syncRail(){
+    var p = Math.min(1, Math.max(0, window.scrollY / pageMax()));
+    if (fill) fill.style.transform = 'scaleY(' + p + ')';
+    if (topProgress) topProgress.style.transform = 'scaleX(' + p + ')';
+    if (bar) bar.setAttribute('aria-valuenow', Math.round(p * 100));
+
+    var probe = window.scrollY + window.innerHeight * 0.32;
+    var current = 'top';
+    sectionIds.forEach(function(id){
+      var el = document.getElementById(id);
+      if (!el) return;
+      var top = el.getBoundingClientRect().top + window.scrollY;
+      if (top <= probe) current = id;
+    });
+    sideItems.forEach(function(item){
+      item.classList.toggle('is-active', item.getAttribute('data-target') === current);
+    });
   }
 
   if (heroVid) {
@@ -844,18 +961,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 
   function update(){
     syncNav();
+    syncRail();
     var p = pageProgress();
-    if (fill) fill.style.transform = 'scaleY(' + p + ')';
-    if (dot) {
-      var y = trackH > 0 ? (p * trackH) : (p * 100);
-      if (trackH > 0) {
-        dot.style.transform = 'translate3d(0,' + y + 'px,0)';
-      } else {
-        dot.style.top = (p * 100) + '%';
-        dot.style.transform = 'translate3d(0,0,0)';
-      }
-    }
-    if (bar) bar.setAttribute('aria-valuenow', Math.round(p * 100));
     if (spriteOk) {
       var f = Math.round(p * (FR - 1));
       if (f !== lastFrame) { lastFrame = f; drawFrame(f); }
@@ -874,10 +981,17 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
     });
   }
 
+  function onResize(){
+    measureTotal();
+    layoutRail();
+    resizeCanvas();
+    update();
+  }
+
   window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', function(){ measure(); measureTotal(); resizeCanvas(); onScroll(); }, {passive:true});
-  window.addEventListener('load', function(){ measure(); measureTotal(); resizeCanvas(); update(); });
-  measure();
+  window.addEventListener('resize', onResize, {passive:true});
+  window.addEventListener('load', function(){ onResize(); });
+  layoutRail();
   update();
 })();
 </script>

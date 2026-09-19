@@ -622,8 +622,31 @@ html[lang="en"] .sec-desc{
   line-height:1.6;
   text-align:right;
   align-self:flex-end;
+  flex:1 1 240px;
+  min-width:220px;
 }
-html[lang="en"] .sec-head{align-items:flex-end;gap:20px 40px;max-width:none}
+html[lang="en"] .sec-head{align-items:flex-end;gap:20px 40px;max-width:none;flex-wrap:wrap}
+html[lang="en"] .sec-head-main{
+  flex:0 0 auto;
+  min-width:max-content;
+  max-width:100%;
+}
+html[lang="en"] .sec-head h2{
+  max-width:min(100%,52rem);
+  letter-spacing:.01em;
+  font-weight:650;
+}
+html[lang="en"] .sec-en,
+html[lang="en"] .ui-copy .sec-en,
+html[lang="en"] .arch-cap{
+  letter-spacing:.14em;
+  font-family:var(--font-en);
+  white-space:nowrap;
+  flex-shrink:0;
+  display:inline-block;
+  width:max-content;
+  max-width:100%;
+}
 
 html[lang="en"] .hero-t-zh{
   font-family:var(--font-en);
@@ -637,8 +660,10 @@ html[lang="en"] .hero-t-zh{
 html[lang="en"] .sec-en,
 html[lang="en"] .ui-copy .sec-en,
 html[lang="en"] .arch-cap{
-  letter-spacing:.16em;
+  letter-spacing:.14em;
   font-family:var(--font-en);
+  white-space:nowrap;
+  flex-shrink:0;
 }
 html[lang="en"] .cap-main h3,
 html[lang="en"] .tech-item h3,

@@ -367,14 +367,15 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 .sec{padding:120px 0}
 .sec-head{
   display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  gap:14px;
+  flex-direction:row;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:24px 48px;
   margin-bottom:56px;
-  max-width:720px;
+  max-width:none;
 }
-.sec-head h2{font-family:var(--font-cn);font-size:clamp(32px,4vw,48px);font-weight:600;letter-spacing:.06em;line-height:1.35;text-wrap:balance;color:#fff;max-width:14em}
-.sec-head-main{min-width:0;width:100%}
+.sec-head h2{font-family:var(--font-cn);font-size:clamp(32px,4vw,48px);font-weight:600;letter-spacing:.06em;line-height:1.35;text-wrap:balance;color:#fff;max-width:14em;margin:0}
+.sec-head-main{min-width:0;flex:0 1 auto}
 .sec-en{
   display:block;
   font-family:var(--font-en);
@@ -382,7 +383,7 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   font-weight:600;
   letter-spacing:.26em;
   text-transform:uppercase;
-  margin-bottom:0;
+  margin-bottom:14px;
   background:linear-gradient(90deg,#8fb8a6 0%,#d7ebe0 55%,#8fb8a6 100%);
   -webkit-background-clip:text;
   background-clip:text;
@@ -391,10 +392,13 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 }
 .sec-desc{
   font-family:var(--font-cn);
-  max-width:40em;font-size:16px;color:var(--muted);
-  line-height:1.85;letter-spacing:.03em;font-weight:400;
-  text-wrap:pretty;margin:0;align-self:flex-start;
-  white-space:normal;
+  max-width:none;font-size:16px;color:var(--muted);
+  line-height:1.75;letter-spacing:.03em;font-weight:400;
+  text-wrap:pretty;margin:0;
+  flex:0 1 auto;
+  align-self:flex-end;
+  text-align:right;
+  white-space:nowrap;
 }
 
 /* ===== 能力 ===== */
@@ -544,8 +548,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 
 /* ===== 响应式 ===== */
 @media (max-width:940px){
-  .sec-head{flex-direction:column;gap:12px;align-items:flex-start;max-width:100%}
-  .sec-desc{max-width:36em;white-space:normal}
+  .sec-head{flex-direction:column;align-items:flex-start;gap:12px;max-width:100%}
+  .sec-desc{max-width:36em;white-space:normal;text-align:left;align-self:flex-start}
   .tech-list{grid-template-columns:1fr 1fr}
   .tech-item:nth-child(2n){border-right:none}
   .tech-item:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.06)}
@@ -619,8 +623,16 @@ html[lang="en"] .ui-copy .sec-desc{
   text-align:left;
 }
 html[lang="en"] .hero-sub{font-size:clamp(15px,1.2vw,18px);max-width:46em;margin-left:auto;margin-right:auto;text-align:center}
-html[lang="en"] .sec-desc{max-width:38em;margin-top:2px}
-html[lang="en"] .sec-head{align-items:flex-start;gap:12px;max-width:720px}
+html[lang="en"] .sec-desc{
+  font-family:var(--font-en);
+  white-space:normal;
+  max-width:28em;
+  letter-spacing:.01em;
+  line-height:1.6;
+  text-align:right;
+  align-self:flex-end;
+}
+html[lang="en"] .sec-head{align-items:flex-end;gap:20px 40px;max-width:none}
 html[lang="en"] .sec-head h2 br{display:none}
 html[lang="en"] .ui-copy h2 br{display:none}
 html[lang="en"] .hero-t-zh{

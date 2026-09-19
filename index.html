@@ -353,43 +353,55 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 
 /* ===== 区块 ===== */
 .sec{padding:120px 0}
+/* 中英共用同一套标题栅格，避免切换语言后版式漂移 */
 .sec-head{
-  display:flex;
-  flex-direction:row;
-  align-items:flex-end;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:24px 48px;
+  display:grid;
+  grid-template-columns:minmax(0,1.12fr) minmax(200px,.88fr);
+  gap:20px 48px;
+  align-items:end;
   margin-bottom:56px;
-  max-width:none;
 }
-.sec-head h2{font-family:var(--font-cn);font-size:clamp(32px,4vw,48px);font-weight:600;letter-spacing:.06em;line-height:1.35;text-wrap:balance;color:#fff;max-width:14em;margin:0}
-.sec-head-main{min-width:0;flex:0 0 auto;max-width:100%}
+.sec-head-main{min-width:0}
 .sec-en{
   display:block;
   font-family:var(--font-en);
   font-size:12px;
   font-weight:600;
-  letter-spacing:.26em;
+  letter-spacing:.22em;
   text-transform:uppercase;
   margin-bottom:14px;
   white-space:nowrap;
-  flex-shrink:0;
   background:linear-gradient(90deg,#8fb8a6 0%,#d7ebe0 55%,#8fb8a6 100%);
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
   -webkit-text-fill-color:transparent;
 }
+.sec-head h2{
+  font-family:var(--font-cn);
+  font-size:clamp(32px,4vw,48px);
+  font-weight:600;
+  letter-spacing:.06em;
+  line-height:1.35;
+  text-wrap:balance;
+  color:#fff;
+  max-width:12em;
+  margin:0;
+}
 .sec-desc{
   font-family:var(--font-cn);
-  max-width:none;font-size:16px;color:var(--muted);
-  line-height:1.75;letter-spacing:.03em;font-weight:400;
-  text-wrap:pretty;margin:0;
-  flex:0 1 auto;
-  align-self:flex-end;
+  font-size:16px;
+  color:var(--muted);
+  line-height:1.75;
+  letter-spacing:.03em;
+  font-weight:400;
+  max-width:28em;
+  margin:0;
+  justify-self:end;
+  align-self:end;
   text-align:right;
-  white-space:nowrap;
+  white-space:normal;
+  text-wrap:pretty;
 }
 
 /* ===== 能力 ===== */
@@ -539,8 +551,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 
 /* ===== 响应式 ===== */
 @media (max-width:940px){
-  .sec-head{flex-direction:column;align-items:flex-start;gap:12px;max-width:100%}
-  .sec-desc{max-width:36em;white-space:normal;text-align:left;align-self:flex-start}
+  .sec-head{grid-template-columns:1fr;gap:12px;align-items:start}
+  .sec-desc{max-width:36em;justify-self:start;text-align:left;align-self:start}
   .tech-list{grid-template-columns:1fr 1fr}
   .tech-item:nth-child(2n){border-right:none}
   .tech-item:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.06)}
@@ -601,51 +613,44 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 /* ===== 英文排版：放开中文专用 nowrap/宽字距，避免遮挡与怪异换行 ===== */
 html[lang="en"] body{letter-spacing:0}
 html[lang="en"] .hero-sub,
-html[lang="en"] .sec-desc,
 html[lang="en"] .ui-copy .sec-desc{
   font-family:var(--font-en);
   white-space:normal;
-  max-width:40em;
   letter-spacing:.01em;
   line-height:1.65;
   text-wrap:pretty;
-  justify-self:start;
-  align-self:flex-start;
-  text-align:left;
 }
-html[lang="en"] .hero-sub{font-size:clamp(15px,1.2vw,18px);max-width:46em;margin-left:auto;margin-right:auto;text-align:center}
+html[lang="en"] .hero-sub{font-size:clamp(15px,1.2vw,18px);max-width:46em;margin-left:auto;margin-right:auto;text-align:center;justify-self:center;align-self:center}
+/* 英文与中文共用同一栅格，只换字体与轻微字距 */
 html[lang="en"] .sec-desc{
   font-family:var(--font-en);
-  white-space:normal;
-  max-width:28em;
   letter-spacing:.01em;
-  line-height:1.6;
+  line-height:1.65;
+  max-width:28em;
+  white-space:normal;
   text-align:right;
-  align-self:flex-end;
-  flex:1 1 240px;
-  min-width:220px;
+  justify-self:end;
+  align-self:end;
 }
-html[lang="en"] .sec-head{align-items:flex-end;gap:20px 40px;max-width:none;flex-wrap:wrap}
-html[lang="en"] .sec-head-main{
-  flex:0 0 auto;
-  min-width:max-content;
-  max-width:100%;
+html[lang="en"] .sec-head{
+  grid-template-columns:minmax(0,1.12fr) minmax(200px,.88fr);
+  align-items:end;
+  gap:20px 48px;
 }
 html[lang="en"] .sec-head h2{
-  max-width:min(100%,52rem);
+  font-family:var(--font-en);
+  font-size:clamp(30px,3.8vw,46px);
   letter-spacing:.01em;
   font-weight:650;
+  line-height:1.22;
+  max-width:12em;
 }
 html[lang="en"] .sec-en,
 html[lang="en"] .ui-copy .sec-en,
 html[lang="en"] .arch-cap{
-  letter-spacing:.14em;
   font-family:var(--font-en);
+  letter-spacing:.22em;
   white-space:nowrap;
-  flex-shrink:0;
-  display:inline-block;
-  width:max-content;
-  max-width:100%;
 }
 
 html[lang="en"] .hero-t-zh{
@@ -688,10 +693,6 @@ html[lang="en"] .app-title{
   font-family:var(--font-en);
   letter-spacing:.02em;
 }
-html[lang="en"] .cap-main h3,
-html[lang="en"] .tech-item h3,
-html[lang="en"] .ui-copy h2,
-html[lang="en"] .sec-head h2{letter-spacing:.01em;font-weight:650}
 html[lang="en"] .btn{letter-spacing:.04em;padding-left:36px;padding-right:36px}
 html[lang="en"] .hero-note{letter-spacing:.06em}
 html[lang="en"] .badge-zh{letter-spacing:.04em}

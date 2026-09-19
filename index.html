@@ -155,9 +155,18 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 
 /* ===== Hero(首屏:居中主文案 + 能力卡片横向铺开) ===== */
 .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 0 140px;overflow:hidden}
-.hero .wrap{max-width:none;width:100%;padding:0 100px}
-.hero-grid{display:flex;flex-direction:column;align-items:center;text-align:center}
-.hero-copy{max-width:none;width:100%;display:flex;flex-direction:column;align-items:center}
+.hero .wrap{max-width:1280px;width:100%;padding:0 48px}
+.hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  gap:48px 56px;
+  align-items:center;
+  text-align:left;
+}
+.hero-copy{max-width:none;width:100%;display:flex;flex-direction:column;align-items:flex-start;text-align:left}
+.hero-window{width:100%;position:relative;z-index:2}
+.hero-window .app-body{min-height:380px}
+.hero-window .appcard{box-shadow:0 28px 64px rgba(0,0,0,.42)}
 .hero-badge{
   display:inline-flex;align-items:center;gap:10px;
   font-family:var(--font);
@@ -180,23 +189,22 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   color:var(--muted);
 }
 .hero h1{
-  display:flex;flex-direction:column;align-items:center;
-  gap:0;margin:0 0 32px;
-  width:100%;max-width:none;
-  position:relative;z-index:2;text-align:center;
-  margin:0 0 52px;
+  display:flex;flex-direction:column;align-items:flex-start;
+  gap:0;margin:0 0 28px;
+  width:100%;max-width:100%;
+  position:relative;z-index:2;text-align:left;
 }
 .hero-t-group{
   display:inline-flex;
   flex-direction:column;
-  align-items:flex-end;
+  align-items:flex-start;
   max-width:100%;
   position:relative;z-index:2;
 }
 .hero-t-en{
   display:block;
   font-family:var(--font-en);
-  font-size:clamp(72px,12.8vw,200px);
+  font-size:clamp(48px,6.2vw,96px);
   font-weight:750;
   font-style:normal;
   line-height:.96;
@@ -276,7 +284,7 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.45)}
 .btn-ghost:hover{border-color:var(--green);color:var(--green)}
 
-.hero-note{margin-top:40px;font-family:var(--font-cn);font-size:14px;font-weight:400;color:var(--faint);letter-spacing:.16em;text-align:center;position:relative;z-index:2}
+.hero-note{margin-top:28px;font-family:var(--font-cn);font-size:13.5px;font-weight:400;color:var(--faint);letter-spacing:.14em;text-align:left;position:relative;z-index:2}
 
 .hero-glow{position:absolute;top:50%;transform:translateY(-50%);width:34vw;height:34vw;border-radius:50%;pointer-events:none;z-index:0;border:1px solid rgba(143,185,166,.12)}
 .hero-glow-l{left:-13vw;background:radial-gradient(circle,rgba(143,185,166,.07) 0%,transparent 70%)}
@@ -506,9 +514,18 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   #topProgress{display:block}
   .wrap{padding:0 48px}
   .hero .wrap{padding:0 48px}
-  .hero-sub{font-size:17px;max-width:100%}
+  .hero-grid{grid-template-columns:1fr;gap:36px;text-align:center}
+  .hero-copy{align-items:center;text-align:center}
+  .hero h1{align-items:center;text-align:center}
+  .hero-t-group{align-items:center}
+  .hero-t-zh{margin-right:0;text-align:center}
+  .hero-sub{text-align:center;max-width:100%}
+  .hero-actions{justify-content:center}
+  .hero-note{text-align:center}
+  .hero-window{max-width:720px;margin:0 auto}
+  .hero-sub{font-size:16px;max-width:100%}
   .hero-t-en{font-family:var(--font-en);font-size:clamp(48px,12vw,100px);font-weight:750;letter-spacing:-.03em;white-space:nowrap;filter:drop-shadow(0 6px 24px rgba(0,0,0,.35))}
-  .hero-t-zh{font-family:var(--font-cn);font-size:17px;font-weight:400;letter-spacing:.28em;text-indent:.28em;white-space:normal;max-width:100%;text-align:right;margin-right:-.28em}
+  .hero-t-zh{font-family:var(--font-cn);font-size:17px;font-weight:400;letter-spacing:.28em;text-indent:.28em;white-space:normal;max-width:100%;text-align:center;margin-right:0}
   .btn{padding:16px 36px;font-size:16px}
 }
 @media (max-width:760px){
@@ -595,6 +612,49 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
           <a class="btn btn-ghost" href="#capabilities">了解能力</a>
         </div>
         <p class="hero-note">数据不出机 · 本地大模型 · 无需账号</p>
+      </div>
+      <div class="hero-window" aria-hidden="true">
+        <div class="appcard">
+          <div class="app-bar">
+            <span class="app-dot"></span><span class="app-dot"></span><span class="app-dot"></span>
+            <span class="app-title">DS — Desktop System Agent</span>
+          </div>
+          <div class="app-body">
+            <div class="app-side">
+              <div class="app-sess-head">
+                <span class="app-sess-title">会话</span>
+                <span class="app-new">+ 新对话</span>
+              </div>
+              <div class="app-sess-item on">调研报告总结</div>
+              <div class="app-sess-item">本周文件整理</div>
+              <div class="app-sess-item">合同条款检索</div>
+              <div class="app-sess-item">读书笔记</div>
+              <div class="app-side-foot">
+                <i>插件</i><i>记忆</i><i>整理</i><i>关于</i>
+              </div>
+            </div>
+            <div class="app-main">
+              <div class="app-toolbar"><span class="app-scope">▾ 搜索范围 · 全部位置</span></div>
+              <div class="app-msg me">
+                <div class="app-ava"></div>
+                <div class="app-bubble">帮我找一下本地硬盘里关于「机器学习」的文档。</div>
+              </div>
+              <div class="app-msg">
+                <div class="app-ava"></div>
+                <div class="app-bubble">已在本机检索到 5 个相关文档，优先展示最新的 3 份。</div>
+              </div>
+              <div class="app-msg">
+                <div class="app-ava"></div>
+                <div class="app-bubble">最新一份是《机器学习笔记.md》，共 18 页。全程未离开本机。</div>
+              </div>
+              <div class="app-input"><span>输入指令，让 DS 帮你完成…</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4Z"/></svg></em></div>
+              <div class="app-perm">
+                <span class="app-net"><i class="pd off"></i>联网 关</span>
+                <span class="app-perm-level"><i class="pd"></i>权限 · 询问 ▾</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

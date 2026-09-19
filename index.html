@@ -275,30 +275,38 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 
 .hero-note{margin-top:40px;font-family:var(--font-cn);font-size:14px;font-weight:400;color:var(--faint);letter-spacing:.16em;text-align:center;position:relative;z-index:2}
 
-/* 两侧：本地边界弧 + 权限缺口（贴合 Local Boundary / 安全授权） */
+/* 两侧：本机文件/文件夹关联图（呼应本地文件检索） */
 .hero-bound{
   position:absolute;top:50%;transform:translateY(-50%);
-  width:min(44vw,520px);height:min(44vw,520px);
+  width:min(22vw,220px);height:min(58vh,420px);
   pointer-events:none;z-index:0;
+  opacity:.9;
 }
-.hero-bound-l{left:min(-12vw,-64px)}
-.hero-bound-r{right:min(-10vw,-56px);transform:translateY(-50%) scaleX(-1)}
+.hero-bound-l{left:max(12px,calc(50% - 620px))}
+.hero-bound-r{right:max(12px,calc(50% - 620px));transform:translateY(-50%) scaleX(-1)}
 .hero-bound svg{width:100%;height:100%;display:block;overflow:visible}
-.hero-bound .arc-glow{
-  fill:none;stroke:rgba(143,184,166,.08);stroke-width:16;
-  filter:blur(12px);
-  stroke-dasharray:380 220 160;
+.hero-bound .lnk{
+  fill:none;stroke:rgba(143,184,166,.22);stroke-width:1;
+  stroke-dasharray:3 5;stroke-linecap:round;
 }
-.hero-bound .arc-main{
-  fill:none;stroke:rgba(143,184,166,.2);stroke-width:1.2;
-  stroke-linecap:round;
-  stroke-dasharray:700 40 95 26 250 36;
+.hero-bound .node{
+  fill:rgba(255,255,255,.03);
+  stroke:rgba(143,184,166,.38);
+  stroke-width:1.2;
+  stroke-linejoin:round;stroke-linecap:round;
 }
-.hero-bound .arc-soft{
-  fill:none;stroke:rgba(143,184,166,.09);stroke-width:1;
-  stroke-dasharray:10 14;
+.hero-bound .node-soft{
+  fill:rgba(255,255,255,.02);
+  stroke:rgba(143,184,166,.22);
+  stroke-width:1;
 }
-.hero-bound .gate{fill:rgba(143,184,166,.4)}
+.hero-bound .dot{fill:rgba(143,184,166,.45)}
+.hero-bound .lbl{
+  fill:rgba(244,247,244,.28);
+  font-family:var(--font-en);
+  font-size:9px;
+  letter-spacing:.08em;
+}
 .hero .wrap,.hero .hero-grid,.hero .hero-copy{position:relative;z-index:2}
 .hero-hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-size:12.5px;color:var(--faint);display:flex;align-items:center;gap:8px;z-index:5;white-space:nowrap}
 .hero-hint svg{width:13px;height:13px;animation:dip 2.2s ease-in-out infinite}
@@ -626,7 +634,9 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .tech-list{grid-template-columns:1fr}
   .app-body{grid-template-columns:1fr}
   .app-side{display:none}
-  .hero-bound{width:56vw;height:56vw;opacity:.7}
+  .hero-bound{width:120px;height:280px;opacity:.55}
+  .hero-bound-l{left:6px}
+  .hero-bound-r{right:6px}
   .hero-hint{display:none}
 }
 
@@ -790,21 +800,73 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
     </div>
   </div>
   <div class="hero-bound hero-bound-l" aria-hidden="true">
-    <svg viewBox="0 0 400 400" fill="none">
-      <circle class="arc-glow" cx="200" cy="200" r="170"/>
-      <circle class="arc-main" cx="200" cy="200" r="170"/>
-      <circle class="arc-soft" cx="200" cy="200" r="150"/>
-      <circle class="gate" cx="322" cy="112" r="3.4"/>
-      <circle class="gate" cx="336" cy="138" r="2.2"/>
+    <svg viewBox="0 0 180 360" fill="none">
+      <!-- 关联连线 -->
+      <path class="lnk" d="M52 78v36M52 150v28M98 96h28M70 210v34M70 278v22"/>
+      <circle class="dot" cx="52" cy="114" r="2"/>
+      <circle class="dot" cx="52" cy="178" r="2"/>
+      <circle class="dot" cx="98" cy="96" r="2"/>
+      <circle class="dot" cx="70" cy="244" r="2"/>
+      <!-- 文件夹 -->
+      <g transform="translate(18,40)">
+        <path class="node" d="M8 22h28l8 9h40v41H8V22z"/>
+        <path class="node-soft" d="M8 34h76"/>
+      </g>
+      <!-- 文件 PDF -->
+      <g transform="translate(100,72)">
+        <path class="node" d="M10 8h28l16 16v40H10V8z"/>
+        <path class="node-soft" d="M38 8v16h16"/>
+        <path class="node-soft" d="M20 40h24M20 48h18"/>
+      </g>
+      <!-- 文件 MD -->
+      <g transform="translate(20,140)">
+        <path class="node-soft" d="M8 6h24l14 14v36H8V6z"/>
+        <path class="node-soft" d="M32 6v14h14"/>
+        <path class="node-soft" d="M16 34h20M16 42h14"/>
+      </g>
+      <!-- 文件夹 2 -->
+      <g transform="translate(40,200)">
+        <path class="node" d="M6 18h24l7 8h36v34H6V18z"/>
+      </g>
+      <!-- 文件 XLS -->
+      <g transform="translate(28,268)">
+        <path class="node-soft" d="M8 6h22l14 14v34H8V6z"/>
+        <path class="node-soft" d="M30 6v14h14"/>
+        <path class="node-soft" d="M16 32h22M16 40h22M24 28v22"/>
+      </g>
+      <text class="lbl" x="18" y="340">LOCAL FILES</text>
     </svg>
   </div>
   <div class="hero-bound hero-bound-r" aria-hidden="true">
-    <svg viewBox="0 0 400 400" fill="none">
-      <circle class="arc-glow" cx="200" cy="200" r="170"/>
-      <circle class="arc-main" cx="200" cy="200" r="170"/>
-      <circle class="arc-soft" cx="200" cy="200" r="150"/>
-      <circle class="gate" cx="322" cy="112" r="3.4"/>
-      <circle class="gate" cx="336" cy="138" r="2.2"/>
+    <svg viewBox="0 0 180 360" fill="none">
+      <path class="lnk" d="M52 78v36M52 150v28M98 96h28M70 210v34M70 278v22"/>
+      <circle class="dot" cx="52" cy="114" r="2"/>
+      <circle class="dot" cx="52" cy="178" r="2"/>
+      <circle class="dot" cx="98" cy="96" r="2"/>
+      <circle class="dot" cx="70" cy="244" r="2"/>
+      <g transform="translate(18,40)">
+        <path class="node" d="M8 22h28l8 9h40v41H8V22z"/>
+        <path class="node-soft" d="M8 34h76"/>
+      </g>
+      <g transform="translate(100,72)">
+        <path class="node" d="M10 8h28l16 16v40H10V8z"/>
+        <path class="node-soft" d="M38 8v16h16"/>
+        <path class="node-soft" d="M20 40h24M20 48h18"/>
+      </g>
+      <g transform="translate(20,140)">
+        <path class="node-soft" d="M8 6h24l14 14v36H8V6z"/>
+        <path class="node-soft" d="M32 6v14h14"/>
+        <path class="node-soft" d="M16 34h20M16 42h14"/>
+      </g>
+      <g transform="translate(40,200)">
+        <path class="node" d="M6 18h24l7 8h36v34H6V18z"/>
+      </g>
+      <g transform="translate(28,268)">
+        <path class="node-soft" d="M8 6h22l14 14v34H8V6z"/>
+        <path class="node-soft" d="M30 6v14h14"/>
+        <path class="node-soft" d="M16 32h22M16 40h22M24 28v22"/>
+      </g>
+      <text class="lbl" x="18" y="340">LOCAL FILES</text>
     </svg>
   </div>
   <div class="hero-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg><span data-i18n="hero.hint">滚动查看</span></div>

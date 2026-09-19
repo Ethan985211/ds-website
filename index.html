@@ -1335,9 +1335,9 @@ applyLang(lang);
   }
 
   function scrubVideo(){
-    if (!heroVid || jumping) return;
+    if (!heroVid) return;
     var t = pageProgress() * vDur;
-    if (Math.abs(t - lastT) < 0.05) return;
+    if (Math.abs(t - lastT) < 0.03) return;
     lastT = t;
     targetT = t;
     if (!seeking) doSeek();
@@ -1346,7 +1346,6 @@ applyLang(lang);
   function update(){
     syncNav();
     syncRail();
-    if (jumping) return; /* 导航平滑滚动期间只更新进度/高亮 */
     var p = pageProgress();
     if (spriteOk) {
       var f = Math.round(p * (FR - 1));

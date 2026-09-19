@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DS · 桌面智能管家 —— 基于本地大模型的桌面 Agent</title>
-<meta name="description" content="DS（Desktop system Agent）是一款基于本地大模型的桌面智能管家：纯本地、离线、数据不出机。对话、检索、记忆、工具，全部在本地完成。">
+<title>DS Agent · 桌面智能体 —— 基于本地大模型</title>
+<meta name="description" content="DS Agent（Desktop System Agent）是一款基于本地大模型的桌面智能体：纯本地、离线、数据不出机。对话、检索、记忆、工具，全部在本地完成。">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2324584A'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='28' font-weight='700' text-anchor='middle' fill='%23FFFFFF'%3EDS%3C/text%3E%3C/svg%3E">
 <style>
 :root{
@@ -77,15 +77,29 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 .hero-copy{max-width:1120px;width:100%;display:flex;flex-direction:column;align-items:center}
 .hero-badge{
   display:inline-flex;align-items:center;gap:8px;
-  font-size:12.5px;color:var(--muted);letter-spacing:.06em;
+  font-size:12.5px;color:var(--muted);letter-spacing:.08em;
   border:1px solid var(--line);border-radius:999px;
   padding:7px 16px;margin-bottom:28px;
   background:rgba(255,255,255,.04);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
 }
 .hero-badge i{width:6px;height:6px;border-radius:50%;background:var(--green);font-style:normal;box-shadow:0 0 0 3px rgba(143,184,166,.2)}
-.hero h1{font-size:clamp(60px,8vw,136px);font-weight:800;line-height:1.05;letter-spacing:-.03em;text-wrap:balance;margin-bottom:24px;color:#fff}
-.hero h1 .hl{color:var(--green)}
+.hero h1{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:26px;text-wrap:balance}
+.hero-t-en{
+  font-size:clamp(64px,9vw,140px);
+  font-weight:800;line-height:.92;
+  letter-spacing:-.045em;
+  color:#fff;
+}
+.hero-t-en .t-dot{color:var(--green);margin:0 .02em}
+.hero-t-zh{
+  font-size:clamp(20px,2.6vw,34px);
+  font-weight:600;
+  letter-spacing:.42em;
+  text-indent:.42em; /* letter-spacing 视觉居中补偿 */
+  color:rgba(255,255,255,.7);
+  line-height:1.2;
+}
 .hero-sub{font-size:19px;color:var(--muted);max-width:640px;margin-bottom:36px;line-height:1.75;text-wrap:pretty;text-align:center}
 .hero-sub b{color:#fff;font-weight:600}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
@@ -300,7 +314,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .nav-inner{padding:16px 28px}
   .wrap{padding:0 28px}
   .hero-sub{font-size:17px;max-width:100%}
-  .hero h1{font-size:clamp(44px,8.5vw,80px)}
+  .hero-t-en{font-size:clamp(48px,10vw,84px)}
+  .hero-t-zh{font-size:18px;letter-spacing:.28em;text-indent:.28em}
   .hero-caps{grid-template-columns:repeat(3,minmax(0,1fr));max-width:100%}
   .hero-cap{min-height:0}
 }
@@ -355,7 +370,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 <header class="hero" id="top">
   <nav class="nav" id="siteNav">
     <div class="nav-inner">
-      <div class="brand"><span class="brand-mark"></span><span class="brand-name">DS<em>桌面智能管家</em></span></div>
+      <div class="brand"><span class="brand-mark"></span><span class="brand-name">DS<em>Agent</em></span></div>
       <div class="nav-links">
         <a href="#capabilities">能力</a>
         <a href="#tech">技术</a>
@@ -368,7 +383,10 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
     <div class="hero-grid">
       <div class="hero-copy">
         <div class="hero-badge"><i></i>Desktop System Agent · 本地优先</div>
-        <h1>你的桌面<br><span class="hl">智能管家</span></h1>
+        <h1>
+          <span class="hero-t-en">DS<span class="t-dot">.</span>Agent</span>
+          <span class="hero-t-zh">桌面智能体</span>
+        </h1>
         <p class="hero-sub">基于本地大模型的桌面 Agent，对话、检索、记忆、工具调用全部在本机完成。<b>离线运行，数据不出机</b>。</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#download" id="dlHero">
@@ -416,7 +434,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 <section class="sec" id="capabilities">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>一个管家，<br>六项能力</h2>
+      <h2>六项能力，<br>皆在本地</h2>
       <p class="sec-desc">围绕日常桌面工作设计，每项能力都跑在本地，可以按需组合。</p>
     </div>
     <div class="cap-list reveal" data-stagger>

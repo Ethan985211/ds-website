@@ -445,18 +445,29 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   align-items:start;
   justify-content:center;
 }
-.ui-copy{min-width:0}
-.ui-copy .sec-en{margin-bottom:14px}
+.ui-copy{min-width:0;display:flex;flex-direction:column;align-items:flex-start;padding-top:6px}
+.ui-copy .sec-en{
+  font-family:var(--font-en);
+  font-size:11px;font-weight:600;letter-spacing:.24em;
+  margin-bottom:14px;
+  background:linear-gradient(90deg,#8fb8a6 0%,#d7ebe0 55%,#8fb8a6 100%);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;
+}
 .ui-copy h2{
   font-family:var(--font-cn);
-  font-size:clamp(32px,4vw,48px);
-  font-weight:600;letter-spacing:.06em;line-height:1.35;
+  font-size:clamp(28px,2.8vw,36px);
+  font-weight:600;letter-spacing:.1em;line-height:1.4;
   text-wrap:balance;color:#fff;
   margin-bottom:18px;
 }
 .ui-copy .sec-desc{
-  max-width:28em;justify-self:start;text-align:left;
-  margin:0;
+  font-family:var(--font-cn);
+  font-size:14.5px;font-weight:400;
+  line-height:1.9;letter-spacing:.04em;
+  color:var(--muted);
+  max-width:16em;
+  margin:0;text-align:left;
 }
 .ui-note{margin-top:18px;text-align:center;font-size:13px;color:var(--faint)}
 /* 恢复原先窗口展示：最大宽 900，不被栅格压扁 */

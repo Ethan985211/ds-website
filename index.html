@@ -1265,11 +1265,27 @@ applyLang(lang);
 
   var dl = document.getElementById('dlBtn');
   var dlHero = document.getElementById('dlHero');
+  var DS_RELEASE_BASE = 'https://github.com/Ethan985211/ds-website/releases/download/v0.3.0-beta.1/DS-Desktop-0.3.0-beta.1-windows-x64-app.zip';
+  var DS_MIRROR_PREFIX = 'https://ghproxy.net/';
   var DS_DOWNLOADS = window.DS_DOWNLOADS || {
-    light: 'https://github.com/Ethan985211/ds-website/releases/download/v0.3.0-beta.1/DS-Desktop-0.3.0-beta.1-windows-x64-app.zip'
+    light: DS_RELEASE_BASE,
+    light_zh: DS_MIRROR_PREFIX + DS_RELEASE_BASE,
+    light_en: DS_RELEASE_BASE
   };
+  function pickDownloadUrl(track){
+    track = track || 'light';
+    var key = track;
+    if (lang === 'zh') {
+      if (DS_DOWNLOADS[track + '_zh']) return DS_DOWNLOADS[track + '_zh'];
+      if (track === 'light' && DS_DOWNLOADS.light_zh) return DS_DOWNLOADS.light_zh;
+    } else {
+      if (DS_DOWNLOADS[track + '_en']) return DS_DOWNLOADS[track + '_en'];
+      if (track === 'light' && DS_DOWNLOADS.light_en) return DS_DOWNLOADS.light_en;
+    }
+    return DS_DOWNLOADS[key] || DS_DOWNLOADS.light || '';
+  }
   function openTrack(track){
-    var url = DS_DOWNLOADS[track] || DS_DOWNLOADS.light || '';
+    var url = pickDownloadUrl(track);
     if (!url) return false;
     var a = document.createElement('a');
     a.href = url;

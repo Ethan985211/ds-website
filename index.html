@@ -1032,12 +1032,12 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
       <div class="dl-feature">
         <div class="dl-feature-inner">
           <h3 data-i18n="track.light.t">Windows 应用包</h3>
-          <p class="dl-feature-sub" data-i18n="track.light.sub">轻量安装包；首启引导把模型下到本机目录，数据不离机。</p>
+          <p class="dl-feature-sub" data-i18n="track.light.sub">程序 + 界面。模型在首次启动时下载到本机。</p>
           <ul class="dl-feature-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.a">体积小（程序 + 界面）</span></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.b">首次启动引导下载模型到本机目录</span></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.c">需网络下载模型，或已有 model-pack / Ollama</span></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.e">无需注册账号，安装后即可启动</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.a">应用包约 166 MB</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.b">首启下载模型（约 3.4 GB）</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.c">需 Ollama，或已有 model-pack</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.e">免注册，本地运行</span></li>
           </ul>
           <div class="dl-feature-meta">
             <span><em>Windows</em> 10/11 x64</span>
@@ -1052,16 +1052,16 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
             </button>
             <span class="dl-feature-file" data-i18n="track.light.d">DS-Desktop-0.3.0-beta.1-windows-x64-app.zip</span>
           </div>
-          <p class="dl-hint" id="dlHint" data-i18n="dl.hint">首启按引导下载模型（Qwen3 + bge-m3，约 3.4 GB）</p>
+          <p class="dl-hint" id="dlHint" data-i18n="dl.hint">默认模型 Qwen3:4b + bge-m3</p>
         </div>
       </div>
       <div class="dl-side">
         <div class="dl-card">
           <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="12" rx="2"/><path d="M8 20h8"/><path d="M12 16v4"/></svg><span data-i18n="dl1.t">系统要求</span></h3>
           <ul>
-            <li data-i18n="dl1.a">Windows 10/11 64 位（以验收为准）</li>
+            <li data-i18n="dl1.a">Windows 10/11 x64</li>
             <li data-i18n="dl1.b">建议 16 GB 内存（8 GB 可试）</li>
-            <li data-i18n="dl1.c">应用包很小；模型约 3.4 GB + 运行占用</li>
+            <li data-i18n="dl1.c">预留磁盘：模型约 3.4 GB+</li>
           </ul>
         </div>
         <div class="dl-card">
@@ -1146,10 +1146,10 @@ var I18N = {
     'app.net':'联网 关','app.perm':'权限 · 询问 ▾',
     'ui.note':'界面为示意，以实际应用为准',
     'dl.title':'开始使用','dl.desc':'安装即可使用，无需注册账号，数据保存在本机',
-    'track.light.t':'Windows 应用包','track.light.sub':'轻量安装包，程序与界面一体。首次启动按引导把模型下载到本机目录，数据留在你的电脑上。','track.light.a':'体积小（程序 + 界面）','track.light.b':'首次启动引导下载模型到本机目录','track.light.c':'需网络下载模型，或已有 model-pack / Ollama','track.light.d':'DS-Desktop-0.3.0-beta.1-windows-x64-app.zip','track.light.e':'无需注册账号，安装后即可启动','track.light.btn':'下载 Windows 版','dl1.t':'系统要求','dl1.a':'Windows 10/11 64 位（以验收为准）','dl1.b':'建议 16 GB 内存（8 GB 可试，4 GB 不承诺）','dl1.c':'应用包很小；模型约 3.4 GB + 运行占用，请预留足够磁盘',
+    'track.light.t':'Windows 应用包','track.light.sub':'程序 + 界面。模型在首次启动时下载到本机。','track.light.a':'应用包约 166 MB','track.light.b':'首启下载模型（约 3.4 GB）','track.light.c':'需 Ollama，或已有 model-pack','track.light.d':'DS-Desktop-0.3.0-beta.1-windows-x64-app.zip','track.light.e':'免注册，本地运行','track.light.btn':'下载 Windows 版','dl1.t':'系统要求','dl1.a':'Windows 10/11 x64','dl1.b':'建议 16 GB 内存','dl1.c':'预留磁盘：模型约 3.4 GB+，请预留足够磁盘',
     'dl2.t':'本地模型','dl2.a':'正式离线包将内置推理运行环境与模型，无需单独安装 Ollama','dl2.b':'默认模型：Qwen3:4b + bge-m3（非 7B）','dl2.c':'安装与首次使用可断网；联网能力为可选开关',
     'dl3.t':'隐私','dl3.a':'数据保存在本机，默认离线','dl3.b':'无需账号与注册','dl3.c':'联网开关由你控制，按需开启',
-    'dl.btn':'下载 Windows 版','dl.hint':'安装后首次启动按引导下载模型（默认 Qwen3 + bge-m3，约 3.4 GB）','dl.toast':'开始下载…',
+    'dl.btn':'下载 Windows 版','dl.hint':'默认模型 Qwen3:4b + bge-m3','dl.toast':'开始下载…',
     'foot.zh':'桌面智能体','foot.tag':'本地优先，数据安全',
     'rail.home':'首页','rail.cap':'能力','rail.tech':'技术','rail.ui':'界面','rail.dl':'下载'
   },
@@ -1191,10 +1191,10 @@ var I18N = {
     'app.net':'Network off','app.perm':'Permission · Ask ▾',
     'ui.note':'UI is illustrative; the app may differ',
     'dl.title':'Get started','dl.desc':'Install and go. No account required',
-    'track.light.t':'Windows app package','track.light.sub':'Lightweight installer package. First launch downloads models into a local folder; data stays on your PC.','track.light.a':'Small download (app + UI)','track.light.b':'First launch guides model download to local folder','track.light.c':'Needs network for models, or local model-pack / Ollama','track.light.d':'DS-Desktop-0.3.0-beta.1-windows-x64-app.zip','track.light.e':'No account required after install','track.light.btn':'Download for Windows','dl1.t':'System','dl1.a':'Windows 10/11 64-bit (subject to validation)','dl1.b':'16 GB RAM recommended (8 GB may work; 4 GB not promised)','dl1.c':'App zip is small; leave room for ~3.4 GB models + runtime',
+    'track.light.t':'Windows app package','track.light.sub':'App + UI. Models download on first launch to this PC.','track.light.a':'App package ~166 MB','track.light.b':'Models on first launch (~3.4 GB)','track.light.c':'Needs Ollama or a local model-pack','track.light.d':'DS-Desktop-0.3.0-beta.1-windows-x64-app.zip','track.light.e':'No account, runs locally','track.light.btn':'Download for Windows','dl1.t':'System','dl1.a':'Windows 10/11 x64','dl1.b':'16 GB RAM recommended','dl1.c':'Disk: ~3.4 GB+ for models',
     'dl2.t':'Local model','dl2.a':'Official offline package will bundle runtime + models (no separate Ollama install)','dl2.b':'Defaults: Qwen3:4b + bge-m3 (not 7B)','dl2.c':'Install/first run can be offline; network features optional',
     'dl3.t':'Privacy','dl3.a':'Data stays on device, offline by default','dl3.b':'No account required','dl3.c':'You control network access',
-    'dl.btn':'Download for Windows','dl.hint':'After install, first launch downloads models (Qwen3 + bge-m3, ~3.4 GB)','dl.toast':'Starting download…',
+    'dl.btn':'Download for Windows','dl.hint':'Default models: Qwen3:4b + bge-m3','dl.toast':'Starting download…',
     'foot.zh':'Desktop Agent','foot.tag':'Local-first · Data-safe',
     'rail.home':'Home','rail.cap':'Features','rail.tech':'Tech','rail.ui':'UI','rail.dl':'Download'
   }

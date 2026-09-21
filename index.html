@@ -1173,7 +1173,12 @@ applyLang(lang);
     openTrack(track || 'light');
   }
   if (dl) dl.addEventListener('click', function(e){ dlClick(e, 'light'); });
-  if (dlHero) dlHero.addEventListener('click', function(e){ dlClick(e, 'light'); });
+  function scrollToDownload(e){
+    if (e) e.preventDefault();
+    var sec = document.getElementById('download');
+    if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  if (dlHero) dlHero.addEventListener('click', scrollToDownload);
 
   var siteNav = document.getElementById('siteNav');
   function syncNav(){

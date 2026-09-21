@@ -954,12 +954,30 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
         </ul>
       </div>
     </div>
+    <div class="dl-tracks reveal" data-stagger style="display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:8px">
+      <div class="dl-card">
+        <h3><span data-i18n="track.light.t">轻量应用包</span></h3>
+        <ul>
+          <li data-i18n="track.light.a">体积小（程序 + 界面）</li>
+          <li data-i18n="track.light.b">首次启动引导下载模型到本机目录</li>
+          <li data-i18n="track.light.c">需网络下载模型，或已有 model-pack / Ollama</li>
+          <li data-i18n="track.light.d">候选文件：DS-Desktop-*-windows-x64-app.zip</li>
+        </ul>
+        <button class="btn" id="dlBtnLight" type="button" data-i18n="track.light.btn">下载轻量包</button>
+      </div>
+      <div class="dl-card">
+        <h3><span data-i18n="track.full.t">完整离线包</span></h3>
+        <ul>
+          <li data-i18n="track.full.a">内置 Ollama 运行时 + 默认模型</li>
+          <li data-i18n="track.full.b">安装与首次使用可断网</li>
+          <li data-i18n="track.full.c">体积大（约 10 GB 级，以实测清单为准）</li>
+          <li data-i18n="track.full.d">候选文件：DS-Desktop-*-windows-x64-offline.zip</li>
+        </ul>
+        <button class="btn btn-primary" id="dlBtn" type="button" data-i18n="track.full.btn">下载完整离线包</button>
+      </div>
+    </div>
     <div class="dl-cta reveal">
-      <button class="btn btn-primary" id="dlBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
-        <span data-i18n="dl.btn">下载 Windows 版</span>
-      </button>
-      <p class="dl-hint" id="dlHint" data-i18n="dl.hint">安装包即将开放，敬请期待</p>
+      <p class="dl-hint" id="dlHint" data-i18n="dl.hint">轻量包首启下载模型；完整包含 Ollama 与默认模型，可离线安装</p>
     </div>
   </div>
 </section>
@@ -1025,10 +1043,10 @@ var I18N = {
     'app.net':'联网 关','app.perm':'权限 · 询问 ▾',
     'ui.note':'界面为示意，以实际应用为准',
     'dl.title':'开始使用','dl.desc':'安装即可使用，无需注册账号，数据保存在本机',
-    'dl1.t':'系统要求','dl1.a':'Windows 10+ 64 位','dl1.b':'4 GB 内存以上','dl1.c':'约 2 GB 磁盘空间',
-    'dl2.t':'本地模型','dl2.a':'安装 Ollama 并选择一个本地大模型','dl2.b':'推荐 7B 及以上参数模型','dl2.c':'全程本地推理，默认无需联网',
+    'track.light.t':'轻量应用包','track.light.a':'体积小（程序 + 界面）','track.light.b':'首次启动引导下载模型到本机目录','track.light.c':'需网络下载模型，或已有 model-pack / Ollama','track.light.d':'候选文件：DS-Desktop-*-app.zip','track.light.btn':'下载轻量包','track.full.t':'完整离线包','track.full.a':'内置 Ollama + 默认模型','track.full.b':'安装与首次使用可断网','track.full.c':'体积大约 10 GB 级（以实测为准）','track.full.d':'候选文件：DS-Desktop-*-offline.zip','track.full.btn':'下载完整离线包','dl1.t':'系统要求','dl1.a':'Windows 10/11 64 位（以验收为准）','dl1.b':'建议 16 GB 内存（8 GB 可试，4 GB 不承诺）','dl1.c':'完整离线包需预留数十 GB（含模型解压，以实测为准）',
+    'dl2.t':'本地模型','dl2.a':'正式离线包将内置推理运行环境与模型，无需单独安装 Ollama','dl2.b':'默认模型：Qwen3:4b + bge-m3（非 7B）','dl2.c':'安装与首次使用可断网；联网能力为可选开关',
     'dl3.t':'隐私','dl3.a':'数据保存在本机，默认离线','dl3.b':'无需账号与注册','dl3.c':'联网开关由你控制，按需开启',
-    'dl.btn':'下载 Windows 版','dl.hint':'安装包即将开放，敬请期待','dl.toast':'安装包即将开放，敬请期待',
+    'dl.btn':'下载 Windows 版','dl.hint':'轻量包首启下载模型；完整包含 Ollama 与默认模型，可离线安装','dl.toast':'开始下载…',
     'foot.zh':'桌面智能体','foot.tag':'本地优先，数据安全',
     'rail.home':'首页','rail.cap':'能力','rail.tech':'技术','rail.ui':'界面','rail.dl':'下载'
   },
@@ -1070,10 +1088,10 @@ var I18N = {
     'app.net':'Network off','app.perm':'Permission · Ask ▾',
     'ui.note':'UI is illustrative; the app may differ',
     'dl.title':'Get started','dl.desc':'Install and go. No account required',
-    'dl1.t':'System','dl1.a':'Windows 10+ 64-bit','dl1.b':'4 GB RAM or more','dl1.c':'~2 GB disk space',
-    'dl2.t':'Local model','dl2.a':'Install Ollama and pick a local model','dl2.b':'7B+ parameters recommended','dl2.c':'Local inference; network optional',
+    'track.light.t':'Light app package','track.light.a':'Small download (app + UI)','track.light.b':'First launch guides model download to local folder','track.light.c':'Needs network for models, or local model-pack / Ollama','track.light.d':'Candidate: DS-Desktop-*-app.zip','track.light.btn':'Download light package','track.full.t':'Full offline package','track.full.a':'Bundled Ollama runtime + default models','track.full.b':'Install and first run can be offline','track.full.c':'Large (~10 GB class; see measured manifest)','track.full.d':'Candidate: DS-Desktop-*-offline.zip','track.full.btn':'Download full offline','dl1.t':'System','dl1.a':'Windows 10/11 64-bit (subject to validation)','dl1.b':'16 GB RAM recommended (8 GB may work; 4 GB not promised)','dl1.c':'Tens of GB free disk for full offline media + model unpack',
+    'dl2.t':'Local model','dl2.a':'Official offline package will bundle runtime + models (no separate Ollama install)','dl2.b':'Defaults: Qwen3:4b + bge-m3 (not 7B)','dl2.c':'Install/first run can be offline; network features optional',
     'dl3.t':'Privacy','dl3.a':'Data stays on device, offline by default','dl3.b':'No account required','dl3.c':'You control network access',
-    'dl.btn':'Download for Windows','dl.hint':'Installer coming soon','dl.toast':'Installer coming soon',
+    'dl.btn':'Download for Windows','dl.hint':'Light package downloads models on first launch; full package bundles Ollama + models','dl.toast':'Starting download…',
     'foot.zh':'Desktop Agent','foot.tag':'Local-first · Data-safe',
     'rail.home':'Home','rail.cap':'Features','rail.tech':'Tech','rail.ui':'UI','rail.dl':'Download'
   }
@@ -1143,13 +1161,32 @@ applyLang(lang);
   }
 
   var dl = document.getElementById('dlBtn');
+  var dlLight = document.getElementById('dlBtnLight');
   var dlHero = document.getElementById('dlHero');
-  function dlClick(e){
-    e.preventDefault();
+  var DS_DOWNLOADS = window.DS_DOWNLOADS || {
+    light: 'downloads/DS-Desktop-0.3.0-beta.1-windows-x64-app.zip',
+    full: 'downloads/DS-Desktop-0.3.0-beta.1-windows-x64-offline.zip'
+  };
+  function openTrack(track){
+    var url = DS_DOWNLOADS[track] || '';
+    if (!url) return false;
+    var a = document.createElement('a');
+    a.href = url;
+    a.rel = 'noopener';
+    a.download = '';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
     showToast((I18N[lang]||{})['dl.toast']||'');
+    return true;
   }
-  if (dl) dl.addEventListener('click', dlClick);
-  if (dlHero) dlHero.addEventListener('click', dlClick);
+  function dlClick(e, track){
+    e.preventDefault();
+    openTrack(track || 'full');
+  }
+  if (dl) dl.addEventListener('click', function(e){ dlClick(e, 'full'); });
+  if (dlLight) dlLight.addEventListener('click', function(e){ dlClick(e, 'light'); });
+  if (dlHero) dlHero.addEventListener('click', function(e){ dlClick(e, 'light'); });
 
   var siteNav = document.getElementById('siteNav');
   function syncNav(){

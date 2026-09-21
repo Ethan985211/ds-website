@@ -495,14 +495,14 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 .ui-wrap .appcard{width:100%}
 .ui-wrap .app-body{min-height:560px}
 
-/* ===== 下载:与技术区/架构卡同层磨砂 ===== */
+/* ===== 下载区 ===== */
 .dl-grid{
   display:grid;grid-template-columns:repeat(3,1fr);gap:0;
   background:rgba(255,255,255,.05);
   backdrop-filter:blur(16px) saturate(140%);
   -webkit-backdrop-filter:blur(16px) saturate(140%);
   border:1px solid rgba(255,255,255,.1);
-  border-radius:10px;overflow:hidden;margin-bottom:48px;
+  border-radius:10px;overflow:hidden;margin-bottom:28px;
 }
 .dl-card{
   border:0;border-right:1px solid rgba(255,255,255,.06);
@@ -519,8 +519,86 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 .dl-card li{font-size:13.5px;color:var(--muted);padding:6px 0;border-top:1px solid rgba(255,255,255,.06);line-height:1.65;text-wrap:pretty}
 .dl-card li:first-of-type{border-top:none}
 .dl-cta{text-align:center}
-.dl-cta .btn-primary{font-size:16px;padding:15px 44px}
-.dl-hint{margin-top:16px;font-size:13px;color:var(--faint)}
+.dl-hint{margin-top:14px;font-size:13px;color:var(--faint)}
+
+.dl-feature{
+  position:relative;
+  max-width:720px;margin:0 auto 20px;
+  padding:36px 36px 32px;
+  border-radius:16px;
+  background:
+    radial-gradient(120% 90% at 10% 0%, rgba(143,184,166,.16), transparent 55%),
+    radial-gradient(90% 80% at 100% 100%, rgba(255,255,255,.06), transparent 45%),
+    rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  box-shadow:0 18px 50px rgba(0,0,0,.28);
+  text-align:left;
+}
+.dl-feature::before{
+  content:'';position:absolute;inset:0;border-radius:16px;pointer-events:none;
+  background:linear-gradient(135deg, rgba(255,255,255,.08), transparent 42%);
+  opacity:.7;
+}
+.dl-feature-inner{position:relative;z-index:1}
+.dl-feature-kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-en);font-size:12px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--green);
+  margin-bottom:10px;
+}
+.dl-feature-kicker i{
+  width:8px;height:8px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 0 4px rgba(143,184,166,.18);
+}
+.dl-feature h3{
+  margin:0 0 8px;font-family:var(--font);font-size:28px;font-weight:700;
+  color:#fff;letter-spacing:.02em;line-height:1.25;
+}
+.dl-feature-sub{
+  margin:0 0 20px;font-family:var(--font-cn);font-size:14.5px;
+  color:var(--muted);line-height:1.75;max-width:36em;
+}
+.dl-feature-list{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:10px}
+.dl-feature-list li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-family:var(--font-cn);font-size:14px;color:var(--muted);line-height:1.6;
+}
+.dl-feature-list li svg{
+  width:16px;height:16px;flex-shrink:0;margin-top:2px;color:var(--green);
+}
+.dl-feature-meta{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;
+}
+.dl-feature-meta span{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:999px;
+  font-family:var(--font-en);font-size:12px;font-weight:500;letter-spacing:.04em;
+  color:var(--faint);
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+}
+.dl-feature-meta span em{
+  font-style:normal;color:var(--green);font-weight:600;
+}
+.dl-feature-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.dl-feature-actions .btn-primary{
+  font-size:15px;padding:14px 36px;border-radius:10px;
+  box-shadow:0 10px 28px rgba(143,184,166,.22);
+}
+.dl-feature-file{
+  font-family:var(--font-en);font-size:12px;color:var(--faint);
+  letter-spacing:.02em;word-break:break-all;
+}
+.dl-feature .dl-hint{text-align:left;margin-top:18px;max-width:40em}
+@media (max-width:720px){
+  .dl-feature{padding:28px 22px 24px}
+  .dl-feature h3{font-size:22px}
+  .dl-grid{grid-template-columns:1fr}
+  .dl-card{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
+  .dl-card:last-child{border-bottom:none}
+}
 
 /* ===== Footer ===== */
 footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
@@ -928,21 +1006,48 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
       </div>
       <p class="sec-desc" data-i18n="dl.desc">安装即可使用，无需注册账号，数据保存在本机</p>
     </div>
+    <div class="dl-feature reveal">
+      <div class="dl-feature-inner">
+        <div class="dl-feature-kicker"><i></i><span>Get Started</span></div>
+        <h3 data-i18n="track.light.t">Windows 应用包</h3>
+        <p class="dl-feature-sub" data-i18n="track.light.sub">轻量安装包，程序与界面一体。首次启动按引导把模型下载到本机目录，数据留在你的电脑上。</p>
+        <ul class="dl-feature-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.a">体积小（程序 + 界面）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.b">首次启动引导下载模型到本机目录</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.c">需网络下载模型，或已有 model-pack / Ollama</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.e">无需注册账号，安装后即可启动</span></li>
+        </ul>
+        <div class="dl-feature-meta">
+          <span><em>Windows</em> 10/11 x64</span>
+          <span><em>~166 MB</em> 应用包</span>
+          <span><em>~3.4 GB</em> 首启模型</span>
+          <span>本地优先</span>
+        </div>
+        <div class="dl-feature-actions">
+          <button class="btn btn-primary" id="dlBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+            <span data-i18n="track.light.btn">下载 Windows 版</span>
+          </button>
+          <span class="dl-feature-file" data-i18n="track.light.d">DS-Desktop-0.3.0-beta.1-windows-x64-app.zip</span>
+        </div>
+        <p class="dl-hint" id="dlHint" data-i18n="dl.hint">安装后首次启动按引导下载模型（默认 Qwen3 + bge-m3，约 3.4 GB）</p>
+      </div>
+    </div>
     <div class="dl-grid reveal" data-stagger>
       <div class="dl-card">
         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="12" rx="2"/><path d="M8 20h8"/><path d="M12 16v4"/></svg><span data-i18n="dl1.t">系统要求</span></h3>
         <ul>
-          <li data-i18n="dl1.a">Windows 10+ 64 位</li>
-          <li data-i18n="dl1.b">4 GB 内存以上</li>
-          <li data-i18n="dl1.c">约 2 GB 磁盘空间</li>
+          <li data-i18n="dl1.a">Windows 10/11 64 位（以验收为准）</li>
+          <li data-i18n="dl1.b">建议 16 GB 内存（8 GB 可试，4 GB 不承诺）</li>
+          <li data-i18n="dl1.c">应用包很小；模型约 3.4 GB + 运行占用</li>
         </ul>
       </div>
       <div class="dl-card">
         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/></svg><span data-i18n="dl2.t">本地模型</span></h3>
         <ul>
-          <li data-i18n="dl2.a">安装 Ollama 并选择一个本地大模型</li>
-          <li data-i18n="dl2.b">推荐 7B 及以上参数模型</li>
-          <li data-i18n="dl2.c">全程本地推理，默认无需联网</li>
+          <li data-i18n="dl2.a">默认模型 Qwen3:4b + bge-m3，首启引导安装</li>
+          <li data-i18n="dl2.b">也可导入本地 model-pack，无需再下</li>
+          <li data-i18n="dl2.c">模型保存在本机目录，推理默认不上传</li>
         </ul>
       </div>
       <div class="dl-card">
@@ -953,23 +1058,7 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
           <li data-i18n="dl3.c">联网开关由你控制，按需开启</li>
         </ul>
       </div>
-    </div>
-    <div class="dl-tracks reveal" data-stagger style="display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:8px">
-      <div class="dl-card">
-        <h3><span data-i18n="track.light.t">Windows 应用包</span></h3>
-        <ul>
-          <li data-i18n="track.light.a">体积小（程序 + 界面）</li>
-          <li data-i18n="track.light.b">首次启动引导下载模型到本机目录</li>
-          <li data-i18n="track.light.c">需网络下载模型，或已有 model-pack / Ollama</li>
-          <li data-i18n="track.light.d">DS-Desktop-*-windows-x64-app.zip</li>
-        </ul>
-        <button class="btn btn-primary" id="dlBtn" type="button" data-i18n="track.light.btn">下载 Windows 版</button>
-      </div>
-    </div>
-    <div class="dl-cta reveal">
-      <p class="dl-hint" id="dlHint" data-i18n="dl.hint">安装后首次启动按引导下载模型（默认 Qwen3 + bge-m3，约 3.4 GB）</p>
-    </div>
-  </div>
+    </div>  </div>
 </section>
 
 <!-- ===== Footer ===== -->
@@ -1033,7 +1122,7 @@ var I18N = {
     'app.net':'联网 关','app.perm':'权限 · 询问 ▾',
     'ui.note':'界面为示意，以实际应用为准',
     'dl.title':'开始使用','dl.desc':'安装即可使用，无需注册账号，数据保存在本机',
-    'track.light.t':'Windows 应用包','track.light.a':'体积小（程序 + 界面）','track.light.b':'首次启动引导下载模型到本机目录','track.light.c':'需网络下载模型，或已有 model-pack / Ollama','track.light.d':'DS-Desktop-*-app.zip','track.light.btn':'下载 Windows 版','dl1.t':'系统要求','dl1.a':'Windows 10/11 64 位（以验收为准）','dl1.b':'建议 16 GB 内存（8 GB 可试，4 GB 不承诺）','dl1.c':'应用包很小；模型约 3.4 GB + 运行占用，请预留足够磁盘',
+    'track.light.t':'Windows 应用包','track.light.sub':'轻量安装包，程序与界面一体。首次启动按引导把模型下载到本机目录，数据留在你的电脑上。','track.light.a':'体积小（程序 + 界面）','track.light.b':'首次启动引导下载模型到本机目录','track.light.c':'需网络下载模型，或已有 model-pack / Ollama','track.light.d':'DS-Desktop-0.3.0-beta.1-windows-x64-app.zip','track.light.e':'无需注册账号，安装后即可启动','track.light.btn':'下载 Windows 版','dl1.t':'系统要求','dl1.a':'Windows 10/11 64 位（以验收为准）','dl1.b':'建议 16 GB 内存（8 GB 可试，4 GB 不承诺）','dl1.c':'应用包很小；模型约 3.4 GB + 运行占用，请预留足够磁盘',
     'dl2.t':'本地模型','dl2.a':'正式离线包将内置推理运行环境与模型，无需单独安装 Ollama','dl2.b':'默认模型：Qwen3:4b + bge-m3（非 7B）','dl2.c':'安装与首次使用可断网；联网能力为可选开关',
     'dl3.t':'隐私','dl3.a':'数据保存在本机，默认离线','dl3.b':'无需账号与注册','dl3.c':'联网开关由你控制，按需开启',
     'dl.btn':'下载 Windows 版','dl.hint':'安装后首次启动按引导下载模型（默认 Qwen3 + bge-m3，约 3.4 GB）','dl.toast':'开始下载…',
@@ -1078,7 +1167,7 @@ var I18N = {
     'app.net':'Network off','app.perm':'Permission · Ask ▾',
     'ui.note':'UI is illustrative; the app may differ',
     'dl.title':'Get started','dl.desc':'Install and go. No account required',
-    'track.light.t':'Windows app package','track.light.a':'Small download (app + UI)','track.light.b':'First launch guides model download to local folder','track.light.c':'Needs network for models, or local model-pack / Ollama','track.light.d':'DS-Desktop-*-app.zip','track.light.btn':'Download for Windows','dl1.t':'System','dl1.a':'Windows 10/11 64-bit (subject to validation)','dl1.b':'16 GB RAM recommended (8 GB may work; 4 GB not promised)','dl1.c':'App zip is small; leave room for ~3.4 GB models + runtime',
+    'track.light.t':'Windows app package','track.light.sub':'Lightweight installer package. First launch downloads models into a local folder; data stays on your PC.','track.light.a':'Small download (app + UI)','track.light.b':'First launch guides model download to local folder','track.light.c':'Needs network for models, or local model-pack / Ollama','track.light.d':'DS-Desktop-0.3.0-beta.1-windows-x64-app.zip','track.light.e':'No account required after install','track.light.btn':'Download for Windows','dl1.t':'System','dl1.a':'Windows 10/11 64-bit (subject to validation)','dl1.b':'16 GB RAM recommended (8 GB may work; 4 GB not promised)','dl1.c':'App zip is small; leave room for ~3.4 GB models + runtime',
     'dl2.t':'Local model','dl2.a':'Official offline package will bundle runtime + models (no separate Ollama install)','dl2.b':'Defaults: Qwen3:4b + bge-m3 (not 7B)','dl2.c':'Install/first run can be offline; network features optional',
     'dl3.t':'Privacy','dl3.a':'Data stays on device, offline by default','dl3.b':'No account required','dl3.c':'You control network access',
     'dl.btn':'Download for Windows','dl.hint':'After install, first launch downloads models (Qwen3 + bge-m3, ~3.4 GB)','dl.toast':'Starting download…',

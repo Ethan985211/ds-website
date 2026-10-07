@@ -1265,12 +1265,12 @@ applyLang(lang);
 
   var dl = document.getElementById('dlBtn');
   var dlHero = document.getElementById('dlHero');
-  var DS_RELEASE_BASE = 'https://github.com/Ethan985211/ds-website/releases/download/v0.3.0-beta.1/DS-Desktop-0.3.0-beta.1-setup.exe';
+  var DS_RELEASE_BASE = '';
   var DS_MIRROR_PREFIX = 'https://ghproxy.net/';
   var DS_DOWNLOADS = window.DS_DOWNLOADS || {
-    light: DS_RELEASE_BASE,
-    light_zh: DS_MIRROR_PREFIX + DS_RELEASE_BASE,
-    light_en: DS_RELEASE_BASE
+    light: '',
+    light_zh: '',
+    light_en: ''
   };
   function pickDownloadUrl(track){
     track = track || 'light';

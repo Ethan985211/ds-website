@@ -7,8 +7,13 @@ DS(Desktop system Agent)产品官网,独立目录,与桌面应用仓库(`Desktop
 ```
 ds-website/
 ├── index.html      # 官网单页(自包含:内联 CSS/JS)
+├── 404.html        # 404 页(Cloudflare Pages 自动识别)
+├── robots.txt      # 允许抓取 + 指向 sitemap
+├── sitemap.xml     # 单页 sitemap
 ├── assets/
-│   └── ds-logo.png # 品牌定稿 Logo(墨绿底白标「DS 交错标」)
+│   ├── ds-logo.webp    # 品牌 Logo(160px,由 ds-logo.png 转换,页面只用这个)
+│   ├── ds-logo.png     # Logo 原图(2048px,源文件,页面不引用)
+│   └── og-cover.png    # 1200×630 社交分享封面
 └── README.md
 ```
 
@@ -53,3 +58,21 @@ python <skill_dir>/scripts/shot.py index.html
 ```
 
 截图输出在 `_shots/`(非交付产物)。
+
+## 下载按钮怎么上线 / 下线
+
+`index.html` 里的 `DS_RELEASE` 是全站唯一真相,包名、体积、按钮状态都由它派生:
+
+```js
+var DS_RELEASE = {
+  name: 'DS-Desktop-0.3.0-beta.1-setup.exe',  // 显示的文件名
+  size: '~115 MB',                            // 显示的体积
+  url:  '',                                   // 安装包直链;为空 = 未开放下载
+  mirror: ''                                  // 可选镜像前缀,如 https://ghproxy.net/
+};
+```
+
+- `url` 为空:按钮显示「即将发布」,点击弹提示,不会静默失败。
+- 填入 `url` 即恢复下载,无需改文案。
+- 换版本只改这一处,下载区三处文案不会打架。
+

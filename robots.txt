@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://desktopsystem.cc.cd/sitemap.xml

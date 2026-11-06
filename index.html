@@ -4,8 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DS Agent · 桌面智能体 —— 基于本地大模型</title>
-<meta name="description" content="DS Agent 是一款基于本地大模型的桌面智能体：离线可用，数据保存在本机。对话、检索、记忆、工具，都在本地完成">
+<meta name="description" id="metaDesc" content="DS Agent 是一款基于本地大模型的桌面智能体：离线可用，数据保存在本机。对话、检索、记忆、工具，都在本地完成">
+<link rel="canonical" href="https://desktopsystem.cc.cd/">
+<meta name="theme-color" content="#0d1f18">
+<meta name="robots" content="index,follow">
+
+<!-- 社交分享卡片 -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DS Agent">
+<meta property="og:url" content="https://desktopsystem.cc.cd/">
+<meta property="og:title" id="ogTitle" content="DS Agent · 桌面智能体 —— 基于本地大模型">
+<meta property="og:description" id="ogDesc" content="DS Agent 是一款基于本地大模型的桌面智能体：离线可用，数据保存在本机。对话、检索、记忆、工具，都在本地完成">
+<meta property="og:image" content="https://desktopsystem.cc.cd/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" id="ogLocale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" id="twTitle" content="DS Agent · 桌面智能体 —— 基于本地大模型">
+<meta name="twitter:description" id="twDesc" content="DS Agent 是一款基于本地大模型的桌面智能体：离线可用，数据保存在本机。对话、检索、记忆、工具，都在本地完成">
+<meta name="twitter:image" content="https://desktopsystem.cc.cd/assets/og-cover.png">
+
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2324584A'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='28' font-weight='700' text-anchor='middle' fill='%23FFFFFF'%3EDS%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "DS Agent",
+  "alternateName": "Desktop System Agent",
+  "applicationCategory": "ProductivityApplication",
+  "operatingSystem": "Windows 10, Windows 11",
+  "description": "基于本地大模型的桌面智能体：对话、检索、记忆、工具调用全部在本机完成，离线可用，数据保存在本机。",
+  "url": "https://desktopsystem.cc.cd/",
+  "downloadUrl": "https://desktopsystem.cc.cd/",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
+  "softwareVersion": "0.3.0-beta.1"
+}
+</script>
 <style>
 :root{
   --bg:#0d1f18;
@@ -36,6 +71,8 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 .video-bg{position:fixed;inset:0;z-index:-2;pointer-events:none}
 .video-bg video,.video-bg canvas{position:absolute;inset:0;width:100%;height:100%}
 .video-bg video{object-fit:cover}
+/* 画布默认隐藏，sprite 就绪后由脚本打开；否则走视频兜底 */
+#heroCanvas{display:none}
 .overlay{position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(8,22,17,.58) 0%,rgba(8,22,17,.42) 45%,rgba(8,22,17,.6) 100%)}
 
 /* ===== 导航:与内容区同宽、尺寸对齐整体 ===== */
@@ -58,7 +95,7 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 .brand-mark{
   width:40px;height:40px;border-radius:10px;
   background-size:cover;background-position:center;
-  background-image:url("assets/ds-logo.png");
+  background-image:url("assets/ds-logo.webp");
   box-shadow:0 4px 16px rgba(0,0,0,.25);
 }
 .brand-name{font-family:var(--font);font-size:18px;font-weight:800;letter-spacing:.06em;color:#fff;white-space:nowrap}
@@ -101,9 +138,6 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   width:auto;height:auto;
   pointer-events:none;
 }
-.side-rail-line{display:none}
-#scrollFill{display:none}
-#scrollDot{display:none}
 .side-item{
   position:static;transform:none;
   display:flex;flex-direction:row-reverse;align-items:center;gap:12px;
@@ -299,45 +333,13 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 .app-perm{display:flex;align-items:center;gap:14px;padding-top:12px;font-size:11px;color:#6f6553}
 
 
-.menu-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:6px;font-size:13.5px;color:#6f6553;cursor:pointer}
-.menu-item svg{width:17px;height:17px;flex-shrink:0}
-.menu-item.on{background:rgba(36,88,74,.1);color:#24584a;font-weight:600}
-.menu-item.foot{margin-top:auto;border-top:1px solid rgba(38,48,60,.08);border-radius:0;padding-top:12px}
-.plug-list{display:flex;flex-direction:column;gap:10px}
-.plug-card{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(38,48,60,.08);border-radius:10px;padding:12px 14px}
-.plug-ic{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;font-size:18px;flex-shrink:0}
-.plug-info{flex:1;display:flex;flex-direction:column;gap:2px}
-.plug-info b{font-size:14px;color:#26303c}
-.plug-info span{font-size:12px;color:#6f6553}
-.plug-sw{width:34px;height:19px;border-radius:999px;background:#d5d0c4;position:relative;flex-shrink:0;transition:background .2s}
-.plug-sw::after{content:"";position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#fff;transition:left .2s}
-.plug-sw.on{background:#24584a}
-.plug-sw.on::after{left:17px}
-.app-tabs{margin-left:auto;font-size:12px;color:#6f6553}
-.app-tabs b{color:#24584a;font-weight:600}
 .app-perm .pd{display:inline-block;width:7px;height:7px;border-radius:50%;background:#9a8f7a;margin-right:6px;vertical-align:middle}
 
 
-.menu-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:6px;font-size:13.5px;color:#6f6553;cursor:pointer}
-.menu-item svg{width:17px;height:17px;flex-shrink:0}
-.menu-item.on{background:rgba(36,88,74,.1);color:#24584a;font-weight:600}
-.menu-item.foot{margin-top:auto;border-top:1px solid rgba(38,48,60,.08);border-radius:0;padding-top:12px}
-.plug-list{display:flex;flex-direction:column;gap:10px}
-.plug-card{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(38,48,60,.08);border-radius:10px;padding:12px 14px}
-.plug-ic{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;font-size:18px;flex-shrink:0}
-.plug-info{flex:1;display:flex;flex-direction:column;gap:2px}
-.plug-info b{font-size:14px;color:#26303c}
-.plug-info span{font-size:12px;color:#6f6553}
-.plug-sw{width:34px;height:19px;border-radius:999px;background:#d5d0c4;position:relative;flex-shrink:0;transition:background .2s}
-.plug-sw::after{content:"";position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#fff;transition:left .2s}
-.plug-sw.on{background:#24584a}
-.plug-sw.on::after{left:17px}
-.app-tabs{margin-left:auto;font-size:12px;color:#6f6553}
-.app-tabs b{color:#24584a;font-weight:600}
 .app-perm .pd.off{background:#8a9a91}
 .app-main{display:flex;flex-direction:column;padding:26px}
 .app-msg{display:flex;gap:12px;margin-bottom:18px}
-.app-ava{width:34px;height:34px;border-radius:8px;background-size:cover;background-position:center;background-image:url("assets/ds-logo.png");flex-shrink:0}
+.app-ava{width:34px;height:34px;border-radius:8px;background-size:cover;background-position:center;background-image:url("assets/ds-logo.webp");flex-shrink:0}
 .app-bubble{max-width:80%;font-size:13.5px;line-height:1.7;padding:11px 15px;border-radius:8px;background:#f0ede5;color:#26303c}
 .app-msg.me{flex-direction:row-reverse}
 .app-msg.me .app-ava{display:none}
@@ -591,6 +593,15 @@ p,h1,h2,h3,h4{text-wrap:pretty}
   font-family:var(--font-en);font-size:12px;color:var(--faint);
   letter-spacing:.02em;word-break:break-all;
 }
+/* 安装包未开放下载时的按钮态 */
+.btn.is-pending{opacity:.62;cursor:not-allowed;box-shadow:none}
+.btn.is-pending:hover{transform:none}
+.dl-feature-status{
+  flex-basis:100%;
+  font-family:var(--font-cn);font-size:12px;line-height:1.6;
+  color:var(--faint);letter-spacing:.02em;
+}
+html[lang="en"] .dl-feature-status{font-family:var(--font-en)}
 .dl-feature .dl-hint{text-align:left;margin-top:8px;font-size:11.5px}
 @media (max-width:720px){
   .dl-feature{padding:28px 22px 24px}
@@ -626,12 +637,9 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
 .foot-brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-en);font-size:15px;font-weight:700;letter-spacing:.08em;margin-bottom:12px;color:#fff}
 .foot-brand .foot-zh{font-family:var(--font);font-weight:500;letter-spacing:.12em;color:var(--muted);font-size:13px}
-.foot-brand i{width:24px;height:24px;border-radius:7px;background-size:cover;background-position:center;background-image:url("assets/ds-logo.png");font-style:normal}
+.foot-brand i{width:24px;height:24px;border-radius:7px;background-size:cover;background-position:center;background-image:url("assets/ds-logo.webp");font-style:normal}
 .foot-line{font-size:13px;color:var(--faint);line-height:1.8}
 .foot-line .dot{margin:0 10px;color:rgba(255,255,255,.2)}
-
-/* ===== 滚动进度条（旧节点样式清理，逻辑并入 side-rail） ===== */
-#scrollDot{display:none}
 
 /* ===== 滚动揭示(克制) ===== */
 .reveal{opacity:0;transform:translate3d(0,24px,0);transition:opacity .7s var(--ease),transform .7s var(--ease);will-change:opacity,transform}
@@ -686,7 +694,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 52px;text-align:center}
   .brand-mark{width:34px;height:34px;border-radius:8px}
   .brand-name{font-size:16px}
   .nav-links{gap:16px;font-size:13.5px}
-  .nav-links a:last-child{display:none}
+  .nav-links a:first-child{display:none}
   .nav-inner{justify-content:space-between}
   .side-rail{display:none}
   #topProgress{display:block}
@@ -816,7 +824,8 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
 
 <!-- ===== 视频背板:固定全屏,滚动驱动进度 ===== -->
 <div class="video-bg" aria-hidden="true">
-  <video id="heroVid" src="assets/hero.mp4" muted playsinline preload="auto" tabindex="-1"></video>
+  <!-- 视频仅在 sprite 加载失败时按需拉取（data-src），避免与 sprite 双份下载 -->
+  <video id="heroVid" data-src="assets/hero.mp4" muted playsinline preload="none" tabindex="-1"></video>
   <img id="sprite-0" src="assets/hero-sprite-0.webp" alt="" style="display:none">
   <img id="sprite-1" src="assets/hero-sprite-1.webp" alt="" style="display:none">
   <img id="sprite-2" src="assets/hero-sprite-2.webp" alt="" style="display:none">
@@ -837,8 +846,8 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
         <a href="#download" data-i18n="nav.dl">下载</a>
       </div>
       <div class="nav-lang" role="group" aria-label="Language">
-        <button type="button" data-lang="zh" class="on">中文</button>
-        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="zh" class="on" aria-pressed="true">中文</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
       </div>
     </div>
   </nav>
@@ -967,8 +976,8 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
         <p class="sec-desc" data-i18n="ui.desc">左侧管理会话，主区完成对话与工具调用，状态一目了然</p>
       </div>
       <div class="ui-wrap">
-        <div class="appcard">
-        <div class="app-bar">
+        <div class="appcard" role="img" aria-label="DS Agent 单窗口界面示意图：左侧会话列表，右侧对话与工具区">
+        <div class="app-bar" aria-hidden="true">
           <span class="app-dot"></span><span class="app-dot"></span><span class="app-dot"></span>
           <span class="app-title">DS — Desktop System Agent</span>
         </div>
@@ -1032,18 +1041,18 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
       <div class="dl-feature">
         <div class="dl-feature-inner">
           <h3 data-i18n="track.light.t">Windows 应用包</h3>
-          <p class="dl-feature-sub" data-i18n="track.light.sub">程序 + 界面。模型在首次启动时下载到本机。</p>
+          <p class="dl-feature-sub" data-i18n="track.light.sub">NSIS 向导安装。模型在首次启动时下载到本机。</p>
           <ul class="dl-feature-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.a">安装包约 115 MB</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.a">安装包 ~115 MB</span></li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.b">首启下载模型（约 3.4 GB）</span></li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.c">需 Ollama，或已有 model-pack</span></li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="track.light.e">免注册，本地运行</span></li>
           </ul>
           <div class="dl-feature-meta">
             <span><em>Windows</em> 10/11 x64</span>
-            <span><em>~115 MB</em> Setup.exe</span>
-            <span><em>~3.4 GB</em> 首启模型</span>
-            <span>本地优先</span>
+            <span><em id="dlSizeChip">~115 MB</em> Setup.exe</span>
+            <span><em>~3.4 GB</em> <span data-i18n="meta.firstrun">首启模型</span></span>
+            <span data-i18n="meta.local">本地优先</span>
           </div>
           <div class="dl-feature-actions">
             <button class="btn btn-primary" id="dlBtn" type="button">
@@ -1051,6 +1060,7 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
               <span data-i18n="track.light.btn">下载 Windows 版</span>
             </button>
             <span class="dl-feature-file" data-i18n="track.light.d">DS-Desktop-0.3.0-beta.1-setup.exe</span>
+            <span class="dl-feature-status" id="dlStatus" hidden></span>
           </div>
           <p class="dl-hint" id="dlHint" data-i18n="dl.hint">默认模型 Qwen3:4b + bge-m3</p>
         </div>
@@ -1095,9 +1105,6 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
 
 <!-- ===== 右侧轨道导航：进度 + 章节节点 ===== -->
 <nav class="side-rail" id="sideRail" aria-label="章节导航">
-  <div class="side-rail-line" id="scrollbar" role="progressbar" aria-label="页面进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-    <div id="scrollFill"></div>
-  </div>
   <a class="side-item" href="#top" data-target="top"><span class="side-dot"></span><span class="side-label" data-i18n="rail.home">首页</span></a>
   <a class="side-item" href="#capabilities" data-target="capabilities"><span class="side-dot"></span><span class="side-label" data-i18n="rail.cap">能力</span></a>
   <a class="side-item" href="#tech" data-target="tech"><span class="side-dot"></span><span class="side-label" data-i18n="rail.tech">技术</span></a>
@@ -1107,6 +1114,15 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
 <div id="topProgress" aria-hidden="true"></div>
 
 <script>
+/* ===== 发布产物：全站唯一真相 =====
+   下载区里的包名、体积、按钮状态全部由这里派生，
+   改版本只需改这一处。url 为空 = 尚未开放下载。 */
+var DS_RELEASE = {
+  name: 'DS-Desktop-0.3.0-beta.1-setup.exe',
+  size: '~115 MB',
+  url: '',            // 填入安装包直链即上线
+  mirror: ''          // 可选镜像前缀，如 https://ghproxy.net/
+};
 var I18N = {
   zh: {
     'nav.cap':'能力','nav.tech':'技术','nav.ui':'界面','nav.dl':'下载',
@@ -1141,15 +1157,18 @@ var I18N = {
     'app.m1':'帮我找一下本地硬盘里关于「机器学习」的文档',
     'app.m2':'已在本机检索到 5 个相关文档，优先展示最新的 3 份',
     'app.m3':'把这些结果总结一下',
-    'app.m4':'最新一份是《机器学习笔记.md》，共 18 页，涵盖线性回归与神经网络两章全程未离开本机',
+    'app.m4':'最新一份是《机器学习笔记.md》，共 18 页，涵盖线性回归与神经网络两章，全程未离开本机',
     'app.ph':'输入指令，让 DS 帮你完成…',
     'app.net':'联网 关','app.perm':'权限 · 询问 ▾',
     'ui.note':'界面为示意，以实际应用为准',
     'dl.title':'开始使用','dl.desc':'安装即可使用，无需注册账号，数据保存在本机',
-    'track.light.t':'Windows 应用包','track.light.sub':'NSIS 向导安装。模型在首次启动时下载到本机。','track.light.a':'安装包约 115 MB','track.light.b':'首启下载模型（约 3.4 GB）','track.light.c':'需 Ollama，或已有 model-pack','track.light.d':'DS-Desktop-0.3.0-beta.1-setup.exe','track.light.e':'免注册，本地运行','track.light.btn':'下载 Windows 版','dl1.t':'系统要求','dl1.a':'Windows 10/11 x64','dl1.b':'建议 16 GB 内存','dl1.c':'预留磁盘：模型约 3.4 GB+，请预留足够磁盘',
-    'dl2.t':'本地模型','dl2.a':'正式离线包将内置推理运行环境与模型，无需单独安装 Ollama','dl2.b':'默认模型：Qwen3:4b + bge-m3（非 7B）','dl2.c':'安装与首次使用可断网；联网能力为可选开关',
+    'track.light.t':'Windows 应用包','track.light.sub':'NSIS 向导安装。模型在首次启动时下载到本机。','track.light.a':'安装包 {size}','track.light.b':'首启下载模型（约 3.4 GB）','track.light.c':'需 Ollama，或已有 model-pack','track.light.d':'{name}','track.light.e':'免注册，本地运行','track.light.btn':'下载 Windows 版','dl1.t':'系统要求','dl1.a':'Windows 10/11 x64','dl1.b':'建议 16 GB 内存（8 GB 可试）','dl1.c':'预留磁盘：模型约 3.4 GB+',
+    'dl2.t':'本地模型','dl2.a':'默认模型 Qwen3:4b + bge-m3，首启引导安装 Ollama','dl2.b':'也可导入本地 model-pack','dl2.c':'安装与首次使用可断网；联网能力为可选开关',
     'dl3.t':'隐私','dl3.a':'数据保存在本机，默认离线','dl3.b':'无需账号与注册','dl3.c':'联网开关由你控制，按需开启',
     'dl.btn':'下载 Windows 版','dl.hint':'默认模型 Qwen3:4b + bge-m3','dl.toast':'开始下载…',
+    'dl.soon':'即将发布','dl.offline':'安装包暂未开放下载，发布后在此提供',
+    'meta.firstrun':'首启模型','meta.local':'本地优先',
+    'ui.alt':'DS Agent 单窗口界面示意图：左侧为会话列表，右侧为对话与工具区',
     'foot.zh':'桌面智能体','foot.tag':'本地优先，数据安全',
     'rail.home':'首页','rail.cap':'能力','rail.tech':'技术','rail.ui':'界面','rail.dl':'下载'
   },
@@ -1191,10 +1210,13 @@ var I18N = {
     'app.net':'Network off','app.perm':'Permission · Ask ▾',
     'ui.note':'UI is illustrative; the app may differ',
     'dl.title':'Get started','dl.desc':'Install and go. No account required',
-    'track.light.t':'Windows app package','track.light.sub':'NSIS wizard installer. Models download on first launch to this PC.','track.light.a':'Setup ~115 MB','track.light.b':'Models on first launch (~3.4 GB)','track.light.c':'Needs Ollama or a local model-pack','track.light.d':'DS-Desktop-0.3.0-beta.1-setup.exe','track.light.e':'No account, runs locally','track.light.btn':'Download for Windows','dl1.t':'System','dl1.a':'Windows 10/11 x64','dl1.b':'16 GB RAM recommended','dl1.c':'Disk: ~3.4 GB+ for models',
-    'dl2.t':'Local model','dl2.a':'Official offline package will bundle runtime + models (no separate Ollama install)','dl2.b':'Defaults: Qwen3:4b + bge-m3 (not 7B)','dl2.c':'Install/first run can be offline; network features optional',
+    'track.light.t':'Windows app package','track.light.sub':'NSIS wizard installer. Models download on first launch to this PC.','track.light.a':'Setup {size}','track.light.b':'Models on first launch (~3.4 GB)','track.light.c':'Needs Ollama or a local model-pack','track.light.d':'{name}','track.light.e':'No account, runs locally','track.light.btn':'Download for Windows','dl1.t':'System','dl1.a':'Windows 10/11 x64','dl1.b':'16 GB RAM recommended (8 GB works)','dl1.c':'Disk: ~3.4 GB+ for models',
+    'dl2.t':'Local model','dl2.a':'Qwen3:4b + bge-m3 by default; first launch walks you through Ollama','dl2.b':'You can also import a local model-pack','dl2.c':'Model stays on this device; inference is not uploaded',
     'dl3.t':'Privacy','dl3.a':'Data stays on device, offline by default','dl3.b':'No account required','dl3.c':'You control network access',
     'dl.btn':'Download for Windows','dl.hint':'Default models: Qwen3:4b + bge-m3','dl.toast':'Starting download…',
+    'dl.soon':'Coming soon','dl.offline':'Installer is not available yet — check back soon',
+    'meta.firstrun':'first-run models','meta.local':'Local-first',
+    'ui.alt':'DS Agent single-window UI preview: sessions on the left, chat and tools on the right',
     'foot.zh':'Desktop Agent','foot.tag':'Local-first · Data-safe',
     'rail.home':'Home','rail.cap':'Features','rail.tech':'Tech','rail.ui':'UI','rail.dl':'Download'
   }
@@ -1205,6 +1227,26 @@ try {
   if (saved === 'en' || saved === 'zh') lang = saved;
   else if (String(navigator.language||'').toLowerCase().indexOf('zh') !== 0) lang = 'en';
 } catch (e) {}
+/* ===== SEO 文案（随语言切换，避免英文页露中文摘要） ===== */
+var SEO = {
+  zh: {
+    title: 'DS Agent · 桌面智能体 —— 基于本地大模型',
+    desc: 'DS Agent 是一款基于本地大模型的桌面智能体：离线可用，数据保存在本机。对话、检索、记忆、工具，都在本地完成',
+    locale: 'zh_CN'
+  },
+  en: {
+    title: 'DS Agent · Local Desktop Agent powered by on-device LLMs',
+    desc: 'DS Agent is a desktop agent powered by local LLMs. Chat, search, memory and tools run entirely on your device — offline-ready, data stays local.',
+    locale: 'en_US'
+  }
+};
+function fillTokens(s){
+  return String(s).replace(/\{size\}/g, DS_RELEASE.size).replace(/\{name\}/g, DS_RELEASE.name);
+}
+function setMeta(id, val){
+  var el = document.getElementById(id);
+  if (el) el.setAttribute('content', val);
+}
 function applyLang(l){
   lang = (l === 'en') ? 'en' : 'zh';
   try { localStorage.setItem('ds-lang', lang); } catch (e) {}
@@ -1214,15 +1256,28 @@ function applyLang(l){
     var k = el.getAttribute('data-i18n');
     var v = dict[k];
     if (v == null) return;
+    v = fillTokens(v);
     if (el.getAttribute('data-i18n-html') === '1') el.innerHTML = v;
     else el.textContent = v;
   });
   document.querySelectorAll('.nav-lang button').forEach(function(b){
-    b.classList.toggle('on', b.getAttribute('data-lang') === lang);
+    var on = b.getAttribute('data-lang') === lang;
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
-  document.title = (lang === 'zh')
-    ? 'DS Agent · 桌面智能体 —— 基于本地大模型'
-    : 'DS Agent · Local Desktop Agent powered by on-device LLMs';
+  var card = document.querySelector('.appcard');
+  if (card && dict['ui.alt']) card.setAttribute('aria-label', dict['ui.alt']);
+
+  var s = SEO[lang];
+  document.title = s.title;
+  setMeta('metaDesc', s.desc);
+  setMeta('ogTitle', s.title);
+  setMeta('ogDesc', s.desc);
+  setMeta('twTitle', s.title);
+  setMeta('twDesc', s.desc);
+  setMeta('ogLocale', s.locale);
+
+  if (window.__dsSyncRelease) window.__dsSyncRelease();
 }
 document.addEventListener('click', function(e){
   var b = e.target && e.target.closest ? e.target.closest('.nav-lang button') : null;
@@ -1265,28 +1320,37 @@ applyLang(lang);
 
   var dl = document.getElementById('dlBtn');
   var dlHero = document.getElementById('dlHero');
-  var DS_RELEASE_BASE = '';
-  var DS_MIRROR_PREFIX = 'https://ghproxy.net/';
-  var DS_DOWNLOADS = window.DS_DOWNLOADS || {
-    light: '',
-    light_zh: '',
-    light_en: ''
-  };
-  function pickDownloadUrl(track){
-    track = track || 'light';
-    var key = track;
-    if (lang === 'zh') {
-      if (DS_DOWNLOADS[track + '_zh']) return DS_DOWNLOADS[track + '_zh'];
-      if (track === 'light' && DS_DOWNLOADS.light_zh) return DS_DOWNLOADS.light_zh;
-    } else {
-      if (DS_DOWNLOADS[track + '_en']) return DS_DOWNLOADS[track + '_en'];
-      if (track === 'light' && DS_DOWNLOADS.light_en) return DS_DOWNLOADS.light_en;
-    }
-    return DS_DOWNLOADS[key] || DS_DOWNLOADS.light || '';
+  var dlStatus = document.getElementById('dlStatus');
+
+  function releaseUrl(){
+    if (!DS_RELEASE.url) return '';
+    return (DS_RELEASE.mirror || '') + DS_RELEASE.url;
   }
-  function openTrack(track){
-    var url = pickDownloadUrl(track);
-    if (!url) return false;
+
+  /* 包名 / 体积 / 按钮状态统一从 DS_RELEASE 派生，杜绝三处口径打架 */
+  function syncRelease(){
+    var dict = I18N[lang] || {};
+    var chip = document.getElementById('dlSizeChip');
+    if (chip) chip.textContent = DS_RELEASE.size;
+    var url = releaseUrl();
+    if (dl) {
+      var label = dl.querySelector('[data-i18n="track.light.btn"]');
+      if (label) label.textContent = url ? (dict['track.light.btn'] || '') : (dict['dl.soon'] || '');
+      dl.classList.toggle('is-pending', !url);
+      dl.setAttribute('title', url ? '' : (dict['dl.offline'] || ''));
+    }
+    if (dlStatus) {
+      dlStatus.hidden = !!url;
+      dlStatus.textContent = dict['dl.offline'] || '';
+    }
+  }
+  window.__dsSyncRelease = syncRelease;
+
+  /* 无下载地址时给出明确反馈，而不是点了没反应 */
+  function openDownload(){
+    var dict = I18N[lang] || {};
+    var url = releaseUrl();
+    if (!url) { showToast(dict['dl.offline'] || ''); return false; }
     var a = document.createElement('a');
     a.href = url;
     a.rel = 'noopener';
@@ -1294,20 +1358,17 @@ applyLang(lang);
     document.body.appendChild(a);
     a.click();
     a.remove();
-    showToast((I18N[lang]||{})['dl.toast']||'');
+    showToast(dict['dl.toast'] || '');
     return true;
   }
-  function dlClick(e, track){
-    e.preventDefault();
-    openTrack(track || 'light');
-  }
-  if (dl) dl.addEventListener('click', function(e){ dlClick(e, 'light'); });
+  if (dl) dl.addEventListener('click', function(e){ e.preventDefault(); openDownload(); });
   function scrollToDownload(e){
     if (e) e.preventDefault();
     var sec = document.getElementById('download');
     if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   if (dlHero) dlHero.addEventListener('click', scrollToDownload);
+  syncRelease();
 
   var siteNav = document.getElementById('siteNav');
   function syncNav(){
@@ -1316,8 +1377,6 @@ applyLang(lang);
     else siteNav.classList.remove('is-scrolled');
   }
 
-  var fill = document.getElementById('scrollFill');
-  var bar = document.getElementById('scrollbar');
   var topProgress = document.getElementById('topProgress');
   var sideItems = Array.prototype.slice.call(document.querySelectorAll('.side-item'));
   var sectionIds = ['top','capabilities','tech','ui','download'];
@@ -1416,25 +1475,9 @@ applyLang(lang);
   }
   bindNavJump();
 
-  function layoutRail(){
-    var max = pageMax();
-    sideItems.forEach(function(item){
-      var id = item.getAttribute('data-target');
-      var el = document.getElementById(id);
-      if (!el) return;
-      var top = el.getBoundingClientRect().top + window.scrollY;
-      var p = id === 'top' ? 0 : Math.min(1, Math.max(0, top / max));
-      /* 稍微上提一点，避免末节点贴底 */
-      if (id === 'download') p = Math.min(1, p * 0.92);
-      item.style.setProperty('--p', p);
-    });
-  }
-
   function syncRail(){
     var p = Math.min(1, Math.max(0, window.scrollY / pageMax()));
-    if (fill) fill.style.transform = 'scaleY(' + p + ')';
     if (topProgress) topProgress.style.transform = 'scaleX(' + p + ')';
-    if (bar) bar.setAttribute('aria-valuenow', Math.round(p * 100));
 
     var probe = window.scrollY + window.innerHeight * 0.32;
     var current = 'top';
@@ -1449,12 +1492,22 @@ applyLang(lang);
     });
   }
 
+  /* 视频只在 sprite 不可用时按需拉取，避免与首屏 sprite 双份下载 */
+  function ensureVideo(){
+    if (!heroVid) return null;
+    if (!heroVid.getAttribute('src')) {
+      var s = heroVid.getAttribute('data-src');
+      if (!s) return null;
+      heroVid.src = s;
+      heroVid.load();
+    }
+    return heroVid;
+  }
   if (heroVid) {
     heroVid.addEventListener('loadedmetadata', function(){
       vDur = heroVid.duration || 8;
       try { if (heroVid.currentTime < 0.01) heroVid.currentTime = 0.01; } catch (err) {}
     });
-    try { heroVid.currentTime = 0.01; } catch (err) {}
   }
 
   function resizeCanvas(){
@@ -1498,22 +1551,32 @@ applyLang(lang);
     });
   }
 
-  var loadedCount = 0;
+  var loadedCount = 0, failedCount = 0, spritesSettled = false;
+  function settleSprites(){
+    spritesSettled = true;
+    /* 全部真实解码成功才切 canvas；任一张失败就走视频兜底 */
+    if (failedCount === 0 && sprites.filter(Boolean).length >= SUB) spriteReady();
+    else update();
+  }
   function trackLoad(el, idx){
     if (!el) return;
-    function done(){ sprites[idx] = el; loadedCount++; if (loadedCount >= SUB) spriteReady(); }
+    function done(){
+      if (el.naturalWidth > 0) sprites[idx] = el; else failedCount++;
+      loadedCount++;
+      if (loadedCount >= SUB && !spritesSettled) settleSprites();
+    }
     if (el.complete && el.naturalWidth > 0) {
       done();
     } else {
-      el.addEventListener('load', done);
-      el.addEventListener('error', done);
+      el.addEventListener('load', done, { once: true });
+      el.addEventListener('error', done, { once: true });
     }
   }
   trackLoad(document.getElementById('sprite-0'), 0);
   trackLoad(document.getElementById('sprite-1'), 1);
   trackLoad(document.getElementById('sprite-2'), 2);
   trackLoad(document.getElementById('sprite-3'), 3);
-  if (loadedCount >= SUB) spriteReady();
+  if (loadedCount >= SUB && !spritesSettled) settleSprites();
 
   var totalScroll = 1;
   function measureTotal(){
@@ -1541,7 +1604,9 @@ applyLang(lang);
   }
 
   function scrubVideo(){
-    if (!heroVid) return;
+    /* sprite 判定结束且不可用时才拉视频，避免首屏双下载 */
+    if (!spritesSettled || spriteOk) return;
+    if (!ensureVideo()) return;
     var t = pageProgress() * vDur;
     if (Math.abs(t - lastT) < 0.03) return;
     lastT = t;
@@ -1573,7 +1638,6 @@ applyLang(lang);
 
   function onResize(){
     measureTotal();
-    layoutRail();
     resizeCanvas();
     update();
   }
@@ -1581,7 +1645,6 @@ applyLang(lang);
   window.addEventListener('scroll', onScroll, {passive:true});
   window.addEventListener('resize', onResize, {passive:true});
   window.addEventListener('load', function(){ onResize(); });
-  layoutRail();
   update();
 })();
 </script>

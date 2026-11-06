@@ -344,10 +344,34 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 .app-msg.me{flex-direction:row-reverse}
 .app-msg.me .app-ava{display:none}
 .app-msg.me .app-bubble{background:#24584a;color:#fff}
-.app-input{display:flex;align-items:center;gap:12px;background:#f7f3ec;border:1px solid rgba(38,48,60,.1);border-radius:8px;padding:12px 15px;margin-top:auto}
-.app-input span{font-size:13px;color:#9a8f7a}
-.app-input em{width:30px;height:30px;border-radius:6px;background:#24584a;display:grid;place-items:center;font-style:normal;color:#fff;margin-left:auto}
-.app-input em svg{width:13px;height:13px}
+.app-input{display:flex;align-items:center;gap:12px;background:#f7f3ec;border:1px solid rgba(38,48,60,.1);border-radius:8px;padding:12px 15px;margin-top:auto;transition:border-color .2s,box-shadow .2s}
+.app-input.is-focus{border-color:rgba(36,88,74,.42);box-shadow:0 0 0 3px rgba(36,88,74,.09)}
+.app-input input{flex:1;min-width:0;border:0;background:transparent;padding:0;outline:none;
+  font-family:inherit;font-size:13px;line-height:1.6;color:#26303c}
+.app-input input::placeholder{color:#9a8f7a;opacity:1}
+.app-send{width:30px;height:30px;border-radius:6px;background:#24584a;display:grid;place-items:center;
+  color:#fff;border:0;padding:0;margin-left:auto;flex-shrink:0;cursor:pointer;
+  transition:transform .18s var(--ease),opacity .18s var(--ease)}
+.app-send:hover{opacity:.88}
+.app-send:active{transform:scale(.92)}
+.app-send svg{width:13px;height:13px}
+/* 对话流：固定高度内滚动，避免演示时卡片高度跳动 */
+.app-thread{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;
+  overflow-y:auto;overflow-x:hidden;scrollbar-width:none;-ms-overflow-style:none;scroll-behavior:smooth}
+.app-thread::-webkit-scrollbar{display:none}
+.app-thread .app-msg:last-child{margin-bottom:0}
+/* 思考中气泡 */
+.app-think{display:inline-flex;align-items:center;gap:9px}
+.app-think .txt{font-size:12.5px;color:#6f6553;letter-spacing:.02em}
+.app-dots{display:inline-flex;gap:3px;align-items:center}
+.app-dots i{width:5px;height:5px;border-radius:50%;background:#9a8f7a;animation:adot 1.2s infinite}
+.app-dots i:nth-child(2){animation-delay:.15s}
+.app-dots i:nth-child(3){animation-delay:.3s}
+@keyframes adot{0%,60%,100%{opacity:.28;transform:translateY(0)}30%{opacity:1;transform:translateY(-2px)}}
+/* 流式输出光标 */
+.app-bubble.streaming::after{content:"";display:inline-block;width:2px;height:1em;
+  background:currentColor;margin-left:3px;vertical-align:-2px;animation:caret .9s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
 
 /* ===== 区块 ===== */
 .sec{padding:120px 0}
@@ -798,7 +822,7 @@ html[lang="en"] .app-sess-item,
 html[lang="en"] .app-side-foot i,
 html[lang="en"] .app-toolbar,
 html[lang="en"] .app-bubble,
-html[lang="en"] .app-input span,
+html[lang="en"] .app-input input,
 html[lang="en"] .app-perm{
   font-family:var(--font-en);
   letter-spacing:.02em;
@@ -997,23 +1021,30 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
           </div>
           <div class="app-main">
             <div class="app-toolbar"><span class="app-scope" data-i18n="app.scope">▾ 搜索范围 · 全部位置</span></div>
-            <div class="app-msg me">
-              <div class="app-ava"></div>
-              <div class="app-bubble" data-i18n="app.m1">帮我找一下本地硬盘里关于「机器学习」的文档</div>
+            <div class="app-thread" id="appThread">
+              <div class="app-msg me">
+                <div class="app-ava"></div>
+                <div class="app-bubble" data-i18n="app.m1">帮我找一下本地硬盘里关于「机器学习」的文档</div>
+              </div>
+              <div class="app-msg">
+                <div class="app-ava"></div>
+                <div class="app-bubble" data-i18n="app.m2">已在本机检索到 5 个相关文档，优先展示最新的 3 份</div>
+              </div>
+              <div class="app-msg me">
+                <div class="app-ava"></div>
+                <div class="app-bubble" data-i18n="app.m3">把这些结果总结一下</div>
+              </div>
+              <div class="app-msg">
+                <div class="app-ava"></div>
+                <div class="app-bubble" data-i18n="app.m4">最新一份是《机器学习笔记.md》，共 18 页，涵盖线性回归与神经网络两章全程未离开本机</div>
+              </div>
             </div>
-            <div class="app-msg">
-              <div class="app-ava"></div>
-              <div class="app-bubble" data-i18n="app.m2">已在本机检索到 5 个相关文档，优先展示最新的 3 份</div>
+            <div class="app-input" id="appInputBox">
+              <input id="appInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" tabindex="-1" aria-hidden="true" data-i18n-ph="app.ph">
+              <button class="app-send" id="appSend" type="button" tabindex="-1" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4Z"/></svg>
+              </button>
             </div>
-            <div class="app-msg me">
-              <div class="app-ava"></div>
-              <div class="app-bubble" data-i18n="app.m3">把这些结果总结一下</div>
-            </div>
-            <div class="app-msg">
-              <div class="app-ava"></div>
-              <div class="app-bubble" data-i18n="app.m4">最新一份是《机器学习笔记.md》，共 18 页，涵盖线性回归与神经网络两章全程未离开本机</div>
-            </div>
-            <div class="app-input"><span data-i18n="app.ph">输入指令，让 DS 帮你完成…</span><em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4Z"/></svg></em></div>
             <div class="app-perm">
               <span class="app-net"><i class="pd off"></i><span data-i18n="app.net">联网 关</span></span>
               <span class="app-perm-level"><i class="pd"></i><span data-i18n="app.perm">权限 · 询问 ▾</span></span>
@@ -1169,6 +1200,8 @@ var I18N = {
     'dl.soon':'即将发布','dl.offline':'安装包暂未开放下载，发布后在此提供',
     'meta.firstrun':'首启模型','meta.local':'本地优先',
     'ui.alt':'DS Agent 单窗口界面示意图：左侧为会话列表，右侧为对话与工具区',
+    'demo.t1':'正在理解指令…','demo.t2':'正在本机检索…','demo.t3':'正在整理结论…',
+    'demo.reply':'这是官网的界面演示，回复仅供参考。真实版本会在本机完成检索，再把结果给你。',
     'foot.zh':'桌面智能体','foot.tag':'本地优先，数据安全',
     'rail.home':'首页','rail.cap':'能力','rail.tech':'技术','rail.ui':'界面','rail.dl':'下载'
   },
@@ -1217,6 +1250,8 @@ var I18N = {
     'dl.soon':'Coming soon','dl.offline':'Installer is not available yet — check back soon',
     'meta.firstrun':'first-run models','meta.local':'Local-first',
     'ui.alt':'DS Agent single-window UI preview: sessions on the left, chat and tools on the right',
+    'demo.t1':'Understanding…','demo.t2':'Searching this device…','demo.t3':'Summarizing…',
+    'demo.reply':'This is a UI demo on the official site. The real app searches your device and answers there.',
     'foot.zh':'Desktop Agent','foot.tag':'Local-first · Data-safe',
     'rail.home':'Home','rail.cap':'Features','rail.tech':'Tech','rail.ui':'UI','rail.dl':'Download'
   }
@@ -1260,6 +1295,10 @@ function applyLang(l){
     if (el.getAttribute('data-i18n-html') === '1') el.innerHTML = v;
     else el.textContent = v;
   });
+  document.querySelectorAll('[data-i18n-ph]').forEach(function(el){
+    var v = dict[el.getAttribute('data-i18n-ph')];
+    if (v != null) el.setAttribute('placeholder', fillTokens(v));
+  });
   document.querySelectorAll('.nav-lang button').forEach(function(b){
     var on = b.getAttribute('data-lang') === lang;
     b.classList.toggle('on', on);
@@ -1278,6 +1317,7 @@ function applyLang(l){
   setMeta('ogLocale', s.locale);
 
   if (window.__dsSyncRelease) window.__dsSyncRelease();
+  if (window.__dsDemoReset) window.__dsDemoReset();
 }
 document.addEventListener('click', function(e){
   var b = e.target && e.target.closest ? e.target.closest('.nav-lang button') : null;
@@ -1646,6 +1686,224 @@ applyLang(lang);
   window.addEventListener('resize', onResize, {passive:true});
   window.addEventListener('load', function(){ onResize(); });
   update();
+})();
+</script>
+<script>
+/* ===== 界面示意：可发送的对话演示（打字 → 思考 → 流式回复） ===== */
+(function(){
+  var card = document.querySelector('.appcard');
+  var thread = document.getElementById('appThread');
+  var input = document.getElementById('appInput');
+  var box = document.getElementById('appInputBox');
+  var sendBtn = document.getElementById('appSend');
+  if (!card || !thread || !input || !sendBtn) return;
+
+  var REDUCE = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var gen = 0, pending = [], auto = true, inView = false, started = false, resumeTimer = 0;
+
+  function T(k){
+    var d = I18N[lang] || {};
+    return d[k] != null ? d[k] : ((I18N.zh || {})[k] || '');
+  }
+  function sleep(ms){
+    return new Promise(function(res){
+      var id = setTimeout(function(){
+        pending = pending.filter(function(p){ return p.id !== id; });
+        res();
+      }, REDUCE ? 0 : ms);
+      pending.push({ id: id, res: res });
+    });
+  }
+  function stopTimers(){
+    pending.slice().forEach(function(p){ clearTimeout(p.id); p.res(); });
+    pending = [];
+    clearTimeout(resumeTimer);
+  }
+  function reset(){
+    gen++;
+    stopTimers();
+    if (thread) thread.innerHTML = '';
+    input.value = '';
+    box.classList.remove('is-focus');
+    return gen;
+  }
+  function scrollEnd(){ if (thread) thread.scrollTop = thread.scrollHeight; }
+  function addMsg(text, me){
+    var w = document.createElement('div');
+    w.className = 'app-msg' + (me ? ' me' : '');
+    if (!me) {
+      var a = document.createElement('div');
+      a.className = 'app-ava';
+      w.appendChild(a);
+    }
+    var b = document.createElement('div');
+    b.className = 'app-bubble';
+    b.textContent = text || '';
+    w.appendChild(b);
+    thread.appendChild(w);
+    scrollEnd();
+    return b;
+  }
+  function addThink(label){
+    var w = document.createElement('div');
+    w.className = 'app-msg';
+    var a = document.createElement('div');
+    a.className = 'app-ava';
+    w.appendChild(a);
+    var b = document.createElement('div');
+    b.className = 'app-bubble app-think';
+    var t = document.createElement('span');
+    t.className = 'txt';
+    t.textContent = label;
+    var d = document.createElement('span');
+    d.className = 'app-dots';
+    d.innerHTML = '<i></i><i></i><i></i>';
+    b.appendChild(t); b.appendChild(d);
+    w.appendChild(b);
+    thread.appendChild(w);
+    scrollEnd();
+    return { wrap: w, txt: t };
+  }
+  async function typeInto(text, my){
+    box.classList.add('is-focus');
+    input.value = '';
+    for (var i = 0; i < text.length; i++){
+      if (my !== gen) return false;
+      input.value += text.charAt(i);
+      await sleep(46);
+    }
+    await sleep(280);
+    return my === gen;
+  }
+  /* steps: [{text, ms}] —— 依次切换思考文案，最后停留后移除 */
+  async function think(steps, my){
+    var t = addThink(steps[0].text);
+    for (var i = 1; i < steps.length; i++){
+      await sleep(steps[i - 1].ms);
+      if (my !== gen) { t.wrap.remove(); return false; }
+      t.txt.textContent = steps[i].text;
+    }
+    await sleep(steps[steps.length - 1].ms);
+    if (my !== gen) { t.wrap.remove(); return false; }
+    t.wrap.remove();
+    return true;
+  }
+  async function stream(el, text, my){
+    if (REDUCE) { el.textContent = text; scrollEnd(); return true; }
+    el.classList.add('streaming');
+    el.textContent = '';
+    for (var i = 0; i < text.length; i++){
+      if (my !== gen) { el.classList.remove('streaming'); return false; }
+      el.textContent += text.charAt(i);
+      scrollEnd();
+      await sleep(26);
+    }
+    el.classList.remove('streaming');
+    return true;
+  }
+  function send(text){
+    input.value = '';
+    addMsg(text, true);
+    box.classList.remove('is-focus');
+  }
+
+  async function playOnce(my){
+    thread.innerHTML = '';
+    if (!await typeInto(T('app.m1'), my)) return false;
+    send(T('app.m1'));
+    await sleep(420);
+    if (my !== gen) return false;
+    if (!await think([{ text: T('demo.t1'), ms: 900 }, { text: T('demo.t2'), ms: 1000 }], my)) return false;
+    if (!await stream(addMsg('', false), T('app.m2'), my)) return false;
+    await sleep(850);
+    if (my !== gen) return false;
+    if (!await typeInto(T('app.m3'), my)) return false;
+    send(T('app.m3'));
+    await sleep(420);
+    if (my !== gen) return false;
+    if (!await think([{ text: T('demo.t3'), ms: 1200 }], my)) return false;
+    if (!await stream(addMsg('', false), T('app.m4'), my)) return false;
+    return my === gen;
+  }
+
+  async function loop(){
+    var my = gen;
+    while (my === gen && auto){
+      if (!inView) { await sleep(1200); continue; }
+      if (!await playOnce(my)) return;
+      await sleep(4200);
+    }
+  }
+
+  async function manual(text){
+    auto = false;
+    var my = reset();
+    addMsg(text, true);
+    await sleep(430);
+    if (my !== gen) return;
+    if (!await think([{ text: T('demo.t1'), ms: 850 }, { text: T('demo.t2'), ms: 1000 }], my)) return;
+    if (!await stream(addMsg('', false), T('demo.reply'), my)) return;
+    /* 空闲一段时间后回到自动演示 */
+    resumeTimer = setTimeout(function(){
+      if (input.value.trim()) return;
+      auto = true;
+      reset();
+      loop().catch(function(){});
+    }, 22000);
+  }
+
+  function submit(){
+    var v = (input.value || '').replace(/\s+$/, '');
+    if (!v.trim()) return;
+    takeover();
+    manual(v).catch(function(){});
+  }
+  /* 用户一碰输入框就接管，别让自动演示继续往输入框里打字 */
+  function takeover(){
+    if (!auto) return;
+    auto = false;
+    gen++;
+    stopTimers();
+    clearTimeout(resumeTimer);
+  }
+  sendBtn.addEventListener('click', function(e){ e.preventDefault(); submit(); });
+  input.addEventListener('keydown', function(e){
+    takeover();
+    if (e.key !== 'Enter') return;
+    if (e.isComposing || e.keyCode === 229) return;   /* 输入法组字中不发送 */
+    e.preventDefault();
+    submit();
+  });
+  input.addEventListener('focus', function(){ box.classList.add('is-focus'); takeover(); });
+  input.addEventListener('blur', function(){ if (!input.value) box.classList.remove('is-focus'); });
+  box.addEventListener('click', function(e){ if (e.target !== input) input.focus(); });
+
+  function renderStatic(){
+    thread.innerHTML = '';
+    ['app.m1', 'app.m2', 'app.m3', 'app.m4'].forEach(function(k, i){ addMsg(T(k), i % 2 === 0); });
+  }
+
+  window.__dsDemoReset = function(){
+    reset();
+    auto = true;
+    if (REDUCE) { renderStatic(); return; }
+    loop().catch(function(){});
+  };
+
+  if (REDUCE) return;   /* 减少动效：保留静态对话，不自动播放 */
+
+  if ('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        inView = e.isIntersecting;
+        if (inView && !started) { started = true; loop().catch(function(){}); }
+      });
+    }, { threshold: 0.28 }).observe(card);
+  } else {
+    inView = true;
+    started = true;
+    loop().catch(function(){});
+  }
 })();
 </script>
 </body>

@@ -314,64 +314,185 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 .hero-hint svg{width:13px;height:13px;animation:dip 2.2s ease-in-out infinite}
 @keyframes dip{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
 
-/* ===== 界面卡 ===== */
-.appcard{background:#fffdf8;border:1px solid rgba(38,48,60,.1);border-radius:12px;overflow:hidden;box-shadow:0 18px 44px rgba(0,0,0,.35)}
-.app-bar{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid rgba(38,48,60,.08)}
-.app-dot{width:10px;height:10px;border-radius:50%;background:rgba(38,48,60,.18)}
-.app-dot:first-child{background:#d9c27f}
-.app-title{margin-left:10px;font-size:13px;color:#6f6553}
-.app-body{display:grid;grid-template-columns:220px 1fr;min-height:560px}
-.app-side{border-right:1px solid rgba(38,48,60,.08);background:#f7f3ec;padding:14px 10px;display:flex;flex-direction:column;gap:3px}
-.app-sess-head{display:flex;align-items:center;justify-content:space-between;padding:4px 10px 10px}
-.app-sess-title{font-size:12px;color:#6f6553;letter-spacing:.04em}
-.app-new{font-size:11px;color:#24584a;background:rgba(36,88,74,.1);padding:3px 9px;border-radius:5px}
-.app-sess-item{font-size:13px;color:#6f6553;padding:9px 12px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.app-sess-item.on{background:rgba(36,88,74,.1);color:#24584a;font-weight:600}
-.app-side-foot{margin-top:auto;display:flex;gap:6px;padding:10px 8px 2px;border-top:1px solid rgba(38,48,60,.08)}
-.app-side-foot i{flex:1;font-style:normal;text-align:center;font-size:11px;color:#6f6553;padding:6px 0;border-radius:5px;background:rgba(38,48,60,.05)}
-.app-toolbar{display:flex;align-items:center;padding:2px 2px 14px;font-size:12px;color:#6f6553}
-.app-perm{display:flex;align-items:center;gap:14px;padding-top:12px;font-size:11px;color:#6f6553}
-
-
-.app-perm .pd{display:inline-block;width:7px;height:7px;border-radius:50%;background:#9a8f7a;margin-right:6px;vertical-align:middle}
-
-
-.app-perm .pd.off{background:#8a9a91}
-.app-main{display:flex;flex-direction:column;padding:26px}
-.app-msg{display:flex;gap:12px;margin-bottom:18px}
-.app-ava{width:34px;height:34px;border-radius:8px;background-size:cover;background-position:center;background-image:url("assets/ds-logo.webp");flex-shrink:0}
-.app-bubble{max-width:80%;font-size:13.5px;line-height:1.7;padding:11px 15px;border-radius:8px;background:#f0ede5;color:#26303c}
-.app-msg.me{flex-direction:row-reverse}
-.app-msg.me .app-ava{display:none}
-.app-msg.me .app-bubble{background:#24584a;color:#fff}
-.app-input{display:flex;align-items:center;gap:12px;background:#f7f3ec;border:1px solid rgba(38,48,60,.1);border-radius:8px;padding:12px 15px;margin-top:auto;transition:border-color .2s,box-shadow .2s}
-.app-input.is-focus{border-color:rgba(36,88,74,.42);box-shadow:0 0 0 3px rgba(36,88,74,.09)}
-.app-input input{flex:1;min-width:0;border:0;background:transparent;padding:0;outline:none;
-  font-family:inherit;font-size:13px;line-height:1.6;color:#26303c}
-.app-input input::placeholder{color:#9a8f7a;opacity:1}
-.app-send{width:30px;height:30px;border-radius:6px;background:#24584a;display:grid;place-items:center;
-  color:#fff;border:0;padding:0;margin-left:auto;flex-shrink:0;cursor:pointer;
-  transition:transform .18s var(--ease),opacity .18s var(--ease)}
-.app-send:hover{opacity:.88}
-.app-send:active{transform:scale(.92)}
-.app-send svg{width:13px;height:13px}
-/* 对话流：固定高度内滚动，避免演示时卡片高度跳动 */
-.app-thread{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;
-  overflow-y:auto;overflow-x:hidden;scrollbar-width:none;-ms-overflow-style:none;scroll-behavior:smooth}
+/* ===== 界面卡（按客户端真实布局还原） ===== */
+.appcard{--ac:#24584a;--ink:#26303c;--sub:#6f6553;--ln:rgba(38,48,60,.1);
+  display:flex;flex-direction:column;width:100%;min-width:0;aspect-ratio:896/606;min-height:500px;
+  background:#f7f3ec;border-radius:14px;overflow:hidden;color:var(--ink);
+  font-family:var(--font-cn);text-align:left;
+  box-shadow:0 28px 64px rgba(0,0,0,.46),0 0 0 1px rgba(255,255,255,.08),0 1px 0 rgba(255,255,255,.06) inset}
+/* 顶部应用栏 */
+.app-bar{display:flex;align-items:center;justify-content:space-between;height:54px;padding:0 16px;
+  background:#fffdf8;border-bottom:1px solid var(--ln)}
+.ab-brand{display:flex;align-items:center;gap:10px;min-width:0}
+.ab-logo{width:30px;height:30px;border-radius:9px;flex-shrink:0;
+  background:url("assets/ds-logo.webp") center/cover var(--ac);box-shadow:0 6px 14px rgba(38,48,60,.14)}
+.ab-title{font-size:17px;font-weight:700;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ab-right{display:flex;align-items:center;gap:9px;flex-shrink:0}
+.ab-lang{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--sub);
+  border:1px solid var(--ln);border-radius:7px;padding:4px 8px;background:#fff;white-space:nowrap}
+.ab-lang svg{width:9px;height:9px;opacity:.5}
+.ab-win{display:flex;gap:1px}
+.ab-win i{width:26px;height:24px;display:grid;place-items:center;border-radius:5px;color:var(--sub);font-style:normal}
+.ab-win svg{width:11px;height:11px}
+/* 主体：会话卡 + 对话卡，中间留缝 */
+.app-body{display:flex;gap:10px;padding:12px;flex:1 1 auto;min-height:0}
+.app-side{width:200px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;
+  background:#fffdf8;border:1px solid var(--ln);border-radius:10px;padding:9px;
+  box-shadow:0 6px 18px rgba(38,48,60,.04)}
+.as-head{display:flex;align-items:center;justify-content:space-between;padding:1px 2px 4px}
+.as-title{font-size:12px;font-weight:700;color:var(--sub);letter-spacing:.08em}
+.as-acts{display:flex;align-items:center;gap:4px}
+.as-new{font-size:11px;font-weight:600;color:var(--ac);background:#fff;
+  border:1px solid rgba(36,88,74,.24);border-radius:6px;padding:3px 8px;white-space:nowrap}
+.as-collapse{width:18px;height:18px;display:grid;place-items:center;color:var(--sub)}
+.as-collapse svg{width:11px;height:11px}
+.as-list{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:4px;overflow:hidden}
+.as-item{font-size:12.5px;color:var(--ink);padding:7px 9px;border-radius:7px;background:#fff;
+  border:1px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.as-item.on{border-color:var(--ac);background:#dfece6;font-weight:600}
+.as-foot{margin-top:auto;display:flex;gap:5px;padding-top:8px;border-top:1px solid var(--ln)}
+.as-foot i{flex:1;height:26px;display:grid;place-items:center;border:1px solid var(--ln);
+  border-radius:6px;background:#fff;color:var(--sub);font-style:normal}
+.as-foot svg{width:13px;height:13px}
+/* 对话卡 */
+.app-main{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;
+  background:#fff;border:1px solid var(--ln);border-radius:10px;padding:13px 15px 11px;
+  box-shadow:0 6px 18px rgba(38,48,60,.04)}
+.app-toolbar{display:flex;align-items:center;gap:9px;flex-shrink:0;font-size:12px;
+  padding:0 2px 9px;min-height:26px}
+.sc-caret{color:var(--sub);font-size:10px;line-height:1;transition:transform .24s var(--ease)}
+.app-toolbar:hover .sc-caret{transform:rotate(90deg)}
+.sc-k{color:var(--ink);white-space:nowrap}
+.sc-v{color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+/* 对话流 */
+.app-thread{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:9px;
+  overflow-y:auto;overflow-x:hidden;padding:2px 2px 4px;
+  scrollbar-width:none;-ms-overflow-style:none;scroll-behavior:smooth}
 .app-thread::-webkit-scrollbar{display:none}
-.app-thread .app-msg:last-child{margin-bottom:0}
-/* 思考中气泡 */
-.app-think{display:inline-flex;align-items:center;gap:9px}
-.app-think .txt{font-size:12.5px;color:#6f6553;letter-spacing:.02em}
-.app-dots{display:inline-flex;gap:3px;align-items:center}
-.app-dots i{width:5px;height:5px;border-radius:50%;background:#9a8f7a;animation:adot 1.2s infinite}
-.app-dots i:nth-child(2){animation-delay:.15s}
-.app-dots i:nth-child(3){animation-delay:.3s}
-@keyframes adot{0%,60%,100%{opacity:.28;transform:translateY(0)}30%{opacity:1;transform:translateY(-2px)}}
-/* 流式输出光标 */
-.app-bubble.streaming::after{content:"";display:inline-block;width:2px;height:1em;
-  background:currentColor;margin-left:3px;vertical-align:-2px;animation:caret .9s steps(1) infinite}
+.app-msg{display:flex;gap:8px;max-width:100%;min-width:0}
+.app-msg.me{justify-content:flex-end}
+.app-ava{width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  background:url("assets/ds-logo.webp") center/cover var(--ac);box-shadow:0 4px 10px rgba(38,48,60,.12)}
+.app-bubble{font-size:13px;line-height:1.62;min-width:0;word-break:break-word}
+.app-msg.me .app-bubble{background:var(--ac);color:#fff;padding:8px 12px;border-radius:10px;
+  border-top-right-radius:4px;max-width:78%}
+.app-msg.ai .app-bubble{background:#fff;border:1px solid var(--ln);padding:8px 11px;border-radius:10px;
+  border-top-left-radius:4px;max-width:86%;box-shadow:0 2px 8px rgba(38,48,60,.04)}
+.app-md:empty{display:none}
+/* 结构化结果表（对应客户端 ResultPanel） */
+.res{margin-top:8px;border:1px solid var(--ln);border-radius:8px;overflow:hidden;font-size:11px}
+.res-row{display:grid;grid-template-columns:18px minmax(0,1fr) minmax(0,1.15fr);gap:6px;
+  align-items:center;padding:4px 8px;border-top:1px solid rgba(38,48,60,.06)}
+.res-row:first-child{border-top:0}
+.res-head{background:#f7f3ec;color:var(--sub);font-weight:600;font-size:10.5px}
+.res-i{color:var(--sub);font-size:10px;text-align:center;font-variant-numeric:tabular-nums}
+.res-d{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+.res-p{overflow:hidden;min-width:0}
+.res-pill{display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  background:#eef7f1;color:var(--ac);border-radius:5px;padding:2px 6px;font-size:10px;font-family:var(--font-en)}
+.app-md.streaming::after{content:"";display:inline-block;width:2px;height:1em;background:currentColor;
+  margin-left:2px;vertical-align:-2px;animation:caret .9s steps(1) infinite}
 @keyframes caret{50%{opacity:0}}
+/* 思考过程（可折叠，结构与客户端一致） */
+.proc{margin-bottom:6px}
+.proc-head{display:inline-flex;align-items:center;gap:6px;max-width:100%;
+  font-family:inherit;font-size:11px;color:var(--sub);cursor:pointer;
+  border:1px solid var(--ln);border-radius:999px;padding:3px 9px;background:transparent;
+  transition:background .16s,border-color .16s}
+.proc-head:hover{background:rgba(36,88,74,.05)}
+.proc.is-run .proc-head{border-color:rgba(36,88,74,.16)}
+.proc-ic{font-size:9px;opacity:.7;width:9px;text-align:center;flex-shrink:0}
+.proc-label{font-weight:600;color:var(--ink);white-space:nowrap}
+.proc.is-run .proc-label{color:var(--ac)}
+.proc-more{font-size:10px;opacity:.5;white-space:nowrap}
+.proc-dots{display:inline-flex;gap:3px;align-items:center}
+.proc-dots i{width:4px;height:4px;border-radius:50%;background:currentColor;animation:adot 1.2s infinite}
+.proc-dots i:nth-child(2){animation-delay:.15s}
+.proc-dots i:nth-child(3){animation-delay:.3s}
+@keyframes adot{0%,60%,100%{opacity:.28;transform:translateY(0)}30%{opacity:1;transform:translateY(-2px)}}
+.proc-body{overflow:hidden;max-height:0;opacity:0;margin-top:0;
+  border-left:1px solid var(--ln);padding-left:9px;
+  transition:max-height .34s var(--ease),opacity .26s var(--ease),margin-top .26s var(--ease)}
+.proc.open .proc-body{max-height:200px;opacity:1;margin-top:6px}
+.proc-route{font-size:10px;color:var(--sub);opacity:.72;margin-bottom:4px;letter-spacing:.02em}
+.proc-think{font-size:11px;line-height:1.55;color:var(--sub);opacity:.9;margin-bottom:4px;
+  white-space:pre-wrap;word-break:break-word}
+.proc-steps:empty{display:none}
+.proc-step{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--sub);padding:1px 0}
+.proc-step b{font-size:10.5px;font-weight:600;color:var(--ac);flex-shrink:0}
+.proc-step .st-d{opacity:.62;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.st-i{width:10px;text-align:center;font-size:9px;flex-shrink:0;color:var(--ac)}
+.st-i.run{animation:spin 1.4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* 输入区 */
+.app-compose{display:flex;align-items:stretch;gap:8px;margin-top:8px;flex-shrink:0}
+.app-input{flex:1;min-width:0;display:flex;align-items:center;
+  background:#fff;border:1px solid var(--ln);border-radius:9px;padding:0 11px;min-height:38px;
+  transition:border-color .2s,box-shadow .2s}
+.app-input.is-focus{border-color:rgba(36,88,74,.42);box-shadow:0 0 0 3px rgba(36,88,74,.08)}
+.app-input input{flex:1;min-width:0;border:0;background:transparent;outline:none;padding:0;
+  font-family:inherit;font-size:12.5px;color:var(--ink);line-height:1.4}
+.app-input input::placeholder{color:#9a8f7a;opacity:1}
+.app-send{display:inline-flex;align-items:center;justify-content:center;gap:6px;flex-shrink:0;
+  padding:0 15px;border-radius:9px;border:1px solid var(--ac);background:var(--ac);color:#fff;
+  font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;
+  transition:background .18s var(--ease),color .18s var(--ease),border-color .18s var(--ease),transform .14s var(--ease)}
+.app-send svg{width:12px;height:12px}
+.app-send:active{transform:scale(.97)}
+.app-send:hover{background:#1c463b;border-color:#1c463b}
+.app-send .ic-stop{display:none}
+.app-send.is-busy{background:#fff;color:#b4544a;border-color:rgba(180,84,74,.34)}
+.app-send.is-busy:hover{background:rgba(180,84,74,.06);color:#b4544a;border-color:rgba(180,84,74,.5)}
+.app-send.is-busy .ic-send{display:none}
+.app-send.is-busy .ic-stop{display:block}
+/* 状态条 */
+.app-status{display:flex;align-items:center;gap:7px;margin-top:8px;flex-shrink:0;
+  font-size:11px;color:var(--sub)}
+.st{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:7px;
+  border:1px solid var(--ln);background:#fff;white-space:nowrap}
+.st i{width:6px;height:6px;border-radius:50%;background:var(--sub);flex-shrink:0}
+.st em{font-style:normal;font-size:8px;opacity:.55;line-height:1}
+.st.perm{color:#b98b2f;border-color:rgba(250,204,21,.4);background:rgba(250,204,21,.08)}
+.st.perm i{background:#b98b2f}
+.st-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.st-ring{width:13px;height:13px;border-radius:50%;flex-shrink:0;
+  border:2px solid rgba(36,88,74,.2);border-top-color:var(--ac)}
+.st-ring.is-busy{animation:spin 1.1s linear infinite}
+.st-model{display:inline-flex;align-items:center;gap:5px;color:var(--ink);
+  font-family:var(--font-en);font-size:11px;white-space:nowrap}
+.st-model::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--ac)}
+/* 回到底部浮钮 */
+.app-jump{position:absolute;right:20px;bottom:86px;z-index:3;width:30px;height:30px;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;color:var(--ac);
+  border:1px solid var(--ln);background:rgba(255,255,255,.94);
+  box-shadow:0 8px 20px rgba(38,48,60,.14);transition:background .18s,transform .18s,opacity .2s}
+.app-jump svg{width:13px;height:13px}
+.app-jump:hover{background:var(--ac);color:#fff;border-color:var(--ac)}
+.app-jump:active{transform:scale(.94)}
+@media (max-width:900px){
+  .appcard{min-height:500px}
+  .app-side{width:176px}
+  .app-body{padding:10px;gap:8px}
+}
+@media (max-width:620px){
+  .appcard{min-height:496px}
+  .app-body{padding:8px;gap:0}
+  .app-side{display:none}
+  .app-bar{height:46px;padding:0 12px}
+  .ab-title{font-size:15px}
+  .ab-logo{width:26px;height:26px;border-radius:8px}
+  .ab-win{display:none}
+  .app-main{padding:10px 11px 9px;border-radius:9px}
+  .app-toolbar{font-size:11px;gap:7px;padding-bottom:7px}
+  .app-bubble{font-size:12.5px}
+  .app-msg.ai .app-bubble{max-width:calc(100% - 36px)}
+  .app-compose{align-items:center}
+  .app-send{width:38px;height:38px;padding:0}
+  .app-send span{display:none}
+  .app-send svg{width:14px;height:14px}
+  .app-jump{right:14px;bottom:80px;width:26px;height:26px}
+  .st.perm em{display:none}
+}
 
 /* ===== 区块 ===== */
 .sec{padding:120px 0}
@@ -517,9 +638,8 @@ p,h1,h2,h3,h4{text-wrap:pretty}
 }
 .ui-note{margin-top:18px;text-align:center;font-size:13px;color:var(--faint)}
 /* 恢复原先窗口展示：最大宽 900，不被栅格压扁 */
-.ui-wrap{max-width:900px;width:100%;margin:0}
+.ui-wrap{max-width:900px;width:100%;min-width:0;margin:0}
 .ui-wrap .appcard{width:100%}
-.ui-wrap .app-body{min-height:560px}
 
 /* ===== 下载区 ===== */
 .dl-grid{
@@ -817,13 +937,16 @@ html[lang="en"] .arch-node p,
 html[lang="en"] .arch-bound,
 html[lang="en"] .ui-note,
 html[lang="en"] .dl-hint,
-html[lang="en"] .app-title,
-html[lang="en"] .app-sess-item,
-html[lang="en"] .app-side-foot i,
+html[lang="en"] .ab-title,
+html[lang="en"] .as-item,
+html[lang="en"] .as-new,
+html[lang="en"] .as-foot i,
 html[lang="en"] .app-toolbar,
 html[lang="en"] .app-bubble,
 html[lang="en"] .app-input input,
-html[lang="en"] .app-perm{
+html[lang="en"] .app-status,
+html[lang="en"] .proc-label,
+html[lang="en"] .proc-think{
   font-family:var(--font-en);
   letter-spacing:.02em;
 }
@@ -1002,54 +1125,77 @@ html[lang="en"] .dl-card h3 svg{margin-top:2px}
       <div class="ui-wrap">
         <div class="appcard" role="img" aria-label="DS Agent 单窗口界面示意图：左侧会话列表，右侧对话与工具区">
         <div class="app-bar" aria-hidden="true">
-          <span class="app-dot"></span><span class="app-dot"></span><span class="app-dot"></span>
-          <span class="app-title">DS — Desktop System Agent</span>
+          <div class="ab-brand">
+            <span class="ab-logo"></span>
+            <span class="ab-title">Desktop system Agent</span>
+          </div>
+          <div class="ab-right">
+            <span class="ab-lang"><span data-i18n="app.lang">简体中文</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            <span class="ab-win">
+              <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg></i>
+              <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="5" width="14" height="14" rx="1.5"/></svg></i>
+              <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></i>
+            </span>
+          </div>
         </div>
         <div class="app-body">
-          <div class="app-side">
-            <div class="app-sess-head">
-              <span class="app-sess-title" data-i18n="app.sess">会话</span>
-              <span class="app-new" data-i18n="app.new">+ 新对话</span>
+          <aside class="app-side" aria-hidden="true">
+            <div class="as-head">
+              <span class="as-title" data-i18n="app.sess">对话</span>
+              <span class="as-acts">
+                <span class="as-new" data-i18n="app.new">新建</span>
+                <span class="as-collapse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6l-6 6 6 6"/><path d="M19 6l-6 6 6 6"/></svg></span>
+              </span>
             </div>
-            <div class="app-sess-item on" data-i18n="app.s1">调研报告总结</div>
-            <div class="app-sess-item" data-i18n="app.s2">本周文件整理</div>
-            <div class="app-sess-item" data-i18n="app.s3">合同条款检索</div>
-            <div class="app-sess-item" data-i18n="app.s4">读书笔记</div>
-            <div class="app-side-foot">
-              <i data-i18n="app.f1">插件</i><i data-i18n="app.f2">记忆</i><i data-i18n="app.f3">整理</i><i data-i18n="app.f4">关于</i>
+            <div class="as-list">
+              <div class="as-item on" data-i18n="app.s1">机器学习文档检索</div>
+              <div class="as-item" data-i18n="app.s2">把宝宝照片标记成表格</div>
+              <div class="as-item" data-i18n="app.s3">帮我找一下宝宝文件夹在哪</div>
+              <div class="as-item" data-i18n="app.s4">上周预算报告汇总</div>
+              <div class="as-item" data-i18n="app.s5">合同条款检索</div>
+              <div class="as-item" data-i18n="app.s6">你好</div>
+              <div class="as-item" data-i18n="app.s7">整理下载文件夹</div>
+              <div class="as-item" data-i18n="app.s8">桌面截图归档</div>
+              <div class="as-item" data-i18n="app.s9">读书笔记摘要</div>
+              <div class="as-item" data-i18n="app.s10">找一下身份证扫描件</div>
+              <div class="as-item" data-i18n="app.s11">会议纪要归类</div>
             </div>
-          </div>
-          <div class="app-main">
-            <div class="app-toolbar"><span class="app-scope" data-i18n="app.scope">▾ 搜索范围 · 全部位置</span></div>
-            <div class="app-thread" id="appThread">
-              <div class="app-msg me">
-                <div class="app-ava"></div>
-                <div class="app-bubble" data-i18n="app.m1">帮我找一下本地硬盘里关于「机器学习」的文档</div>
-              </div>
-              <div class="app-msg">
-                <div class="app-ava"></div>
-                <div class="app-bubble" data-i18n="app.m2">已在本机检索到 5 个相关文档，优先展示最新的 3 份</div>
-              </div>
-              <div class="app-msg me">
-                <div class="app-ava"></div>
-                <div class="app-bubble" data-i18n="app.m3">把这些结果总结一下</div>
-              </div>
-              <div class="app-msg">
-                <div class="app-ava"></div>
-                <div class="app-bubble" data-i18n="app.m4">最新一份是《机器学习笔记.md》，共 18 页，涵盖线性回归与神经网络两章全程未离开本机</div>
-              </div>
+            <div class="as-foot">
+              <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v5"/><path d="M15 3v5"/><path d="M6 8h12v3a6 6 0 0 1-12 0z"/><path d="M12 17v4"/></svg></i>
+              <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 1.8"/></svg></i>
+              <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h7l5 5v13H6z"/><path d="M13 3v5h5"/></svg></i>
+              <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 11v5.5"/><path d="M12 7.8h.01"/></svg></i>
             </div>
-            <div class="app-input" id="appInputBox">
-              <input id="appInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" tabindex="-1" aria-hidden="true" data-i18n-ph="app.ph">
+          </aside>
+          <section class="app-main">
+            <div class="app-toolbar" aria-hidden="true">
+              <span class="sc-caret">›</span>
+              <span class="sc-k" data-i18n="app.scope">搜索范围</span>
+              <span class="sc-v" data-i18n="app.scopeV">全部类型 · 全部位置</span>
+            </div>
+            <div class="app-thread" id="appThread"></div>
+            <button class="app-jump" id="appJump" type="button" tabindex="-1" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v13"/><path d="M6 12l6 6 6-6"/><path d="M5 21h14"/></svg>
+            </button>
+            <div class="app-compose">
+              <div class="app-input" id="appInputBox">
+                <input id="appInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" tabindex="-1" aria-hidden="true" data-i18n-ph="app.ph">
+              </div>
               <button class="app-send" id="appSend" type="button" tabindex="-1" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4Z"/></svg>
+                <svg class="ic-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4Z"/></svg>
+                <svg class="ic-stop" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+                <span id="appSendLabel" data-i18n="app.send">发送</span>
               </button>
             </div>
-            <div class="app-perm">
-              <span class="app-net"><i class="pd off"></i><span data-i18n="app.net">联网 关</span></span>
-              <span class="app-perm-level"><i class="pd"></i><span data-i18n="app.perm">权限 · 询问 ▾</span></span>
+            <div class="app-status" aria-hidden="true">
+              <span class="st net"><i></i><span data-i18n="app.net">离线</span></span>
+              <span class="st perm"><i></i><span data-i18n="app.perm">自主</span><em>▾</em></span>
+              <span class="st-right">
+                <span class="st-ring" id="appRing"></span>
+                <span class="st-model">qwen3:4b<em>▾</em></span>
+              </span>
             </div>
-          </div>
+          </section>
         </div>
         </div>
         <p class="ui-note" data-i18n="ui.note">界面为示意，以实际应用为准</p>
@@ -1181,16 +1327,21 @@ var I18N = {
     'arch.tag':'你的设备','arch.bound':' · 数据本地处理 · 结果留在本机','arch.cloud':'联网功能（可选）',
     'ui.title':'简洁的<br>单窗口设计',
     'ui.desc':'左侧管理会话，主区完成对话与工具调用，状态一目了然',
-    'app.sess':'会话','app.new':'+ 新对话',
-    'app.s1':'调研报告总结','app.s2':'本周文件整理','app.s3':'合同条款检索','app.s4':'读书笔记',
-    'app.f1':'插件','app.f2':'记忆','app.f3':'整理','app.f4':'关于',
-    'app.scope':'▾ 搜索范围 · 全部位置',
+    'app.sess':'对话','app.new':'新建','app.lang':'简体中文',
+    'app.s1':'机器学习文档检索','app.s2':'把宝宝照片标记成表格','app.s3':'帮我找一下宝宝文件夹在哪',
+    'app.s4':'上周预算报告汇总','app.s5':'合同条款检索','app.s6':'你好',
+    'app.s7':'整理下载文件夹','app.s8':'桌面截图归档','app.s9':'读书笔记摘要',
+    'app.s10':'找一下身份证扫描件','app.s11':'会议纪要归类',
+    'app.scope':'搜索范围','app.scopeV':'全部类型 · 全部位置',
     'app.m1':'帮我找一下本地硬盘里关于「机器学习」的文档',
     'app.m2':'已在本机检索到 5 个相关文档，优先展示最新的 3 份',
     'app.m3':'把这些结果总结一下',
-    'app.m4':'最新一份是《机器学习笔记.md》，共 18 页，涵盖线性回归与神经网络两章，全程未离开本机',
-    'app.ph':'输入指令，让 DS 帮你完成…',
-    'app.net':'联网 关','app.perm':'权限 · 询问 ▾',
+    'app.m4':'《机器学习笔记.md》共 18 页，两章内容全程都在本机完成',
+    'app.ph':'说说你的需求，例如：帮我找出上周含「预算」的报告并总结',
+    'app.send':'发送','app.stop':'停止',
+    'app.net':'离线','app.perm':'自主',
+    'app.thinking':'正在思考','app.record':'查看过程记录','app.expand':'展开','app.stopped':'已停止',
+    'app.route':'检索 · 标准 · 只读',
     'ui.note':'界面为示意，以实际应用为准',
     'dl.title':'开始使用','dl.desc':'安装即可使用，无需注册账号，数据保存在本机',
     'track.light.t':'Windows 应用包','track.light.sub':'NSIS 向导安装。模型在首次启动时下载到本机。','track.light.a':'安装包 {size}','track.light.b':'首启下载模型（约 3.4 GB）','track.light.c':'需 Ollama，或已有 model-pack','track.light.d':'{name}','track.light.e':'免注册，本地运行','track.light.btn':'下载 Windows 版','dl1.t':'系统要求','dl1.a':'Windows 10/11 x64','dl1.b':'建议 16 GB 内存（8 GB 可试）','dl1.c':'预留磁盘：模型约 3.4 GB+',
@@ -1200,7 +1351,14 @@ var I18N = {
     'dl.soon':'即将发布','dl.offline':'安装包暂未开放下载，发布后在此提供',
     'meta.firstrun':'首启模型','meta.local':'本地优先',
     'ui.alt':'DS Agent 单窗口界面示意图：左侧为会话列表，右侧为对话与工具区',
-    'demo.t1':'正在理解指令…','demo.t2':'正在本机检索…','demo.t3':'正在整理结论…',
+    'res.c1':'描述','res.c2':'地址',
+    'res.r1':'线性回归讲义.md','res.p1':'C:/论文库/机器学习笔记.md',
+    'res.r2':'神经网络章节.md','res.p2':'D:/课程/神经网络.md',
+    'res.r3':'课程报告.pdf','res.p3':'C:/Users/Documents/report.pdf',
+    'demo.think1':'先在本机索引里定位「机器学习」相关的文件，范围是全部位置。',
+    'demo.think2':'命中 5 个文档，先读最近修改的 3 份，其余按时间排序。',
+    'demo.step1n':'检索文件','demo.step1d':'全部位置 · 关键词 机器学习',
+    'demo.step2n':'读取文档','demo.step2d':'机器学习笔记.md 等 3 个文件',
     'demo.reply':'这是官网的界面演示，回复仅供参考。真实版本会在本机完成检索，再把结果给你。',
     'foot.zh':'桌面智能体','foot.tag':'本地优先，数据安全',
     'rail.home':'首页','rail.cap':'能力','rail.tech':'技术','rail.ui':'界面','rail.dl':'下载'
@@ -1231,16 +1389,21 @@ var I18N = {
     'arch.tag':'Your device','arch.bound':' · Processed locally · Results stay on device','arch.cloud':'Online features (optional)',
     'ui.title':'Clean single-window<br>design',
     'ui.desc':'Sessions on the left, chat and tools in the main pane',
-    'app.sess':'Sessions','app.new':'+ New chat',
-    'app.s1':'Research summary','app.s2':'Weekly file cleanup','app.s3':'Contract clause search','app.s4':'Reading notes',
-    'app.f1':'Plugins','app.f2':'Memory','app.f3':'Tidy','app.f4':'About',
-    'app.scope':'▾ Search scope · All locations',
+    'app.sess':'Chats','app.new':'New','app.lang':'English',
+    'app.s1':'Machine learning docs','app.s2':'Tag toddler photos into a table','app.s3':'Where is the toddler folder',
+    'app.s4':'Last week budget report','app.s5':'Contract clause search','app.s6':'Hello',
+    'app.s7':'Tidy the Downloads folder','app.s8':'Archive desktop screenshots','app.s9':'Reading notes summary',
+    'app.s10':'Find the ID scan','app.s11':'Sort meeting notes',
+    'app.scope':'Search scope','app.scopeV':'All types · All locations',
     'app.m1':'Find local documents about “machine learning”',
     'app.m2':'Found 5 related files on this device. Showing the latest 3',
     'app.m3':'Summarize these results',
-    'app.m4':'Latest: “ML Notes.md”, 18 pages covering linear regression and neural nets. Nothing left this device',
-    'app.ph':'Type a command for DS…',
-    'app.net':'Network off','app.perm':'Permission · Ask ▾',
+    'app.m4':'“ML Notes.md” — 18 pages, both chapters processed on this device',
+    'app.ph':'Describe your task — e.g. find the budget reports and summarize',
+    'app.send':'Send','app.stop':'Stop',
+    'app.net':'Offline','app.perm':'Autonomous',
+    'app.thinking':'Thinking','app.record':'View activity','app.expand':'Expand','app.stopped':'Stopped',
+    'app.route':'Retrieval · Medium · Read-only',
     'ui.note':'UI is illustrative; the app may differ',
     'dl.title':'Get started','dl.desc':'Install and go. No account required',
     'track.light.t':'Windows app package','track.light.sub':'NSIS wizard installer. Models download on first launch to this PC.','track.light.a':'Setup {size}','track.light.b':'Models on first launch (~3.4 GB)','track.light.c':'Needs Ollama or a local model-pack','track.light.d':'{name}','track.light.e':'No account, runs locally','track.light.btn':'Download for Windows','dl1.t':'System','dl1.a':'Windows 10/11 x64','dl1.b':'16 GB RAM recommended (8 GB works)','dl1.c':'Disk: ~3.4 GB+ for models',
@@ -1250,7 +1413,14 @@ var I18N = {
     'dl.soon':'Coming soon','dl.offline':'Installer is not available yet — check back soon',
     'meta.firstrun':'first-run models','meta.local':'Local-first',
     'ui.alt':'DS Agent single-window UI preview: sessions on the left, chat and tools on the right',
-    'demo.t1':'Understanding…','demo.t2':'Searching this device…','demo.t3':'Summarizing…',
+    'res.c1':'Description','res.c2':'Location',
+    'res.r1':'Linear regression notes.md','res.p1':'C:/Study/ML notes.md',
+    'res.r2':'Neural nets chapter.md','res.p2':'D:/Course/neural-nets.md',
+    'res.r3':'Course report.pdf','res.p3':'C:/Users/Documents/report.pdf',
+    'demo.think1':'First locating files about “machine learning” in the local index, across all locations.',
+    'demo.think2':'5 documents matched. Reading the 3 most recent first, the rest sorted by time.',
+    'demo.step1n':'Search files','demo.step1d':'All locations · machine learning',
+    'demo.step2n':'Read documents','demo.step2d':'ML Notes.md and 2 more',
     'demo.reply':'This is a UI demo on the official site. The real app searches your device and answers there.',
     'foot.zh':'Desktop Agent','foot.tag':'Local-first · Data-safe',
     'rail.home':'Home','rail.cap':'Features','rail.tech':'Tech','rail.ui':'UI','rail.dl':'Download'
@@ -1689,22 +1859,28 @@ applyLang(lang);
 })();
 </script>
 <script>
-/* ===== 界面示意：可发送的对话演示（打字 → 思考 → 流式回复） ===== */
+/* ===== 界面示意：可发送的对话演示（打字 → 思考过程 → 流式回复） ===== */
 (function(){
   var card = document.querySelector('.appcard');
   var thread = document.getElementById('appThread');
   var input = document.getElementById('appInput');
   var box = document.getElementById('appInputBox');
   var sendBtn = document.getElementById('appSend');
-  if (!card || !thread || !input || !sendBtn) return;
+  var sendLabel = document.getElementById('appSendLabel');
+  var jump = document.getElementById('appJump');
+  var ring = document.getElementById('appRing');
+  if (!card || !thread || !input || !sendBtn || !sendLabel) return;
 
   var REDUCE = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  var gen = 0, pending = [], auto = true, inView = false, started = false, resumeTimer = 0;
+  /* 窄屏只演一轮，避免小卡片里出现被裁切的半截对话 */
+  var NARROW = !!(window.matchMedia && window.matchMedia('(max-width:620px)').matches);
+  var gen = 0, pending = [], auto = true, inView = false, started = false, resumeTimer = 0, busy = false;
 
   function T(k){
     var d = I18N[lang] || {};
     return d[k] != null ? d[k] : ((I18N.zh || {})[k] || '');
   }
+  function mk(t, c){ var n = document.createElement(t); if (c) n.className = c; return n; }
   function sleep(ms){
     return new Promise(function(res){
       var id = setTimeout(function(){
@@ -1717,119 +1893,231 @@ applyLang(lang);
   function stopTimers(){
     pending.slice().forEach(function(p){ clearTimeout(p.id); p.res(); });
     pending = [];
-    clearTimeout(resumeTimer);
+  }
+  function scrollEnd(){ thread.scrollTop = thread.scrollHeight; }
+  function setBusy(b){
+    busy = b;
+    sendBtn.classList.toggle('is-busy', b);
+    sendLabel.textContent = b ? T('app.stop') : T('app.send');
+    if (ring) ring.classList.toggle('is-busy', b);
   }
   function reset(){
     gen++;
     stopTimers();
-    if (thread) thread.innerHTML = '';
+    thread.innerHTML = '';
     input.value = '';
     box.classList.remove('is-focus');
+    setBusy(false);
     return gen;
   }
-  function scrollEnd(){ if (thread) thread.scrollTop = thread.scrollHeight; }
-  function addMsg(text, me){
-    var w = document.createElement('div');
-    w.className = 'app-msg' + (me ? ' me' : '');
-    if (!me) {
-      var a = document.createElement('div');
-      a.className = 'app-ava';
-      w.appendChild(a);
-    }
-    var b = document.createElement('div');
-    b.className = 'app-bubble';
-    b.textContent = text || '';
+
+  function addUser(text){
+    var w = mk('div', 'app-msg me');
+    var b = mk('div', 'app-bubble');
+    b.textContent = text;
     w.appendChild(b);
     thread.appendChild(w);
     scrollEnd();
     return b;
   }
-  function addThink(label){
-    var w = document.createElement('div');
-    w.className = 'app-msg';
-    var a = document.createElement('div');
-    a.className = 'app-ava';
-    w.appendChild(a);
-    var b = document.createElement('div');
-    b.className = 'app-bubble app-think';
-    var t = document.createElement('span');
-    t.className = 'txt';
-    t.textContent = label;
-    var d = document.createElement('span');
-    d.className = 'app-dots';
-    d.innerHTML = '<i></i><i></i><i></i>';
-    b.appendChild(t); b.appendChild(d);
-    w.appendChild(b);
+
+  /* 思考过程面板：折叠胶囊 + 推理文本 + 工具步骤，与客户端结构一致 */
+  function buildProc(){
+    var root = mk('div', 'proc open is-run');
+    var head = mk('button', 'proc-head');
+    head.type = 'button';
+    head.tabIndex = -1;
+    head.setAttribute('aria-hidden', 'true');
+    var ic = mk('span', 'proc-ic'); ic.textContent = '▾';
+    var label = mk('span', 'proc-label'); label.textContent = T('app.thinking');
+    var dots = mk('span', 'proc-dots'); dots.innerHTML = '<i></i><i></i><i></i>';
+    var more = mk('span', 'proc-more'); more.textContent = T('app.expand'); more.style.display = 'none';
+    head.appendChild(ic); head.appendChild(label); head.appendChild(dots); head.appendChild(more);
+    var body = mk('div', 'proc-body');
+    var route = mk('div', 'proc-route'); route.textContent = T('app.route');
+    var think = mk('div', 'proc-think');
+    var steps = mk('div', 'proc-steps');
+    body.appendChild(route); body.appendChild(think); body.appendChild(steps);
+    root.appendChild(head); root.appendChild(body);
+
+    var st = { root: root, ic: ic, label: label, dots: dots, more: more,
+               think: think, steps: steps, open: true, running: true };
+    head.addEventListener('click', function(){
+      if (st.running) return;
+      st.open = !st.open;
+      root.classList.toggle('open', st.open);
+      ic.textContent = st.open ? '▾' : '▸';
+      more.style.display = st.open ? 'none' : '';
+    });
+    return st;
+  }
+
+  function addAI(){
+    var w = mk('div', 'app-msg ai');
+    var a = mk('div', 'app-ava');
+    var b = mk('div', 'app-bubble');
+    var p = buildProc();
+    var md = mk('div', 'app-md');
+    b.appendChild(p.root);
+    b.appendChild(md);
+    w.appendChild(a); w.appendChild(b);
     thread.appendChild(w);
     scrollEnd();
-    return { wrap: w, txt: t };
+    return { md: md, proc: p, bubble: b };
   }
+
+  function addStep(p, name, detail){
+    var row = mk('div', 'proc-step');
+    var i = mk('span', 'st-i run'); i.textContent = '⚙';
+    var n = mk('b'); n.textContent = name;
+    row.appendChild(i); row.appendChild(n);
+    if (detail){
+      var d = mk('span', 'st-d'); d.textContent = detail; row.appendChild(d);
+    }
+    p.steps.appendChild(row);
+    scrollEnd();
+    return function(){
+      i.classList.remove('run');
+      i.textContent = '✓';
+    };
+  }
+
+  var BS = String.fromCharCode(92);   /* 文案里统一写 /，渲染成 Windows 路径 */
+  function addTable(host){
+    var t = mk('div', 'res');
+    var head = mk('div', 'res-row res-head');
+    head.appendChild(mk('div', 'res-i')).textContent = '#';
+    head.appendChild(mk('div', 'res-d')).textContent = T('res.c1');
+    head.appendChild(mk('div', 'res-p')).textContent = T('res.c2');
+    t.appendChild(head);
+    [['res.r1', 'res.p1'], ['res.r2', 'res.p2'], ['res.r3', 'res.p3']].forEach(function(k, i){
+      var w = mk('div', 'res-row');
+      w.appendChild(mk('div', 'res-i')).textContent = String(i + 1);
+      w.appendChild(mk('div', 'res-d')).textContent = T(k[0]);
+      var p = mk('div', 'res-p');
+      var pill = mk('span', 'res-pill');
+      pill.textContent = T(k[1]).split('/').join(BS);
+      p.appendChild(pill);
+      w.appendChild(p);
+      t.appendChild(w);
+    });
+    host.appendChild(t);
+    scrollEnd();
+  }
+
   async function typeInto(text, my){
     box.classList.add('is-focus');
     input.value = '';
     for (var i = 0; i < text.length; i++){
       if (my !== gen) return false;
       input.value += text.charAt(i);
-      await sleep(46);
+      await sleep(44);
     }
-    await sleep(280);
+    await sleep(260);
     return my === gen;
   }
-  /* steps: [{text, ms}] —— 依次切换思考文案，最后停留后移除 */
-  async function think(steps, my){
-    var t = addThink(steps[0].text);
-    for (var i = 1; i < steps.length; i++){
-      await sleep(steps[i - 1].ms);
-      if (my !== gen) { t.wrap.remove(); return false; }
-      t.txt.textContent = steps[i].text;
+
+  async function appendThink(p, text, my){
+    if (REDUCE){ p.think.textContent += '\n' + text; return true; }
+    p.think.textContent += '\n';
+    for (var i = 0; i < text.length; i++){
+      if (my !== gen) return false;
+      p.think.textContent += text.charAt(i);
+      scrollEnd();
+      await sleep(15);
     }
-    await sleep(steps[steps.length - 1].ms);
-    if (my !== gen) { t.wrap.remove(); return false; }
-    t.wrap.remove();
     return true;
   }
-  async function stream(el, text, my){
-    if (REDUCE) { el.textContent = text; scrollEnd(); return true; }
+
+  async function streamThink(p, text, my){
+    if (REDUCE){ p.think.textContent = text; return true; }
+    p.think.textContent = '';
+    for (var i = 0; i < text.length; i++){
+      if (my !== gen) return false;
+      p.think.textContent += text.charAt(i);
+      scrollEnd();
+      await sleep(17);
+    }
+    return true;
+  }
+
+  async function streamMd(el, text, my){
+    if (REDUCE){ el.textContent = text; scrollEnd(); return true; }
     el.classList.add('streaming');
     el.textContent = '';
     for (var i = 0; i < text.length; i++){
-      if (my !== gen) { el.classList.remove('streaming'); return false; }
+      if (my !== gen){ el.classList.remove('streaming'); return false; }
       el.textContent += text.charAt(i);
       scrollEnd();
-      await sleep(26);
+      await sleep(23);
     }
     el.classList.remove('streaming');
     return true;
   }
-  function send(text){
+
+  /* 跑完一次「思考 → 工具」过程，最后收起为「查看过程记录」 */
+  async function runProc(p, kind, my){
+    if (!await streamThink(p, T('demo.think1'), my)) return false;
+    var done1 = addStep(p, T('demo.step1n'), T('demo.step1d'));
+    await sleep(680);
+    if (my !== gen) return false;
+    done1();
+    if (!await appendThink(p, T('demo.think2'), my)) return false;
+    if (kind === 'retrieval'){
+      var done2 = addStep(p, T('demo.step2n'), T('demo.step2d'));
+      await sleep(740);
+      if (my !== gen) return false;
+      done2();
+    }
+    await sleep(240);
+    if (my !== gen) return false;
+    p.running = false;
+    p.open = false;
+    p.root.classList.remove('open', 'is-run');
+    p.dots.remove();
+    p.ic.textContent = '▸';
+    p.label.textContent = T('app.record');
+    p.more.style.display = '';
+    return true;
+  }
+
+  async function turn(question, answer, kind, my){
+    addUser(question);
     input.value = '';
-    addMsg(text, true);
     box.classList.remove('is-focus');
+    await sleep(360);
+    if (my !== gen) return false;
+    var a = addAI();
+    setBusy(true);
+    if (!await runProc(a.proc, kind, my)) return false;
+    if (!await streamMd(a.md, answer, my)) return false;
+    if (kind === 'retrieval'){
+      await sleep(240);
+      if (my !== gen) return false;
+      addTable(a.bubble);   /* 正文吐完再出结果表，和客户端渲染顺序一致 */
+    }
+    setBusy(false);
+    return my === gen;
   }
 
   async function playOnce(my){
     thread.innerHTML = '';
     if (!await typeInto(T('app.m1'), my)) return false;
-    send(T('app.m1'));
-    await sleep(420);
     if (my !== gen) return false;
-    if (!await think([{ text: T('demo.t1'), ms: 900 }, { text: T('demo.t2'), ms: 1000 }], my)) return false;
-    if (!await stream(addMsg('', false), T('app.m2'), my)) return false;
-    await sleep(850);
+    if (!await turn(T('app.m1'), T('app.m2'), 'retrieval', my)) return false;
+    await sleep(900);
     if (my !== gen) return false;
     if (!await typeInto(T('app.m3'), my)) return false;
-    send(T('app.m3'));
-    await sleep(420);
     if (my !== gen) return false;
-    if (!await think([{ text: T('demo.t3'), ms: 1200 }], my)) return false;
-    if (!await stream(addMsg('', false), T('app.m4'), my)) return false;
+    if (NARROW) return my === gen;
+    if (!await turn(T('app.m3'), T('app.m4'), 'summary', my)) return false;
     return my === gen;
   }
 
   async function loop(){
     var my = gen;
     while (my === gen && auto){
-      if (!inView) { await sleep(1200); continue; }
+      if (!inView){ await sleep(1200); continue; }
       if (!await playOnce(my)) return;
       await sleep(4200);
     }
@@ -1838,18 +2126,38 @@ applyLang(lang);
   async function manual(text){
     auto = false;
     var my = reset();
-    addMsg(text, true);
-    await sleep(430);
+    addUser(text);
+    await sleep(420);
     if (my !== gen) return;
-    if (!await think([{ text: T('demo.t1'), ms: 850 }, { text: T('demo.t2'), ms: 1000 }], my)) return;
-    if (!await stream(addMsg('', false), T('demo.reply'), my)) return;
-    /* 空闲一段时间后回到自动演示 */
+    var a = addAI();
+    setBusy(true);
+    if (!await runProc(a.proc, 'retrieval', my)) return;
+    if (!await streamMd(a.md, T('demo.reply'), my)) return;
+    setBusy(false);
     resumeTimer = setTimeout(function(){
-      if (input.value.trim()) return;
+      if (busy || input.value.trim()) return;
       auto = true;
       reset();
       loop().catch(function(){});
     }, 22000);
+  }
+
+  /* 停止：中断生成，把过程胶囊改为「已停止」 */
+  function stopGen(){
+    auto = false;
+    gen++;
+    stopTimers();
+    setBusy(false);
+    var p = thread.querySelector('.proc.is-run');
+    if (p){
+      p.classList.remove('is-run');
+      var d = p.querySelector('.proc-dots'); if (d) d.remove();
+      var l = p.querySelector('.proc-label'); if (l) l.textContent = T('app.stopped');
+      var ic = p.querySelector('.proc-ic'); if (ic) ic.textContent = '▸';
+      var m = p.querySelector('.proc-more'); if (m) m.style.display = '';
+    }
+    var md = thread.querySelector('.app-md.streaming');
+    if (md) md.classList.remove('streaming');
   }
 
   function submit(){
@@ -1865,22 +2173,45 @@ applyLang(lang);
     gen++;
     stopTimers();
     clearTimeout(resumeTimer);
+    setBusy(false);
   }
-  sendBtn.addEventListener('click', function(e){ e.preventDefault(); submit(); });
+
+  sendBtn.addEventListener('click', function(e){
+    e.preventDefault();
+    if (busy) { stopGen(); return; }
+    submit();
+  });
   input.addEventListener('keydown', function(e){
-    takeover();
     if (e.key !== 'Enter') return;
     if (e.isComposing || e.keyCode === 229) return;   /* 输入法组字中不发送 */
     e.preventDefault();
+    if (busy) return;
     submit();
   });
   input.addEventListener('focus', function(){ box.classList.add('is-focus'); takeover(); });
   input.addEventListener('blur', function(){ if (!input.value) box.classList.remove('is-focus'); });
   box.addEventListener('click', function(e){ if (e.target !== input) input.focus(); });
+  if (jump) jump.addEventListener('click', scrollEnd);
 
   function renderStatic(){
     thread.innerHTML = '';
-    ['app.m1', 'app.m2', 'app.m3', 'app.m4'].forEach(function(k, i){ addMsg(T(k), i % 2 === 0); });
+    [['app.m1', 'app.m2'], ['app.m3', 'app.m4']].forEach(function(pair, idx){
+      addUser(T(pair[0]));
+      var a = addAI();
+      a.proc.running = false;
+      a.proc.open = false;
+      a.proc.root.classList.remove('open', 'is-run');
+      a.proc.dots.remove();
+      a.proc.ic.textContent = '▸';
+      a.proc.label.textContent = T('app.record');
+      a.proc.more.style.display = '';
+      a.proc.think.textContent = T('demo.think1') + '\n' + T('demo.think2');
+      var done = addStep(a.proc, T('demo.step1n'), T('demo.step1d'));
+      done();
+      a.md.textContent = T(pair[1]);
+      if (idx === 0) addTable(a.bubble);
+    });
+    setBusy(false);
   }
 
   window.__dsDemoReset = function(){
@@ -1890,13 +2221,13 @@ applyLang(lang);
     loop().catch(function(){});
   };
 
-  if (REDUCE) return;   /* 减少动效：保留静态对话，不自动播放 */
+  if (REDUCE){ renderStatic(); return; }   /* 减少动效：静态展示，不自动播放 */
 
   if ('IntersectionObserver' in window){
     new IntersectionObserver(function(es){
       es.forEach(function(e){
         inView = e.isIntersecting;
-        if (inView && !started) { started = true; loop().catch(function(){}); }
+        if (inView && !started){ started = true; loop().catch(function(){}); }
       });
     }, { threshold: 0.28 }).observe(card);
   } else {
